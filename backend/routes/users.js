@@ -1,9 +1,25 @@
-var express = require('express');
-var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const express = require('express')
+const { models } = require('mongoose')
+const User = require('../models/User')
+const userController = require('../controllers/UserController')
+const router = express.Router();
+
+
+// CREATE User
+router.post('/', userController.createUser)
+
+// GET ALL Users
+router.get('/', userController.getAllUser);
+
+//GET Single User
+router.get('/:id', userController.getSingleUser);
+
+//Delete User
+router.delete('/:id', userController.deleteUser)
+
+//Put User
+router.put('/:id', userController.updateUser)
+
 
 module.exports = router;
