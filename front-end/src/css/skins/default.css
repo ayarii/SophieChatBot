@@ -1,0 +1,101 @@
+/*----------------------------
+f5d76e
+------------------------------*/
+.heading h1,
+.custom-nav-tabs,
+.play-btn:hover,
+ul.pricing-boxes li.best-plan .plan-name:after,
+.doctorSec a.ico:hover,
+.service_2_item:hover i,
+.swipe-navi .swipe-left:hover i:hover, 
+.swipe-navi .swipe-right:hover i:hover,
+#filter li.selected a, #filter li a:hover,
+#site-searchform #s:focus,
+.portfolioFilter ul li a.current{
+	border-color:#f5d76e;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus,
+.pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus,
+.navbar.navbar-inverse.navbar-static-top a:hover,
+.isStuck .navbar-inverse .navbar-nav>.active>a, .isStuck .navbar-inverse .navbar-nav>.active>a:focus
+{
+	border-color:#f5d76e;
+}
+a,
+.bannerText p a,
+.play-btn:hover,
+.quote i,
+ul.footerLinks li span a,
+ul.hover-social-icons li a,
+.doctorSec p,
+.doctorSec a.ico:hover i,
+.service_2_item:hover i,
+.service_3_item:hover i,
+.swipe-navi .swipe-left:hover i:hover, 
+.swipe-navi .swipe-right:hover i:hover,
+.project_details .details li a:hover,
+ul.hover-social-icons li a,
+a.read:hover,
+.blog_medium .post_meta h2:hover a,
+.recent_posts_list li a:hover,
+.sidebar_widget ul.arrows_list li a:hover, .sidebar_widget ul.arrows_list1 li a:hover i,
+.sidebar_widget ul.archives_list li a:hover, .sidebar_widget ul.arrows_list1 li a:hover i,
+.pagination > li > a, .pagination > li > span,
+.blog_medium .post_meta .metaInfo > span > a:hover,
+.blogTitle > a:hover h2,
+.blogMeta a:hover, .blogTitle span:hover,
+.blog_large .post_meta .metaInfo > span > a:hover, .blog_single .post_meta .metaInfo > span > a:hover,
+.author a,
+span.hoverBox h4,
+.navbar.navbar-inverse.navbar-static-top a:hover{
+	color:#f5d76e;
+}
+.inner-page .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus{
+	color:#f5d76e !important;
+}
+.logo a span,
+.form-container,
+.yellow_section,
+.membership_listing span,
+ul.pricing-boxes li.best-plan .btn-primary,
+.plan-name.color,
+.imageBox.activeImage,
+ul.hover-social-icons li a:hover{
+	background-color:#f5d76e;
+}
+.isStuck,
+.custom-nav-tabs > li.active > a,
+.custom-nav-tabs > li.active > a:hover,
+.custom-nav-tabs > li.active > a:focus,
+.custom-nav-tabs > li > a:hover,
+.custom-nav-tabs > li > a:focus,
+.hover_listing li .img,
+.socialshare a:hover,
+.hover_listing li .img:hover,
+.page_head,
+.front_service:hover .icon_service i,
+.touching.medium a.hover-zoom, 
+.touching.medium a.hover-link,
+.carousel-pagination li.active,
+.gDot,
+#filter li.selected a:before,
+.hover_listing li .img:hover,
+.blog_medium .day,.pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus,
+.blog_large .day, .blog_single .day,
+.readmore,
+.blogPic .blog-hover .icon,
+#ui-lightbox-bottombar{
+	background:#f5d76e ;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus{
+	background:#f5d76e ;
+}
+ul.pricing-boxes li.best-plan .plan-name:after {
+	border-color: rgba(255, 228, 1, 0);
+	border-top-color: #f5d76e;
+}
+/* bottom border color variation */
+ul.pricing-boxes li.best-plan .btn-primary,
+input.normal, select.normal, textarea.normal{
+	border-color:#e5cd00;
+}
