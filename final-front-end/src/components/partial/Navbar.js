@@ -9,7 +9,7 @@ class Navbar extends Component{
 			<div class="header-agile">
 				<h1>
 					<Link to='/' class="navbar-brand logo">
-						<span class="fa fa-scissors" aria-hidden="true" ></span> Men spa	<span class="fa fa-user-secret" aria-hidden="true" ></span>
+					<span class="fa fa-pencil" aria-hidden="true" ></span> E-learning	<span class="fa fa-user" aria-hidden="true" ></span>
 					</Link>
 				</h1>
 			</div>
@@ -20,6 +20,7 @@ class Navbar extends Component{
 						<ul class="menu">
 							<li class="mr-lg-3 mr-2 active"><Link to='/'>Home</Link></li>
 							<li class="mr-lg-3 mr-2"><Link to='/about'>About</Link></li>
+							<li class="mr-lg-3 mr-2"><Link to='/userManagement'>UserManagement</Link></li>
 							<li class="mr-lg-3 mr-2 p-0">
 							{/* <!-- First Tier Drop Down --> */}
 							<label for="drop-2" class="toggle">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span> </label>
