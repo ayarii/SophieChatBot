@@ -19,22 +19,22 @@ class Navbar extends Component{
 					<input type="checkbox" id="drop" />
 						<ul class="menu">
 							<li class="mr-lg-3 mr-2 active"><Link to='/'>Home</Link></li>
-							<li class="mr-lg-3 mr-2"><Link to='/userManagement'>UserManagement</Link></li>
-							<li class="mr-lg-3 mr-2 active"><Link to='/TasksManager'>Tasks Manager</Link></li>
+							<li class="mr-lg-3 mr-2"><Link to='/userManagement'>User Management</Link></li>
+							<li class="mr-lg-3 mr-2"><Link to='/classification'>User Classification</Link></li>
+							<li class="mr-lg-3 mr-2 active"><Link to='/TasksManager'>Tasks Management</Link></li>
 							<li class="mr-lg-3 mr-2 p-0">
 							{/* <!-- First Tier Drop Down --> */}
 							<label for="drop-2" class="toggle">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span> </label>
-							<a href="#">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span></a>
+							<Link to="/recommendations">Recommendations <span class="fa fa-angle-down" aria-hidden="true"></span></Link>
 							<input type="checkbox" id="drop-2"/>
 							<ul class="inner-dropdown">
-								<li><Link to='/services'>Services</Link></li>
-								<li><Link to='/single'>Single</Link></li>
+								<li><Link to='/recommendations/events'>Events</Link></li>
+								<li><Link to='/recommendations/courses'>Courses</Link></li>
+								<li><Link to='/recommendations/news'>News</Link></li>
 							</ul>
 							</li>
-							<li class="mr-lg-3 mr-2"><Link to='/classification'>User Classification</Link></li>
-							<li class="mr-lg-3 mr-2"><Link to='/contact'>Contact Us</Link></li>
 							<li class="mr-lg-3 mr-2"><Link to='/testimonial'>Testimonial</Link></li>
-							<li class="mr-lg-3 mr-2"><Link to='/recommendations'>Recommendations</Link></li>							
+							<li class="mr-lg-3 mr-2"><Link to='/contact'>Contact Us</Link></li>							
 							
 
 						</ul>

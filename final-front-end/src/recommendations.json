@@ -4,7 +4,7 @@
     "title": "Angular vs React",
     "description" : "Here we’ll cover various aspects of Angular, Vue, and React to see how they suit your needs. This post is not just a guide on Angular vs React vs Vue but aims to provide a structure to help judge front-end JavaScript frameworks in general. In case a new framework arrives next year, you will know exactly what parameters to look at!",
     "category": "News",
-    "img": "assets/images/angularreact.jpg",
+    "img": "../assets/images/angularreact.jpg",
     "idUser": 12
     },
     {
@@ -12,7 +12,7 @@
         "title": "Spring Boot ",
         "description" : "Spring has released a new tool, Spring Native Beta, to convert existing Spring Boot applications, written in Java or Kotlin, to GraalVM native images. The goal is to support Spring Boot applications on Spring Native. GraalVM native images are small, optimized and boot quickly. The tradeoffs, however, are longer build times and fewer runtime optimizations compared to the JVM.",
         "category": "News",
-        "img": "assets/images/springboot.jpg",
+        "img": "../assets/images/springboot.jpg",
         "idUser": 13
     },
     {
@@ -20,7 +20,7 @@
         "title": "Hackathon",
         "description" : "The 2nd edition of FST Hackathon is finally here! The competition will take place on the 3rd of April, 2021 at the City of Sciences in Tunis",
         "category": "Events",
-        "img": "assets/images/hackathon.jpg",
+        "img": "../assets/images/hackathon.jpg",
         "idUser": 1
     },
     {
@@ -28,7 +28,7 @@
         "title": "Java Course",
         "description" : "Taking this course will provide you with a basic foundation in Java syntax, which is the first step towards becoming a successful Java developer.",
         "category": "Courses",
-        "img": "assets/images/java.jpg",
+        "img": "../assets/images/java.jpg",
         "idUser": 1
     },
     {
@@ -36,7 +36,7 @@
         "title": "International Commerce",
         "description" : "Ecommerce Conferences to Attend in 2020. National Retail Federation's Retail Big Show. eTail West. eTail Canada. CommerceNext. Paris Retail Week.  ",
         "category": "Events",
-        "img": "assets/images/commerce.jpg",
+        "img": "../assets/images/commerce.jpg",
         "idUser": 1
     },
     {
@@ -44,7 +44,7 @@
         "title": "E-commmerce infoSession",
         "description" : "Ecommerce Conferences to Attend in 2020. National Retail Federation's Retail Big Show. eTail West. eTail Canada. CommerceNext. Paris Retail Week.  ",
         "category": "Events",
-        "img": "assets/images/e-commerce.jpg",
+        "img": "../assets/images/e-commerce.jpg",
         "idUser": 1
     },
     {
@@ -52,7 +52,7 @@
         "title": "Node js",
         "description" : "Ecommerce Conferences to Attend in 2020. National Retail Federation's Retail Big Show. eTail West. eTail Canada. CommerceNext. Paris Retail Week.  ",
         "category": "Events",
-        "img": "assets/images/e-commerce.jpg",
+        "img": "../assets/images/e-commerce.jpg",
         "idUser": 1
     }
 ]

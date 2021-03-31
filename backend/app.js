@@ -9,6 +9,7 @@ const connect = new Connexion()
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var tasksRouter = require('./routes/tasks');
+var recommendationsRouter = require('./routes/recommendations');
 
 
 var app = express();
@@ -50,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tasks', tasksRouter);
+app.use('/recommendations', recommendationsRouter )
 app.listen(5000, () => console.log(`server started on port 5000`))
 
 

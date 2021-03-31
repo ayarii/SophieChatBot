@@ -11,10 +11,10 @@ render() {
     const toRender = recom.filter((recom) => recom.id === id)[0];
     return (
 
-        <div className="detail">
-        <div className="container">
+        <div>
         <section class="inner-page-banner" id="home">
         </section>
+
         <div class="breadcrumb-agile">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item">
@@ -23,11 +23,14 @@ render() {
                         <li class="breadcrumb-item active" aria-current="page">Recommendation</li>
                     </ol>
         </div>  
+        <div className="detail">
+        <div className="container">
             {toRender ? (
             <Rec recom={toRender}></Rec>
             ) : (
             <p>Recommendation not found</p>
             )}
+        </div>
         </div>
         </div>
     );
