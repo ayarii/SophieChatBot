@@ -16,6 +16,7 @@ import RecommendationDetails from './components/RecommendationDetails';
 import News from './components/News';
 import Courses from './components/Courses';
 import Events from './components/Events';
+import TasksManager from './components/TasksManager'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -28,10 +29,8 @@ function App() {
         <Navbar/>
           <Switch>
             <Route exact path='/'component={Home}/>
-            <Route path='/about' component={About}/>
             <Route path='/userManagement' component={UserManagement}/>
-            <Route path='/services' component={Services}/>
-            <Route path='/single' component={Single}/>
+            <Route exact path='/TasksManager' component={TasksManager}/>
             <Route path='/classification' component={UserClassification}/>
             <Route path='/contact' component={Contact}/>
             <Route path='/testimonial' component={Testimonial} /> 

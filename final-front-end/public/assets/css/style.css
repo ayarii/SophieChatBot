@@ -187,7 +187,7 @@ h4.agile-title,h1.agile-title,h2.agile-title {
     background-size: cover;
 }
 
-.csslider>ul>li:nth-child(2) {
+/* .csslider>ul>li:nth-child(2) {
     background: url(../images/ban2.jpg) no-repeat center;
     background-size: cover;
 }
@@ -199,7 +199,7 @@ h4.agile-title,h1.agile-title,h2.agile-title {
 .csslider>ul>li:last-child {
     background: url(../images/ban4.jpg) no-repeat center;
     background-size: cover;
-}
+} */
 
 .csslider {
     position: relative;
@@ -209,7 +209,7 @@ h4.agile-title,h1.agile-title,h2.agile-title {
     display: none;
 }
 
-.csslider>input:nth-of-type(3):checked~ul li:first-of-type {
+/* .csslider>input:nth-of-type(3):checked~ul li:first-of-type {
     margin-left: -200%;
 }
 
@@ -223,7 +223,7 @@ h4.agile-title,h1.agile-title,h2.agile-title {
 
 .csslider>input:nth-of-type(1):checked~ul li:first-of-type {
     margin-left: 0%;
-}
+} */
 
 .csslider>ul {
     position: relative;
@@ -258,7 +258,7 @@ h4.agile-title,h1.agile-title,h2.agile-title {
     white-space: normal;
 }
 
-.csslider>.navigation {
+/* .csslider>.navigation {
     position: absolute;
     bottom: 30px;
     left: 50%;
@@ -315,9 +315,9 @@ h4.agile-title,h1.agile-title,h2.agile-title {
 
 .csslider.inside .navigation label {
     border: 1px solid #7e7e7e;
-}
+} */
 
-.csslider>input:nth-of-type(1):checked~.navigation label:nth-of-type(1):after,
+/* .csslider>input:nth-of-type(1):checked~.navigation label:nth-of-type(1):after,
 .csslider>input:nth-of-type(2):checked~.navigation label:nth-of-type(2):after,
 .csslider>input:nth-of-type(3):checked~.navigation label:nth-of-type(3):after,
 .csslider>input:nth-of-type(4):checked~.navigation label:nth-of-type(4):after {
@@ -351,7 +351,7 @@ h4.agile-title,h1.agile-title,h2.agile-title {
     -o-transform: rotate(225deg);
     -webkit-transform: rotate(225deg);
     transform: rotate(225deg);
-}
+} */
 
 /*#region MODULES */
 

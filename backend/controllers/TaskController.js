@@ -7,7 +7,7 @@ exports.createTask = (req, res) => {
     const TaskObject = JSON.parse(JSON.stringify(req.body))
     console.log(" taskObject : ", TaskObject)
 
-    const task = new task({
+    const task = new Task({
         ...TaskObject,
     })
     task.save()
