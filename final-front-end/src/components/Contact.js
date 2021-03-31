@@ -17,10 +17,10 @@ class Contact extends Component{
     <section class="content-info py-5">
         <div class="container py-md-5">
             <div class="text-center px-lg-5">
-                <h3 class="heading text-center mb-3 mb-sm-5">Contact Us</h3>
+            <h3 class="heading text-center mb-3 mb-sm-5">Contact Us</h3>
+            <h2 class="heading text-center mb-3 mb-sm-5">Your opinion matters</h2>
                 <div class="title-desc text-center px-lg-5">
-                    <p class="px-lg-5 sub-wthree">Praesent ullamcorper dui turpis.At vero eos et accusam et justo duo dolores et ea rebum.Integer sit amet mattis quam, sit amet ultricies velit. Praesent ullamcorper dui turpis.
-                        Praesent ullamcorper dui turpis.</p>
+                    <p class="px-lg-5 sub-wthree">Feel free to contact us to report a bug, to improve a service or to suggest improvments</p>
                 </div>
             </div>
             <div class="contact-w3pvt-form mt-5">
@@ -56,9 +56,7 @@ class Contact extends Component{
         </div>
     </section>
 
-    <div class="map-w3layouts">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423286.27404345275!2d-118.69191921441556!3d34.02016130939095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos+Angeles%2C+CA%2C+USA!5e0!3m2!1sen!2sin!4v1522474296007" allowfullscreen=""></iframe>
-    </div>
+    
 	</div>
         )
     }

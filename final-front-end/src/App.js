@@ -9,6 +9,7 @@ import Single from './components/Single';
 import Gallery from './components/Gallery';
 import Contact from './components/Contact';
 import UserManagement from './components/UserManagement';
+import UserClassification from './components/UserClassification';
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
             <Route path='/userManagement' component={UserManagement}/>
             <Route path='/services' component={Services}/>
             <Route path='/single' component={Single}/>
-            <Route path='/gallery' component={Gallery}/>
+            <Route path='/classification' component={UserClassification}/>
             <Route path='/contact' component={Contact}/>
           </Switch>
         <Footer/>

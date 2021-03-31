@@ -31,7 +31,7 @@ class Navbar extends Component{
 								<li><Link to='/single'>Single</Link></li>
 							</ul>
 							</li>
-							<li class="mr-lg-3 mr-2"><Link to='/gallery'>Gallery</Link></li>
+							<li class="mr-lg-3 mr-2"><Link to='/classification'>User Classification</Link></li>
 							<li class="mr-lg-3 mr-2"><Link to='/contact'>Contact Us</Link></li>
 							
 
