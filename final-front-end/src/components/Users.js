@@ -26,6 +26,7 @@ function Users() {
   const deleteUser = async (id) => {
     await fetch(`http://localhost:5000/users/${id}`, { method: 'DELETE' })
     setUsers(users.filter((user) => user.id != id))
+    console.log("users : ", users)
   }
 
 
@@ -35,7 +36,7 @@ function Users() {
     return (
         <div>
             {users.map((user) => (
-                <User key={user.id} user={user}  onDelete={deleteUser} />
+                <User key={user._id} user={user}  onDelete={deleteUser} />
                 
                 
             ))}
