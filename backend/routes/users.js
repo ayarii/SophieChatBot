@@ -1,4 +1,3 @@
-
 const express = require('express')
 const { models } = require('mongoose')
 const User = require('../models/User')

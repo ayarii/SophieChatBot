@@ -7,6 +7,8 @@ const userShema = mongoose.Schema({
     numtel:{type: Number, required:true},
     pays:{type: String, required:true},
     profession:{type: String, required:true},
+    userName:{type: String, required:true},
+    password:{type: String, required:true},
 })
 //id – nom – prenom – email – numtel – pays – profession
 module.exports = mongoose.model('User', userShema)

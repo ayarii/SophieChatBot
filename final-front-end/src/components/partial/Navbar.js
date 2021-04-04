@@ -8,7 +8,7 @@ class Navbar extends Component{
 		<div class="header d-lg-flex justify-content-between align-items-center">
 			<div class="header-agile">
 				<h1>
-					<Link to='/' class="navbar-brand logo">
+					<Link to='/' class="navbar-brand logo">															
 					<span class="fa fa-pencil" aria-hidden="true" ></span> E-learning	<span class="fa fa-user" aria-hidden="true" ></span>
 					</Link>
 				</h1>
