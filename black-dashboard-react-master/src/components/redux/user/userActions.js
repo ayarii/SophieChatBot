@@ -1,4 +1,4 @@
-import {FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, DELETE_USER, ADD_USER} from './userTypes'
+import {FETCH_USERS_REQUEST, FETCH_USERS_SUCCESS, FETCH_USERS_FAILURE, DELETE_USER, ADD_USER,UPDATE_USER} from './userTypes'
 import axios from 'axios'
 export const fetchUsersRequest = () => {
     return {
@@ -30,6 +30,13 @@ export const deleteUser = (id) =>{
 export const addUser = (user) =>{
     return {
         type : ADD_USER,
+        payload : user
+    }
+}
+
+export const updateUser = (user) =>{
+    return {
+        type : UPDATE_USER,
         payload : user
     }
 }
@@ -69,12 +76,20 @@ export const AddUser = (user) =>{
     return function (dispatch){
          axios.post(`http://localhost:5000/users/`,user)
          .then((response) => {
-            console.log(response);
-            dispatch(addUser(user))
-            //fetchUsers()
+            dispatch(addUser(response.data))
         }, (error) => {
             console.log(error);
         });
     }
 }
 
+export const UpdateUser = (user) =>{
+    return function (dispatch){
+         axios.put(`http://localhost:5000/users/${user._id}`,user)
+         .then(() => {
+            dispatch(updateUser(user))
+        }, (error) => {
+            console.log({"error ": error});
+        });
+    }
+}

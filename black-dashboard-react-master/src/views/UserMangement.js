@@ -17,7 +17,7 @@
 */
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { fetchUsers, DeleteUser, AddUser } from '../components/redux'
+import { fetchUsers, DeleteUser, AddUser,UpdateUser } from '../components/redux'
 import { useSelector, useDispatch } from 'react-redux'
 
 // reactstrap components
@@ -40,6 +40,7 @@ import {
 function UserManagement() {
     const [show, setShow] = useState(false)
     const initialUserState = {
+        "_id":"",
         "nom": "",
         "prenom": "",
         "email": "",
@@ -53,6 +54,7 @@ function UserManagement() {
     // Show Add User
     const showAdd = () => {
         setShow(!show)
+        setUser(initialUserState)
     }
 
 
@@ -64,13 +66,13 @@ function UserManagement() {
     }, [])
 
 
-   
+
 
     /* useEffect(() => {
          fetchUsers()
      }, [])*/
 
-   
+
 
 
 
@@ -85,7 +87,13 @@ function UserManagement() {
                 <td>{user.numtel}</td>
                 <td>{user.pays}</td>
                 <td>{user.profession}</td>
-                <td><button className="btn-fill btn btn-danger" onClick={() => dispatch(DeleteUser(user._id))}>Delete</button></td>
+                <td><button className="btn-fill btn btn-danger mx-3" onClick={() => dispatch(DeleteUser(user._id))}>Delete</button>
+                    <button className="btn-fill btn btn-dark" onClick={() => {
+                        setShow(true)
+                        setUser(user)
+                    }}>
+                        Update
+                        </button></td>
             </tr>
 
         )
@@ -104,11 +112,11 @@ function UserManagement() {
                             {show &&
                                 <>
                                     <CardBody>
-                                        <h3 className="title">Add User</h3>
+                                        <h3 className="title">{user._id ==="" ? "Add User" : "Update User"}</h3>
                                         <Form>
-                                            
-                                            <Row>
 
+                                            <Row>
+                                                    {/*Testing User Id if its null or not for the update method*/}
                                                 <Col className="px-md-1" md="6">
                                                     <FormGroup>
                                                         <label>Username</label>
@@ -118,6 +126,7 @@ function UserManagement() {
                                                                 setUser(newUserObj);
                                                             }
                                                             }
+                                                            disabled = {user._id !==""}
                                                         />
                                                     </FormGroup>
                                                 </Col>
@@ -131,6 +140,7 @@ function UserManagement() {
                                                                 setUser(newUserObj);
                                                             }
                                                             }
+                                                            disabled = {user._id !==""}
                                                         />
                                                     </FormGroup>
                                                 </Col>
@@ -224,8 +234,8 @@ function UserManagement() {
 
                                     </CardBody>
                                     <CardFooter>
-                                        <Button className="btn-fill" color="success" type="submit" onClick={() => dispatch(AddUser(user))}>
-                                            Save
+                                        <Button className="btn-fill" color="success" type="submit" onClick={() => { user._id ==="" ? dispatch(AddUser(user)): dispatch(UpdateUser(user)) }}>
+                                        {user._id ==="" ? "Add" : "Update"}
                              </Button>
                                     </CardFooter>
                                 </>

@@ -1,4 +1,12 @@
 const User = require('../models/User')
+const multer = require('multer')
+
+const storage = multer.diskStorage({
+    destination : (req, file, callback)=>{
+        callback(null, './client/public/uploads')
+    }
+})
+
 
 // CREATE User
 exports.createUser = (req, res) => {
