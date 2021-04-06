@@ -246,7 +246,7 @@ span.red {
 
 .form-control-file {
     width: 100%;
-    color: #5c1ac3;
+    color: orange;
 }
 .form-control-file::-webkit-file-upload-button {
     letter-spacing: 1px;
@@ -260,7 +260,7 @@ span.red {
     transition: .2s ease-out;
     touch-action: manipulation;
     cursor: pointer;
-    background-color: #5c1ac3;
+    background-color: orange;
     box-shadow: 0px 0px 15px 1px rgba(113, 106, 202, 0.2);
     will-change: opacity, transform;
     transition: all 0.3s ease-out;
@@ -281,7 +281,7 @@ span.red {
     transition: .2s ease-out;
     touch-action: manipulation;
     cursor: pointer;
-    background-color: #5c1ac3;
+    background-color: orange;
     box-shadow: 0px 0px 15px 1px rgba(113, 106, 202, 0.2);
     will-change: opacity, transform;
     transition: all 0.3s ease-out;

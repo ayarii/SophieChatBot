@@ -2,13 +2,15 @@ import React from 'react'
 import $ from 'jquery'; 
 
 function Chatbot() {
+     const timeElapsed = Date.now()
+    const today = new Date(timeElapsed)
     return (
         <div>
             {/* Chat bot UI start */}
             <div className="chat-screen">
                 <div className="chat-header">
-                    <div className="chat-header-title">
-                        Sophie ChatBot 😀
+                    <div className="chat-header-title d-flex justify-content-start">
+                        <img src={ require('./img/chatBotIcon.png') } height="30" width="30"/><h4 className="ml-3"> Sophie </h4>
       </div>
                     <div className="chat-header-option hide">
                         <span className="dropdown custom-dropdown">
@@ -44,6 +46,7 @@ function Chatbot() {
                 <div className="chat-mail">
                     <div className="row">
                         <div className="col-md-12 text-center mb-2">
+                            <img src={ require('./img/chatBotLogo.png') } height="100" width="100"/>
                             <p>Hi 👋! Please fill out the form below to authentificate and start chatting with me 💖</p>
                         </div>
                     </div>
@@ -68,9 +71,10 @@ function Chatbot() {
                     </div>
                 </div>
 
-                <div className="chat-mail-registration hide my-5">
+                <div className="chat-mail-registration hide my-5" >
                     <div className="row">
                         <div className="col-md-12 text-center my-4">
+                        <img src={ require('./img/chatBotLogo.png') } height="100" width="100"/>
                             <h4>Create an account with : </h4>
                         </div>
                     </div>
@@ -79,6 +83,53 @@ function Chatbot() {
                             <button id="LinkedIn" className="btn btn-primary btn-rounded btn-block my-2">LinkedIn</button>
                             <button id="Resume" className="btn btn-warning btn-rounded btn-block my-2">Resume</button>
                             <button id="Chat" className="btn btn-secondary btn-rounded btn-block my-2">Chat</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="chat-mail-linkedIn hide my-5">
+                    <div className="row">
+                        <div className="col-md-12 text-center my-4">
+                        <img src={ require('./img/chatBotLogo.png') } height="100" width="100"/>
+                            <h4>Please give me your linkedIn : </h4>
+                        </div>
+                    </div>
+                    <div className="row">
+                    <div className="col-md-12 mb-5">
+                            <div className="form-group">
+                                <input type="text" className="form-control" placeholder="Link" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                    <div className="col-md-12 mb-5">
+                            <div className="form-group">
+                            <button id="SaveLinkedIn" className="btn btn-primary btn-rounded btn-block my-2">Done</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div className="chat-mail-resume hide my-5">
+                    <div className="row">
+                        <div className="col-md-12 text-center my-4">
+                        <img src={ require('./img/chatBotLogo.png') } height="100" width="100"/>
+                            <h4>Please import me your resume : </h4>
+                        </div>
+                    </div>
+                    <div className="row">
+                    <div className="col-md-12 mb-5">
+                            <div className="form-group">
+                                <input type="file" className="form-control-file" name="upload" accept="application/pdf" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                    <div className="col-md-12 mb-5">
+                            <div className="form-group">
+                            <button id="SaveResume" className="btn btn-primary btn-rounded btn-block my-2">Done</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -97,8 +148,10 @@ function Chatbot() {
 
 
 
+
                 <div className="chat-body hide" id="conversation">
-                    <div className="chat-start">Monday, 1:27 PM</div>
+                   
+                    <div className="chat-start">{today.toDateString()}</div>
                     <div className="chat-bubble you">Welcome to our site, if you need help simply reply to this message, we are
                     online and ready to help.</div>
                     <div className="chat-bubble me">Hi, I am back</div>
@@ -223,10 +276,37 @@ $(document).ready(function () {
 
     $('#LinkedIn').click(function () {
         $('.chat-mail-registration').addClass('hide');
+        $('.chat-mail-linkedIn').removeClass('hide');
+        $('.chat-header-option').removeClass('hide');
+    });
+
+    $('#SaveLinkedIn').click(function () {
+        $('.chat-mail-linkedIn').addClass('hide');
         $('.chat-body').removeClass('hide');
         $('.chat-input').removeClass('hide');
         $('.chat-header-option').removeClass('hide');
     });
+
+    $('#SaveResume').click(function () {
+        $('.chat-mail-resume').addClass('hide');
+        $('.chat-body').removeClass('hide');
+        $('.chat-input').removeClass('hide');
+        $('.chat-header-option').removeClass('hide');
+    });
+
+
+
+
+
+
+    $('#Resume').click(function () {
+        $('.chat-mail-registration').addClass('hide');
+        $('.chat-mail-resume').removeClass('hide');
+        $('.chat-header-option').removeClass('hide');
+    });
+
+
+
 
     $('#Chat').click(function () {
         $('.chat-mail-registration').addClass('hide');
@@ -234,16 +314,6 @@ $(document).ready(function () {
         $('.chat-input').removeClass('hide');
         $('.chat-header-option').removeClass('hide');
     });
-
-    $('#Resume').click(function () {
-        $('.chat-mail-registration').addClass('hide');
-        $('.chat-body').removeClass('hide');
-        $('.chat-input').removeClass('hide');
-        $('.chat-header-option').removeClass('hide');
-    });
-
-
-
 
 
 
