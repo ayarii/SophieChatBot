@@ -48,9 +48,11 @@ function UserManagement() {
         "pays": "",
         "profession": "",
         "userName": "",
-        "password": ""
+        "password": "",
+        "image":""
     }
     const [user, setUser] = useState(initialUserState)
+    const [file, setFile] = useState(null)
     // Show Add User
     const showAdd = () => {
         setShow(!show)
@@ -71,6 +73,40 @@ function UserManagement() {
     /* useEffect(() => {
          fetchUsers()
      }, [])*/
+
+
+     const onFileChange = event => { 
+        // Update the state 
+        setFile(event.target.files[0]); 
+        console.log(event.target.files[0])
+      }; 
+
+      const onFileUpload = () => { 
+        const formData = new FormData(); 
+        user.image = file
+        console.log("user before : ",user)
+        
+        formData.append("nom",user.nom )
+        formData.append("prenom",user.prenom )
+        formData.append("email", user.email)
+        formData.append("numtel", user.numtel)
+        formData.append("pays", user.pays)
+        formData.append("profession", user.profession)
+        formData.append("userName", user.userName)
+        formData.append("password", user.password)
+        formData.append("image", user.image)
+       
+        // Details of the uploaded file 
+        console.log("formData.image : ", formData.get("image")); 
+        //delete user.image
+        dispatch(AddUser(user))
+
+
+        }
+
+
+
+
 
 
 
@@ -113,7 +149,7 @@ function UserManagement() {
                                 <>
                                     <CardBody>
                                         <h3 className="title">{user._id ==="" ? "Add User" : "Update User"}</h3>
-                                        <Form>
+                                        <Form encType="multipart/form-data">
 
                                             <Row>
                                                     {/*Testing User Id if its null or not for the update method*/}
@@ -224,6 +260,16 @@ function UserManagement() {
                                                         />
                                                     </FormGroup>
                                                 </Col>
+                                                <Row>
+                                                <Col className="px-md-1" md="4">
+                                                    <FormGroup>
+                                                        <label>Image</label>
+                                                        <Input
+                                                            type="file" onChange={onFileChange}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                </Row>
                                             </Row>
 
                                         </Form>
@@ -234,7 +280,7 @@ function UserManagement() {
 
                                     </CardBody>
                                     <CardFooter>
-                                        <Button className="btn-fill" color="success" type="submit" onClick={() => { user._id ==="" ? dispatch(AddUser(user)): dispatch(UpdateUser(user)) }}>
+                                        <Button className="btn-fill" color="success" type="submit" onClick={() => { user._id ==="" ? onFileUpload() : dispatch(UpdateUser(user)) }}>
                                         {user._id ==="" ? "Add" : "Update"}
                              </Button>
                                     </CardFooter>

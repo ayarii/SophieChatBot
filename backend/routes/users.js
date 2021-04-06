@@ -3,7 +3,7 @@ const { models } = require('mongoose')
 const User = require('../models/User')
 const userController = require('../controllers/UserController')
 const router = express.Router();
-
+const multer = require('multer')
 
 // CREATE User
 router.post('/', userController.createUser)

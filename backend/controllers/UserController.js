@@ -1,19 +1,19 @@
 const User = require('../models/User')
-const multer = require('multer')
 
 
 
 
 // CREATE User
 exports.createUser = (req, res) => {
+    console.log("post in ...")
     delete req.body._id
-    console.log("req.body : ", req.body)
     const UserObject = JSON.parse(JSON.stringify(req.body))
-    console.log("userObject : ", UserObject)
-    
+    console.log("UserObject : ", UserObject)
     const user = new User({
         ...UserObject,
+        image : "test"//`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     })
+    console.log("image : ", user.image)
     user.save()
         .then(() => res.status(201).json(user))
         .catch(err => res.status(400).json({ error: err }))

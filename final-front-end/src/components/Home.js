@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
+import Chatbot from './chatbot/Chatbot';
 
 class Home extends  Component{
     render(){
@@ -33,32 +34,8 @@ class Home extends  Component{
 			<li>
 				
 			</li>
-			<li>
-				<div class="slider-info bg3">
-					<div class="bs-slider-overlay1">
-						<div class="banner-text">
-							<div class="container">
-							<h2 class="movetxt agile-title text-capitalize">We Design and Create Hair Style Latest</h2>
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. It has survived not only five centuries.</p>
-							<Link to='/contact' class="btn">Get appointment</Link>
-							</div>
-						</div>
-					</div>
-				</div>
-			</li>
-			<li>
-				<div class="slider-info bg4">
-					<div class="bs-slider-overlay1">
-						<div class="banner-text">
-							<div class="container">
-								<h4 class="movetxt agile-title text-capitalize">We design latest trending haircuts </h4>
-								<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. It has survived not only five centuries.</p>
-								<Link to='/contact' class="btn">Get appointment</Link>
-							</div>
-						</div>
-					</div>
-				</div>
-			</li>
+			
+			
 		</ul>
 		<div class="navigation"> 
 			<div>
@@ -70,10 +47,13 @@ class Home extends  Component{
 		</div>
 	</div>
 </div>
-// {/* <!-- //banner -->
-
-
+ {/* <!-- //banner -->
 //  <!-- /services --> */}
+
+
+<Chatbot/>
+
+
     <section class="services py-5" id="services">
         <div class="container py-md-5">
 		<h3 class="heading text-center mb-3 mb-sm-5">Services</h3>
@@ -117,10 +97,11 @@ class Home extends  Component{
         </div>
     </section>
     {/* // <!-- /services -->
- 
-	
 // {/* <!-- //pricing -->
 //   <!--/order-now--> */}
+
+
+
     <section class="order-sec py-5">
         <div class="container py-md-5">
             <div class="test-info text-center">

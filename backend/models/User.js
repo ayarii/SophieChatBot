@@ -9,6 +9,8 @@ const userShema = mongoose.Schema({
     profession:{type: String, required:true},
     userName:{type: String, required:true},
     password:{type: String, required:true},
+    image:{type: String, required:true}
+    
 })
 //id – nom – prenom – email – numtel – pays – profession
 module.exports = mongoose.model('User', userShema)

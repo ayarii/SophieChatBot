@@ -29,9 +29,7 @@ function App() {
         <Navbar/>
           <Switch>
             <Route exact path='/'component={Home}/>
-            <Route path='/userManagement' component={UserManagement}/>
             <Route exact path='/TasksManager' component={TasksManager}/>
-            <Route path='/classification' component={UserClassification}/>
             <Route path='/contact' component={Contact}/>
             <Route path='/testimonial' component={Testimonial} /> 
             <Route exact path='/recommendations' component={Recommendations} />

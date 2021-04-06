@@ -19,8 +19,6 @@ class Navbar extends Component{
 					<input type="checkbox" id="drop" />
 						<ul class="menu">
 							<li class="mr-lg-3 mr-2 active"><Link to='/'>Home</Link></li>
-							<li class="mr-lg-3 mr-2"><Link to='/userManagement'>User Management</Link></li>
-							<li class="mr-lg-3 mr-2"><Link to='/classification'>User Classification</Link></li>
 							<li class="mr-lg-3 mr-2 active"><Link to='/TasksManager'>Tasks Management</Link></li>
 							<li class="mr-lg-3 mr-2 p-0">
 							{/* <!-- First Tier Drop Down --> */}

@@ -73,12 +73,13 @@ export const DeleteUser = (id) =>{
 
 
 export const AddUser = (user) =>{
-    console.log("user : ",user)
+   
     return function (dispatch){
+        console.log("user : ",user)
          axios.post(`http://localhost:5000/users/`,user)
          .then((response) => {
             dispatch(addUser(response.data))
-        }).catch((error)=>console.log(error.response));
+        }).catch((error)=>console.log("errorAddinng  : ", error.response));
     }
 }
 
