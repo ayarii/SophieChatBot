@@ -1,20 +1,16 @@
 const User = require('../models/User')
 const multer = require('multer')
 
-const storage = multer.diskStorage({
-    destination : (req, file, callback)=>{
-        callback(null, './client/public/uploads')
-    }
-})
+
 
 
 // CREATE User
 exports.createUser = (req, res) => {
-    console.log("create user ..")
+    delete req.body._id
     console.log("req.body : ", req.body)
     const UserObject = JSON.parse(JSON.stringify(req.body))
     console.log("userObject : ", UserObject)
-    //delete req.body._id
+    
     const user = new User({
         ...UserObject,
     })

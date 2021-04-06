@@ -73,15 +73,18 @@ export const DeleteUser = (id) =>{
 
 
 export const AddUser = (user) =>{
+    console.log("user : ",user)
     return function (dispatch){
          axios.post(`http://localhost:5000/users/`,user)
          .then((response) => {
             dispatch(addUser(response.data))
-        }, (error) => {
-            console.log(error);
-        });
+        }).catch((error)=>console.log(error.response));
     }
 }
+
+
+
+
 
 export const UpdateUser = (user) =>{
     return function (dispatch){
@@ -89,7 +92,7 @@ export const UpdateUser = (user) =>{
          .then(() => {
             dispatch(updateUser(user))
         }, (error) => {
-            console.log({"error ": error});
+            console.log({"error updating ": error});
         });
     }
 }
