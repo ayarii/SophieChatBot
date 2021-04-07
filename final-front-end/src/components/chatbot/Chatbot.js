@@ -1,9 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import $ from 'jquery'; 
+import axios from 'axios'
 
 function Chatbot() {
      const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
+    const [password, setPassword] = useState("")
+    const [userName, setUserName] = useState("")
+    const [connectedUser, setConnectedUser] = useState(null)
+    const onLogin = ()=>{
+        console.log({password,userName})
+
+        axios.post(`http://localhost:5000/users/login`,{password,userName})
+         .then((response) => {
+            console.log("responseLogin : ",response)
+            setConnectedUser(response.data.user)
+            console.log(response.data.user)
+        }).catch((error)=>console.log("errorLogin  : ", error.response));
+    }
+
+
+
+
     return (
         <div>
             {/* Chat bot UI start */}
@@ -53,17 +71,17 @@ function Chatbot() {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="form-group">
-                                <input type="text" className="form-control" placeholder="UserName" />
+                                <input type="text" className="form-control" placeholder="UserName" value={userName} onChange={e=>setUserName(e.target.value)} />
                             </div>
                         </div>
                         <div className="col-md-12">
                             <div className="form-group">
-                                <input type="password" className="form-control" placeholder="Password" />
+                                <input type="password" className="form-control" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)}/>
                             </div>
                         </div>
                         
                         <div className="col-md-12">
-                            <button className="btn btn-primary btn-rounded btn-block">Start Chat</button>
+                            <button className="btn btn-primary btn-rounded btn-block" onClick={()=>onLogin()}>Start Chat</button>
                         </div>
                         <div className="col-md-12">
                             <div className="powered-by"><a href="#">I dont have an account </a></div>
@@ -152,11 +170,9 @@ function Chatbot() {
                 <div className="chat-body hide" id="conversation">
                    
                     <div className="chat-start">{today.toDateString()}</div>
-                    <div className="chat-bubble you">Welcome to our site, if you need help simply reply to this message, we are
+                    <div className="chat-bubble you">Welcome {connectedUser && userName.toUpperCase() } to our site, if you need help simply reply to this message, I am
                     online and ready to help.</div>
                     <div className="chat-bubble me">Hi, I am back</div>
-                    <div className="chat-bubble me">I just want my Report Status.</div>
-                    <div className="chat-bubble me">As i am not getting any weekly reports nowadays.</div>
                     <div className="chat-bubble me">Testing chatBot</div>
                     <div className="chat-bubble you">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{ margin: 'auto', display: 'block', shapeRendering: 'auto', width: 43, height: 20 }} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
