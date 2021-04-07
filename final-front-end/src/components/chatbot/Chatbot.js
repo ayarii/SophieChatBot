@@ -1,22 +1,40 @@
 import React, { useState } from 'react'
-import $ from 'jquery'; 
+import $ from 'jquery';
 import axios from 'axios'
 
 function Chatbot() {
-     const timeElapsed = Date.now()
+    const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
     const [password, setPassword] = useState("")
     const [userName, setUserName] = useState("")
     const [connectedUser, setConnectedUser] = useState(null)
-    const onLogin = ()=>{
-        console.log({password,userName})
+    const onLogin = () => {
+        console.log({ password, userName })
 
-        axios.post(`http://localhost:5000/users/login`,{password,userName})
-         .then((response) => {
-            console.log("responseLogin : ",response)
-            setConnectedUser(response.data.user)
-            console.log(response.data.user)
-        }).catch((error)=>console.log("errorLogin  : ", error.response));
+        axios.post(`http://localhost:5000/users/login`, { password, userName })
+            .then((response) => {
+                console.log("responseLogin : ", response)
+                setConnectedUser(response.data.user)
+                console.log(response.data.user)
+                $('.chat-mail').addClass('hide');
+                $('.chat-body').removeClass('hide');
+                $('.chat-input').removeClass('hide');
+                $('.chat-header-option').removeClass('hide');
+            }).catch((error) => {
+                console.log("errorLogin  : ", error.response.data.error)
+                if (error.response.data.error === "User Not found !") {
+                    $('#alertUserNotFound').removeClass('hide')
+                }
+                else if (error.response.data.error === "incorrect password !") {
+                    $('#alertUserNotFound').addClass('hide')
+                    $('#alertPasswordIncorrect').removeClass('hide')
+                }
+            });
+
+
+
+
+
     }
 
 
@@ -28,8 +46,8 @@ function Chatbot() {
             <div className="chat-screen">
                 <div className="chat-header">
                     <div className="chat-header-title d-flex justify-content-start">
-                        <img src={ require('./img/chatBotIcon.png') } height="30" width="30"/><h4 className="ml-3"> Sophie </h4>
-      </div>
+                        <img src={require('./img/chatBotIcon.png')} height="30" width="30" /><h4 className="ml-3"> Sophie </h4>
+                    </div>
                     <div className="chat-header-option hide">
                         <span className="dropdown custom-dropdown">
                             <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,24 +82,32 @@ function Chatbot() {
                 <div className="chat-mail">
                     <div className="row">
                         <div className="col-md-12 text-center mb-2">
-                            <img src={ require('./img/chatBotLogo.png') } height="100" width="100"/>
+                            <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
                             <p>Hi 👋! Please fill out the form below to authentificate and start chatting with me 💖</p>
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="form-group">
-                                <input type="text" className="form-control" placeholder="UserName" value={userName} onChange={e=>setUserName(e.target.value)} />
+                                <input type="text" className="form-control" placeholder="UserName" value={userName} onChange={e => setUserName(e.target.value)} />
+                                <div id="alertUserNotFound" className="alert alert-danger hide" role="alert">
+                                    UserName not found !
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-12">
                             <div className="form-group">
-                                <input type="password" className="form-control" placeholder="Password" value={password} onChange={e=>setPassword(e.target.value)}/>
+                                <input type="password" className="form-control" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} />
+
+                                <div id="alertPasswordIncorrect" className="alert alert-danger hide" role="alert">
+                                    Password incorrect !
+                                    </div>
+
                             </div>
                         </div>
-                        
+
                         <div className="col-md-12">
-                            <button className="btn btn-primary btn-rounded btn-block" onClick={()=>onLogin()}>Start Chat</button>
+                            <button className="btn btn-primary btn-rounded btn-block" onClick={() => onLogin()}>Start Chat</button>
                         </div>
                         <div className="col-md-12">
                             <div className="powered-by"><a href="#">I dont have an account </a></div>
@@ -92,7 +118,7 @@ function Chatbot() {
                 <div className="chat-mail-registration hide my-5" >
                     <div className="row">
                         <div className="col-md-12 text-center my-4">
-                        <img src={ require('./img/chatBotLogo.png') } height="100" width="100"/>
+                            <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
                             <h4>Create an account with : </h4>
                         </div>
                     </div>
@@ -108,21 +134,21 @@ function Chatbot() {
                 <div className="chat-mail-linkedIn hide my-5">
                     <div className="row">
                         <div className="col-md-12 text-center my-4">
-                        <img src={ require('./img/chatBotLogo.png') } height="100" width="100"/>
+                            <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
                             <h4>Please give me your linkedIn : </h4>
                         </div>
                     </div>
                     <div className="row">
-                    <div className="col-md-12 mb-5">
+                        <div className="col-md-12 mb-5">
                             <div className="form-group">
                                 <input type="text" className="form-control" placeholder="Link" />
                             </div>
                         </div>
                     </div>
                     <div className="row">
-                    <div className="col-md-12 mb-5">
+                        <div className="col-md-12 mb-5">
                             <div className="form-group">
-                            <button id="SaveLinkedIn" className="btn btn-primary btn-rounded btn-block my-2">Done</button>
+                                <button id="SaveLinkedIn" className="btn btn-primary btn-rounded btn-block my-2">Done</button>
                             </div>
                         </div>
                     </div>
@@ -132,21 +158,21 @@ function Chatbot() {
                 <div className="chat-mail-resume hide my-5">
                     <div className="row">
                         <div className="col-md-12 text-center my-4">
-                        <img src={ require('./img/chatBotLogo.png') } height="100" width="100"/>
+                            <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
                             <h4>Please import me your resume : </h4>
                         </div>
                     </div>
                     <div className="row">
-                    <div className="col-md-12 mb-5">
+                        <div className="col-md-12 mb-5">
                             <div className="form-group">
                                 <input type="file" className="form-control-file" name="upload" accept="application/pdf" />
                             </div>
                         </div>
                     </div>
                     <div className="row">
-                    <div className="col-md-12 mb-5">
+                        <div className="col-md-12 mb-5">
                             <div className="form-group">
-                            <button id="SaveResume" className="btn btn-primary btn-rounded btn-block my-2">Done</button>
+                                <button id="SaveResume" className="btn btn-primary btn-rounded btn-block my-2">Done</button>
                             </div>
                         </div>
                     </div>
@@ -168,9 +194,9 @@ function Chatbot() {
 
 
                 <div className="chat-body hide" id="conversation">
-                   
+
                     <div className="chat-start">{today.toDateString()}</div>
-                    <div className="chat-bubble you">Welcome {connectedUser && userName.toUpperCase() } to our site, if you need help simply reply to this message, I am
+                    <div className="chat-bubble you">Welcome {connectedUser && userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
                     online and ready to help.</div>
                     <div className="chat-bubble me">Hi, I am back</div>
                     <div className="chat-bubble me">Testing chatBot</div>
@@ -277,12 +303,13 @@ $(document).ready(function () {
         $('.chat-screen').toggleClass('show-chat');
     });
 
-    $('.chat-mail button').click(function () {
-        $('.chat-mail').addClass('hide');
-        $('.chat-body').removeClass('hide');
-        $('.chat-input').removeClass('hide');
-        $('.chat-header-option').removeClass('hide');
-    });
+    //if login successfully : 
+    // $('.chat-mail button').click(function () {
+    //         $('.chat-mail').addClass('hide');
+    //         $('.chat-body').removeClass('hide');
+    //         $('.chat-input').removeClass('hide');
+    //         $('.chat-header-option').removeClass('hide');
+    // });
 
     $('.chat-mail a').click(function () {
         $('.chat-mail').addClass('hide');

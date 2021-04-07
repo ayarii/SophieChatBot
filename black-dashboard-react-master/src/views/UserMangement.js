@@ -123,7 +123,7 @@ function UserManagement() {
                 <td>{user.numtel}</td>
                 <td>{user.pays}</td>
                 <td>{user.profession}</td>
-                <td><button className="btn-fill btn btn-danger mx-3" onClick={() => dispatch(DeleteUser(user._id))}>Delete</button>
+                <td><button className="btn-fill btn btn-danger mx-3" onClick={() => dispatch(DeleteUser(user._id))} disabled = {user.userName ==="admin"}>Delete</button>
                     <button className="btn-fill btn btn-dark" onClick={() => {
                         setShow(true)
                         setUser(user)
