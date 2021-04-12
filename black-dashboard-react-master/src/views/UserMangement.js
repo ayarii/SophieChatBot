@@ -17,7 +17,7 @@
 */
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { fetchUsers, DeleteUser, AddUser,UpdateUser } from '../components/redux'
+import { fetchUsers, DeleteUser, AddUser, UpdateUser } from '../components/redux'
 import { useSelector, useDispatch } from 'react-redux'
 
 // reactstrap components
@@ -40,7 +40,7 @@ import {
 function UserManagement() {
     const [show, setShow] = useState(false)
     const initialUserState = {
-        "_id":"",
+        "_id": "",
         "nom": "",
         "prenom": "",
         "email": "",
@@ -49,10 +49,12 @@ function UserManagement() {
         "profession": "",
         "userName": "",
         "password": "",
-        "image":""
+        "image": ""
     }
     const [user, setUser] = useState(initialUserState)
-    const [file, setFile] = useState(null)
+    const [fileInputState, setFileInputState] = useState('')
+    const [selectedFile, setSelectedFile] = useState('')
+    const [previewSource, setPreviewSource] = useState('')
     // Show Add User
     const showAdd = () => {
         setShow(!show)
@@ -75,34 +77,33 @@ function UserManagement() {
      }, [])*/
 
 
-     const onFileChange = event => { 
+    const onFileChange = event => {
         // Update the state 
-        setFile(event.target.files[0]); 
+        const file = event.target.files[0];
         console.log(event.target.files[0])
-      }; 
-
-      const onFileUpload = () => { 
-        const formData = new FormData(); 
-        user.image = file
-        console.log("user before : ",user)
-        
-        formData.append("nom",user.nom )
-        formData.append("prenom",user.prenom )
-        formData.append("email", user.email)
-        formData.append("numtel", user.numtel)
-        formData.append("pays", user.pays)
-        formData.append("profession", user.profession)
-        formData.append("userName", user.userName)
-        formData.append("password", user.password)
-        formData.append("image", user.image)
-       
-        // Details of the uploaded file 
-        console.log("formData.image : ", formData.get("image")); 
-        //delete user.image
-        dispatch(AddUser(user))
-
-
+        previewFile(file)
+    };
+    const previewFile = (file)=>{
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = ()=>{
+            setPreviewSource(reader.result)
         }
+    }
+
+const uploadImage = async(base64EncodedImage) =>{
+    console.log(base64EncodedImage)
+    user.image = base64EncodedImage
+}
+
+
+    const onAdd = (e) => {
+        e.preventDefault()
+        console.log("submitting : ",e)
+        if(!previewSource)return
+        uploadImage(previewSource)
+        dispatch(AddUser(user))
+    }
 
 
 
@@ -117,13 +118,14 @@ function UserManagement() {
         userData.users.map(user =>
 
             <tr key={user._id}>
+                <td><img src={user.image} width="50" height="50"/> </td>
                 <td>{user.nom} {user.prenom}</td>
                 <td>{user.userName}</td>
                 <td>{user.email}</td>
                 <td>{user.numtel}</td>
                 <td>{user.pays}</td>
                 <td>{user.profession}</td>
-                <td><button className="btn-fill btn btn-danger mx-3" onClick={() => dispatch(DeleteUser(user._id))} disabled = {user.userName ==="admin"}>Delete</button>
+                <td><button className="btn-fill btn btn-danger mx-3" onClick={() => dispatch(DeleteUser(user._id))} disabled={user.userName === "admin"}>Delete</button>
                     <button className="btn-fill btn btn-dark" onClick={() => {
                         setShow(true)
                         setUser(user)
@@ -148,11 +150,11 @@ function UserManagement() {
                             {show &&
                                 <>
                                     <CardBody>
-                                        <h3 className="title">{user._id ==="" ? "Add User" : "Update User"}</h3>
-                                        <Form encType="multipart/form-data">
+                                        <h3 className="title">{user._id === "" ? "Add User" : "Update User"}</h3>
+                                        <Form onSubmit={(e) => { user._id === "" ? onAdd(e) : dispatch(UpdateUser(user)) }}>
 
                                             <Row>
-                                                    {/*Testing User Id if its null or not for the update method*/}
+                                                {/*Testing User Id if its null or not for the update method*/}
                                                 <Col className="px-md-1" md="6">
                                                     <FormGroup>
                                                         <label>Username</label>
@@ -162,7 +164,7 @@ function UserManagement() {
                                                                 setUser(newUserObj);
                                                             }
                                                             }
-                                                            disabled = {user._id !==""}
+                                                            disabled={user._id !== ""}
                                                         />
                                                     </FormGroup>
                                                 </Col>
@@ -176,7 +178,7 @@ function UserManagement() {
                                                                 setUser(newUserObj);
                                                             }
                                                             }
-                                                            disabled = {user._id !==""}
+                                                            disabled={user._id !== ""}
                                                         />
                                                     </FormGroup>
                                                 </Col>
@@ -261,29 +263,44 @@ function UserManagement() {
                                                     </FormGroup>
                                                 </Col>
                                                 <Row>
-                                                <Col className="px-md-1" md="4">
-                                                    <FormGroup>
-                                                        <label>Image</label>
-                                                        <Input
-                                                            type="file" onChange={onFileChange}
-                                                        />
-                                                    </FormGroup>
+                                                    <Col className="px-md-1" md="12">
+                                                        {/* <FormGroup>
+                                                            <label>Image</label>
+                                                            <Input
+                                                                type="file" onChange={onFileChange}
+                                                            />
+                                                        </FormGroup> */}
+                                                        <FormGroup>
+                                                                <label  htmlFor="exampleFormControlFile1">Image</label>
+                                                                <input type="file"
+                                                                    className="form-input"
+                                                                    value={fileInputState}
+                                                                    onChange={onFileChange}
+                                                                />
+
+                                                        </FormGroup>
+
+
+
+                                                    </Col>
+                                                </Row>
+                                                <Row className="justify-content-md-center">
+                                                <Col className="px-md-1" md="12" >
+                                                          {previewSource && (
+                                                              <img src = {previewSource} alt="chosen" style={{height:'300px'}} height="50" width="100"/>
+                                                          )}  
+
                                                 </Col>
                                                 </Row>
                                             </Row>
-
-                                        </Form>
-
-
-
-
-
-                                    </CardBody>
-                                    <CardFooter>
-                                        <Button className="btn-fill" color="success" type="submit" onClick={() => { user._id ==="" ? onFileUpload() : dispatch(UpdateUser(user)) }}>
-                                        {user._id ==="" ? "Add" : "Update"}
-                             </Button>
+                                            <CardFooter>
+                                        <Button className="btn-fill" color="success" type="submit" >
+                                            {user._id === "" ? "Add" : "Update"}
+                                        </Button>
                                     </CardFooter>
+                                        </Form>
+                                    </CardBody>
+                                    
                                 </>
                             }
                         </Card>
@@ -301,6 +318,7 @@ function UserManagement() {
                                     <Table className="tablesorter" responsive>
                                         <thead className="text-primary">
                                             <tr>
+                                                <th>Image</th>
                                                 <th>Full Name</th>
                                                 <th>UserName</th>
                                                 <th>Email</th>

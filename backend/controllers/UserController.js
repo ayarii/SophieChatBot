@@ -1,11 +1,26 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-
+const { scrapping } = require('../utils/scrapping');
+const linkedIn = require('../utils/scrapping')
+const {cloudinary} = require('../utils/cloudinary')
 
 // CREATE User
-exports.createUser = (req, res) => {
+exports.createUser = async(req, res) => {
     console.log("post in ...")
+    // handling the image 
+    var imageUrl = "http://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png"//a logo default
+    try {
+        const fileStr = req.body.image
+        const uploadedResponse = await cloudinary.uploader.upload(fileStr,{
+            upload_preset : 'sophie'
+        })
+        console.log(uploadedResponse)
+        imageUrl = uploadedResponse.url
+    } catch (error) {
+        console.log(error)
+    }
+    ////////////////
     delete req.body._id
     bcrypt.hash(req.body.password, 10)                     //10 tours de l'algorithme de hashage
         .then(hash => {
@@ -13,10 +28,10 @@ exports.createUser = (req, res) => {
             console.log("UserObject : ", UserObject)
             const user = new User({
                 ...UserObject,
-                image: "test",//`${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                image: imageUrl,
                 password: hash
             })
-            console.log("image : ", user.image)
+            console.log("user : ", user)
             user.save()
                 .then(() => res.status(201).json(user))
                 .catch(err => res.status(400).json({ error: err }))
@@ -49,8 +64,22 @@ exports.deleteUser = (req, res, next) => {
 }
 
 //Update User
-exports.updateUser = (req, res, next) => {
-    User.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
+exports.updateUser =async (req, res, next) => {
+    // handling the image 
+    var imageUrl = "http://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png"//a logo default
+    try {
+        const fileStr = req.body.image
+        const uploadedResponse = await cloudinary.uploader.upload(fileStr,{
+            upload_preset : 'sophie'
+        })
+        console.log(uploadedResponse)
+        imageUrl = uploadedResponse.url
+    } catch (error) {
+        console.log(error)
+    }
+    ////////////////
+
+    User.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id,image:imageUrl })
         .then(() => res.status(200).json({ msg: 'user modified' }))
         .catch(err => res.status(400).json({ error: err }))
 }
@@ -90,4 +119,12 @@ exports.loginUser = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 
 
+}
+
+
+//scrappingLinkedIn
+exports.scrappingLinkedIn = (req, res, next) => {
+        linkedIn.scrapping(req.body.link)
+        .then((result)=>res.status(200).json(result))
+        .catch((err)=>res.status(500).json(err))
 }

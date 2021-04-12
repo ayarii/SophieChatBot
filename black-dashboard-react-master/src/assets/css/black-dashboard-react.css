@@ -1522,7 +1522,9 @@ select.form-control:focus::-ms-value {
 .form-control-file,
 .form-control-range {
   display: block;
-  width: 100%; }
+  width: 100%;
+  background-color :rgba(0, 187, 255, 0.53)
+}
 
 .col-form-label {
   padding-top: calc(0.5rem + 1px);

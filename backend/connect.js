@@ -4,7 +4,7 @@ const config = require("./database/mongodb.json");
 class Connexion {
   constructor() {
     mongoose
-      .connect(config.mongo.uri, {
+      .connect(process.env.MONGODB_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       })
