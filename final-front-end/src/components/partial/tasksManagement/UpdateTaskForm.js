@@ -4,40 +4,39 @@ import styled from 'styled-components'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Button } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { UpdateTask } from '../../redux/tasks/tasksActions'
+
+
 
 const UpdateTaskForm = (props) => {
     const [task, setTask] = useState(props.task)
+
+    const dispatch = useDispatch()
     //const [toRenderTask, setToRenderTask] = useState(task)
     const updateTask = () => { 
-
-    // Treatment to change the date value from react-datepicker to 'dd/mm/yyyy'
-    //but there is a problem that the treatment work for the second click not the first
-    //https://stackoverflow.com/questions/59344089/react-hooks-not-set-state-at-first-time
-
-        // setToRenderTask({
-        //     ...task, 
-        //     beginDate : moment(task.beginDate).format("DD/MM/YYYY"), 
-        //     endDate : moment(task.endDate).format("DD/MM/YYYY")
-        // })
-        // console.log(toRenderTask)
+        dispatch(UpdateTask(task))
+        props.unshowPopup()
     }
-    
+
 
     return (
         
             <Container className="mt-2">  
              <Form>
                 <FormSubTitle>Task title :</FormSubTitle>
-                <Form.Control size="lg" type="text" onChange={
-                    (e) => setTask(
-                        {...task, title : e.target.value}
-                    )
-                } />
+                <Form.Control size="lg" type="text" 
+                    value={task.title}
+                    onChange={
+                        (e) => setTask(
+                            {...task, title : e.target.value}
+                        )} 
+                />
                <div className="d-flex justify-content-between mt-3">
                     <div >
                         <FormSubTitle>Begin date :</FormSubTitle>
                         <DatePicker className="form-control" 
-                        selected = {task.beginDate}
+                        value = {task.beginDate}
                         onChange = { date => setTask(
                             {...task, beginDate : date}
                         )}
@@ -51,7 +50,7 @@ const UpdateTaskForm = (props) => {
                     <div>
                         <FormSubTitle>End date :</FormSubTitle>
                         <DatePicker className="form-control" 
-                        selected = {task.endDate}
+                        value = {task.endDate}
                         onChange = { date => setTask(
                             {...task, endDate : date}
                         )}
@@ -65,17 +64,26 @@ const UpdateTaskForm = (props) => {
 
 
                     <FormSubTitle>Status</FormSubTitle>
-                    <Form.Control as="select">
-                    <option>To Do</option>
-                    <option>In Progress</option>
+                    <Form.Control as="select" 
+                        onChange={
+                            (e) => setTask({
+                                ...task, status : e.target.value
+                            })
+                        }
+                    >
+                    <option value="ToDo" selected={task.status === "ToDo"}>To Do</option>
+                    <option value="InProgress" selected={task.status === "InProgress"}>In Progress</option>
+                    <option value="Done" selected={task.status === "Done"}>Done</option>
                     </Form.Control>
 
                
                 <FormSubTitle className ="mt-3">Description :</FormSubTitle>
-                <Form.Control size="lg" as="textarea"  rows={3} onChange={
-                    (e) => setTask(
-                        {...task, description : e.target.value}
-                    )
+                <Form.Control size="lg" as="textarea"  rows={3} 
+                    value={task.description}
+                    onChange={
+                        (e) => setTask(
+                            {...task, description : e.target.value}
+                        )
                 } />
 
 

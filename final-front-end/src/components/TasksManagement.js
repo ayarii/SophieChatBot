@@ -1,15 +1,26 @@
-import React,  { useState } from 'react'
+import React,  { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Tasks from '../Tasks.json'
-import TaskCard from './partial/tasksManagement/TaskCard'
 import { Container, Col, Card, Button, Modal } from 'react-bootstrap'
 import styled from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchTasks } from './redux/tasks/tasksActions'
+
 import AddTaskForm from './partial/tasksManagement/AddTaskForm'
+import TaskCard from './partial/tasksManagement/TaskCard'
+
+
 
 const TasksManager = () => {
     const [isFormShown, setIsFormShown] = useState(false)
     // eslint-disable-next-line no-lone-blocks
     const showForm = () => {{!isFormShown? setIsFormShown(true) : setIsFormShown(false)}}
+    const taskState = useSelector(state => state.task)
+    const dispatch = useDispatch()
+    
+
+    useEffect(() => {
+        dispatch(fetchTasks())
+    }, [])
 
     return (
         <div>
@@ -46,22 +57,22 @@ const TasksManager = () => {
             <Container className="d-flex align-items my-5" >
                <Col>
                     <Card.Header><PhaseSubTitle className="fa">ToDo</PhaseSubTitle></Card.Header>
-                    {Tasks.filter((task) => task.status === 'ToDo').map((task) => (
-                        <TaskCard task={task} key={task.id}></TaskCard>
+                    {taskState.tasks.filter((task) => task.status === 'ToDo').map((task) => (
+                        <TaskCard task={task} key={task._id}></TaskCard>
                     ))}
                </Col>
                <Col>
                     <Card.Header><PhaseSubTitle className="fa">InProgress</PhaseSubTitle></Card.Header>
-                    {Tasks.filter((task) => task.status === 'InProgress').map((task) => (
-                        <TaskCard task={task} key={task.id}></TaskCard>
+                    {taskState.tasks.filter((task) => task.status === 'InProgress').map((task) => (
+                        <TaskCard task={task} key={task._id}></TaskCard>
                     ))}
                </Col>
                <Col>
                     <Card.Header><PhaseSubTitle className="fa">Done</PhaseSubTitle></Card.Header>
-                    {Tasks.filter((task) => task.status === 'Done').map((task) => (
-                        <TaskCard task={task} key={task.id}></TaskCard>
+                    {taskState.tasks.filter((task) => task.status === 'Done').map((task) => (
+                        <TaskCard task={task} key={task._id}></TaskCard>
                     ))}
-               </Col>
+               </Col> 
             </Container>
 
             <Modal

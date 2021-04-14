@@ -4,11 +4,16 @@ import styled from 'styled-components'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Button } from 'react-bootstrap'
-//import moment from 'moment'
+import { useDispatch } from 'react-redux'
+import { AddTask } from '../../redux/tasks/tasksActions'
+import moment from 'moment'
  
 
 const AddTaskForm = () => {
-    const [task, setTask] = useState({id: 1, userId : 1})
+
+    const dispatch = useDispatch()
+    const [task, setTask] = useState({userId : "606d6fecb60be43a6c2fc601"})
+    const [taskToRender, setTaskToRender] = useState(task)
     //const [toRenderTask, setToRenderTask] = useState(task)
     const addTask = () => { 
 
@@ -16,12 +21,14 @@ const AddTaskForm = () => {
     //but there is a problem that the treatment work for the second click not the first
     //https://stackoverflow.com/questions/59344089/react-hooks-not-set-state-at-first-time
 
-        // setToRenderTask({
-        //     ...task, 
-        //     beginDate : moment(task.beginDate).format("DD/MM/YYYY"), 
-        //     endDate : moment(task.endDate).format("DD/MM/YYYY")
-        // })
-        // console.log(toRenderTask)
+        setTaskToRender({
+            ...task, 
+            beginDate : moment(task.beginDate).format("DD/MM/YYYY"), 
+            endDate : moment(task.endDate).format("DD/MM/YYYY")
+        })
+        console.log(taskToRender)
+        dispatch(AddTask(taskToRender))
+
     }
     
     return (
@@ -38,9 +45,9 @@ const AddTaskForm = () => {
                         <FormSubTitle>Begin date :</FormSubTitle>
                         <DatePicker className="form-control" 
                         selected = {task.beginDate}
-                        onChange = { date => setTask(
-                            {...task, beginDate : date}
-                        )}
+                        onChange = { date => {
+                            setTask({...task, beginDate : date})
+                        }}
                         dateFormat = "dd/MM/yyyy"
                         minDate={new Date()}
                         isClearable
