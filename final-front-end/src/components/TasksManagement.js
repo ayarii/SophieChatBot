@@ -20,7 +20,7 @@ const TasksManager = () => {
 
     useEffect(() => {
         dispatch(fetchTasks())
-    }, [])
+    },[dispatch])
 
     return (
         <div>
@@ -87,7 +87,7 @@ const TasksManager = () => {
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                        <AddTaskForm></AddTaskForm>
+                        <AddTaskForm unShowPopup={() => setIsFormShown(false)}></AddTaskForm>
                 </Modal.Body>
             </Modal>
         </div>
