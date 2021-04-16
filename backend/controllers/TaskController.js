@@ -11,7 +11,7 @@ exports.createTask = (req, res) => {
         ...TaskObject,
     })
     task.save()
-        .then(() => res.status(201).json({ msg: 'Task is Created !' }))
+        .then(() => res.status(201).json(task))
         .catch(err => res.status(400).json({ error: err }))
 }
 
