@@ -10,6 +10,7 @@ const Connexion = require("./connect");
 const connect = new Connexion();
 
 var indexRouter = require("./routes/index");
+var reviewsRouter = require("./routes/reviews")
 var usersRouter = require("./routes/users");
 var usersClassRouter = require("./routes/userClass");
 var userSubject = require("./routes/userSubject");
@@ -56,6 +57,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.use("/", indexRouter);
+app.use("/reviews", reviewsRouter);
 app.use("/users", usersRouter);
 app.use("/usersClass", usersClassRouter);
 app.use("/usersSubject", userSubject);
