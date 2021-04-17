@@ -31,7 +31,6 @@ class Navbar extends Component{
 								<li><Link to='/recommendations/news'>News</Link></li>
 							</ul>
 							</li>
-							<li class="mr-lg-3 mr-2"><Link to='/testimonial'>Testimonial</Link></li>
 							<li class="mr-lg-3 mr-2"><Link to='/contact'>Contact Us</Link></li>							
 							
 

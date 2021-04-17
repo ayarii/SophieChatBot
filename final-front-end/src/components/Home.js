@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import Chatbot from './chatbot/Chatbot';
+import Reviews from './Reviews'
 
 class Home extends  Component{
     render(){
@@ -140,7 +141,9 @@ class Home extends  Component{
 		</div>
 	</div>
 </section>
-// {/* <!-- //subscribe -->
+<Reviews></Reviews>
+<br></br>
+ {/* <!-- //subscribe -->
 // <!-- footer --> */}
     
     </div>

@@ -1,51 +1,34 @@
-import React, { Component } from "react";
-import { Card, Button, Container} from 'react-bootstrap';
-import recom from "../recommendations.json"
-import { withRouter } from 'react-router-dom'; 
+import React from "react";
+import { Card} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import './Recommendation.css'
+import './Recommendation.css';
+import { useSelector , useDispatch } from 'react-redux';
+import {DeleteRecom} from './redux/recommendations/recomActions';
+import { FaTimes } from 'react-icons/fa';
 
-class Recommondation extends Component {
-      
-    render() {
+const Recommendation  = ({ recommendation}) => {
+    const dispatch = useDispatch()  
     return ( 
         <div className="card-container">
         <div className="mx-5">
         <Card style={{ width: '18rem' }}>
         <div className="image-container">
-        <Card.Img className="card-img-top" variant="top" src={this.props.recom.img} />
+        <h3><FaTimes style={{  cursor: 'pointer' }} onClick={() => dispatch(DeleteRecom(recommendation._id))} /></h3>
+        <Card.Img className="card-img-top" variant="top" src={recommendation.img} />
         </div>
         <Card.Body className="card-content">
-            <Card.Title className="card-title">{this.props.recom.title}</Card.Title>
+            <Card.Title className="card-title">{recommendation.title}</Card.Title>
             <Card.Text>
-            {this.props.recom.description.substr(0,100)}{this.props.recom.description.length>100 && " ..." }
+            {recommendation.description.substr(0,100)}{recommendation.description.length>100 && " ..." }
             </Card.Text>
             <span>
-                <Link to={"/recommendations/" + this.props.recom.id}> View More </Link>
+                <a href={recommendation.link} > View More </a>
             </span>
         </Card.Body>
         </Card>
         </div>
         </div>
-        /*<div className="mx-3 ">     
-        <div className='card-container'>
-            
-            <div className='image-container'>
-                <img className="card-img-top" src={this.props.recom.img} alt='' />
-            </div>
-            <div className='card-content'>
-                <div className="card-title">
-                    <h3>{this.props.recom.title}</h3>
-                </div>
-                <div className="card-discription">
-                    {this.props.recom.description}
-                </div>
-            </div>
-            <Card.Link href="#">View More</Card.Link>
-        </div>
-        </div>*/
         );
     }
-}
 
-export default withRouter(Recommondation );
+export default Recommendation;

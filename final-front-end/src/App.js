@@ -8,7 +8,6 @@ import Footer from './components/partial/Footer';
 import Contact from './components/Contact';
 import Testimonial from './components/Testimonial';
 import Recommendations from './components/Recommendations';
-import RecommendationDetails from './components/RecommendationDetails';
 import News from './components/News';
 import Courses from './components/Courses';
 import Events from './components/Events';
@@ -34,8 +33,7 @@ function App() {
               <Route exact path='/recommendations' component={Recommendations} />
               <Route exact path='/recommendations/events' component={Events} />
               <Route exact path='/recommendations/news' component={News} />
-              <Route exact path='/recommendations/courses' component={Courses} />
-              <Route path='/recommendations/:id' component={RecommendationDetails} />   
+              <Route exact path='/recommendations/courses' component={Courses} /> 
             </Switch>
           <Footer/>
         </Router>
