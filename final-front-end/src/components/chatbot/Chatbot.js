@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import $ from 'jquery';
 import axios from 'axios'
 import Conversation from './Conversation';
-
 function Chatbot() {
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
@@ -10,14 +9,22 @@ function Chatbot() {
     const [userName, setUserName] = useState("")
     const [linkedIn, setlinkedIn] = useState("")
     const [fileInputState, setFileInputState] = useState('')
+    const [previewSource, setPreviewSource] = useState('')
 
 
     const onFileChange = event => {
         // Update the state 
         setFileInputState(event.target.files[0])
         console.log(event.target.files[0])
+        previewFile(event.target.files[0])
     };
-
+    const previewFile = (file)=>{
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = ()=>{
+            setPreviewSource(reader.result)
+        }
+    }
 
 
     const initialUserState = {
@@ -59,7 +66,7 @@ function Chatbot() {
 
     const onSub = (e) => {
         e.preventDefault()
-        
+        $('#resumeSpinner').removeClass('hide');
         // Create an object of formData
         const formData = new FormData();
         // Update the formData object
@@ -75,7 +82,31 @@ function Chatbot() {
                 console.log("errorResume  : ", error.response.data.error)
             });
 
-            
+
+       axios.get(`http://localhost:5000/users/resumeScrapping/${fileInputState.name}`)
+       .then(response =>{
+          console.log(response.data) 
+          $('#resumeSpinner').addClass('hide');
+            // adding user's info in setConnectedUser
+            const fullName = response.data.name
+            const array = fullName.split(" ")
+            setConnectedUser({
+                ...connectedUser,
+                nom: array[0],
+                prenom: array[1],
+                profession: response.data.education ? response.data.education.substr(0, 50) : "not_able_to_scrape" ,
+                email : response.data.email ? response.data.email.substr(0, 50) :"not_able_to_scrape" 
+            })
+
+          $('.chat-mail-resume').addClass('hide');
+          $('.chat-mail-folowed-resume').removeClass('hide');
+
+
+       })
+       .catch(error=>{
+           console.log(error.message)
+           $('#resumeSpinner').addClass('hide');
+       })
 
     }
 
@@ -113,7 +144,7 @@ function Chatbot() {
 
     }
 
-
+    
     const onAddUser = (user) => {
         console.log(user)
         axios.post(`http://localhost:5000/users/`, user)
@@ -124,6 +155,32 @@ function Chatbot() {
                 $('.content-conversation').removeClass('hide');
             })
             .catch((error) => console.log("errorAddinng  : ", error.response));
+    }
+
+    const uploadImage = async(base64EncodedImage) =>{
+        //console.log(base64EncodedImage)
+        return base64EncodedImage
+    }
+
+
+    const onAddUserThroughResume = (e,user) => {
+        e.preventDefault()
+        
+        if(!previewSource)return;
+        uploadImage(previewSource).then((imageEnc)=>{
+            user.image = imageEnc
+            console.log("user : ", user)
+            axios.post(`http://localhost:5000/users/throughResume`, user)
+                .then((response) => {
+                    console.log("response.data : ", response.data)
+                    setConnectedUser(response.data)
+                    $('.chat-mail-folowed-resume').addClass('hide');
+                    $('.content-conversation').removeClass('hide');
+                })
+                .catch((error) => console.log("errorAddinng  : ", error.response));
+        
+        })
+       
     }
 
     return (
@@ -297,6 +354,98 @@ function Chatbot() {
 
 
 
+                <div className="chat-mail-folowed-resume hide chat-mail">
+                    <div className="row">
+                        <div className="col-md-12 text-center mb-2">
+                            <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
+                            <p>Hi {connectedUser.nom} {connectedUser.prenom}👋! Please fill out the form below to complete your registration : </p>
+                        </div>
+                    </div>
+                    <form  onSubmit={(e) => onAddUserThroughResume(e,connectedUser)}>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="form-group">
+                                <input type="text" className="form-control" placeholder="UserName"
+                                    value={connectedUser.userName}
+                                    onChange={e => {
+                                        const newUserObj = { ...connectedUser, userName: e.target.value }
+                                        setConnectedUser(newUserObj);
+                                    }
+                                    } />
+
+                                <div id="alertUserNameExist" className="alert alert-danger hide" role="alert">
+                                    UserName exist !
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-12">
+                            <div className="form-group">
+                                <input type="password" className="form-control"
+                                    placeholder="Password"
+                                    value={connectedUser.password}
+                                    onChange={e => {
+                                        const newUserObj = { ...connectedUser, password: e.target.value }
+                                        setConnectedUser(newUserObj);
+                                    }
+                                    } />
+                            </div>
+                        </div>
+
+                        <div className="col-md-12">
+                            <div className="form-group">
+                                <input type="number" className="form-control"
+                                    placeholder="Phone"
+                                    value={connectedUser.numtel}
+                                    onChange={e => {
+                                        const newUserObj = { ...connectedUser, numtel: e.target.value }
+                                        setConnectedUser(newUserObj);
+                                    }
+                                    } />
+                            </div>
+                        </div>
+                        <div className="col-md-12">
+                            <div className="form-group">
+                                <input type="text" className="form-control" placeholder="Country"
+                                    value={connectedUser.pays}
+                                    onChange={e => {
+                                        const newUserObj = { ...connectedUser, pays: e.target.value }
+                                        setConnectedUser(newUserObj);
+                                    }
+                                    } />
+
+                                <div id="alertUserNameExist" className="alert alert-danger hide" role="alert">
+                                    UserName exist !
+                                </div>
+                            </div>
+                        </div>
+                        
+                            <div className="col-md-12 mb-5">
+                                <div className="form-group">
+                                <label  htmlFor="exampleFormControlFile1">Image</label>
+                                    <input type="file"
+                                        className="form-control-file"
+                                        name="image"
+                                        onChange={onFileChange}
+                                    />
+                                </div>
+                            </div>
+                        
+
+
+                        <div className="col-md-12">
+                            <button className="btn btn-primary btn-rounded btn-block"  type="submit">Finish</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                
+
+
+
+
+
+
+
 
 
                 <div className="chat-mail-resume hide my-5">
@@ -304,6 +453,10 @@ function Chatbot() {
                         <div className="col-md-12 text-center my-4">
                             <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
                             <h4>Please import me your resume : </h4>
+                            <div id="resumeSpinner" className="spinner-border text-warning my-2 hide" role="status">
+                            <span className="sr-only">Loading...</span>
+                            <span><img src={require('./img/chatBotIcon.png')} height="30" width="30" /></span>
+                        </div>
                         </div>
                     </div>
                     <form

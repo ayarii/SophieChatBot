@@ -34,6 +34,7 @@ router.post('/resumeUpload', userController.ResumeUpload)
 // GET resumeParser
 router.get('/resumeScrapping/:fileName', userController.resumeScrapping);
 
-
+//throughResume
+router.post('/throughResume', userController.AddUserthroughResume)
 
 module.exports = router;

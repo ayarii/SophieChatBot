@@ -170,3 +170,46 @@ fct.parseResumeFile(`./uploads/${req.params.fileName}`, './files/compiled') // i
   });
     
 }
+
+
+
+//AddUserthroughResume
+exports.AddUserthroughResume =async (req, res, next) => {
+
+    // handling image
+    var imageUrl = "http://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png"//a logo default
+    let uploadedResponse;
+    try {
+        const fileStr = req.body.image
+            uploadedResponse = await cloudinary.uploader.upload(fileStr,{
+            upload_preset : 'sophie'
+        }).then((res)=>{
+            imageUrl = res.url
+        })
+        
+        delete req.body._id
+        bcrypt.hash(req.body.password, 10)                     
+        .then(hash => {
+        const UserObject = JSON.parse(JSON.stringify(req.body))
+        console.log("UserObject : ", UserObject)
+        const user = new User({
+            ...UserObject,
+            image: imageUrl,
+            password:hash
+        })
+        console.log("user : ", user)
+    
+        user.save()
+            .then(() => res.status(201).json(user))
+            .catch(err => res.status(400).json({ error: err }))
+        }).catch(error => res.status(500).json({ error }))
+
+
+    } catch (error) {
+        console.log(error)
+    }
+
+    
+
+}
+
