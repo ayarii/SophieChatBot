@@ -27,6 +27,12 @@ router.post('/login', userController.loginUser)
 //LinkedIn scrapping
 router.post('/linkedIn', userController.scrappingLinkedIn)
 
+//Resume scrapping
+router.post('/resumeUpload', userController.ResumeUpload)
+
+
+// GET resumeParser
+router.get('/resumeScrapping/:fileName', userController.resumeScrapping);
 
 
 

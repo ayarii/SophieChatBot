@@ -4,6 +4,22 @@ const jwt = require('jsonwebtoken');
 const { scrapping } = require('../utils/scrapping');
 const linkedIn = require('../utils/scrapping')
 const {cloudinary} = require('../utils/cloudinary')
+const multer = require('multer');
+const fct = require('../src/index');
+const fs = require('fs');
+// SET STORAGE
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+  })
+   
+  var upload = multer({ storage: storage })
+
+
 
 // CREATE User
 exports.createUser = async(req, res) => {
@@ -127,4 +143,30 @@ exports.scrappingLinkedIn = (req, res, next) => {
         linkedIn.scrapping(req.body.link)
         .then((result)=>res.status(200).json(result))
         .catch((err)=>res.status(500).json(err))
+}
+
+
+
+//upload.single('myFile'),
+
+//UploadingResume
+exports.ResumeUpload = upload.single('myFile'),(req, res) => {
+}
+
+exports.resumeScrapping = (req, res, next) => {
+
+// From file to file
+fct.parseResumeFile(`./uploads/${req.params.fileName}`, './files/compiled') // input file, output dir
+  .then(file => {
+    fs.readFile('./files/compiled/' + req.params.fileName + '.json', (err, data) => {
+        if (err) throw err;
+        let Info = JSON.parse(data);
+        console.log(Info);
+        res.status(200).send(Info);
+        });  
+  })
+  .catch(error => {
+    console.error(error);
+  });
+    
 }

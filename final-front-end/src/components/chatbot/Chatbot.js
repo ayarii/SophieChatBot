@@ -9,6 +9,17 @@ function Chatbot() {
     const [password, setPassword] = useState("")
     const [userName, setUserName] = useState("")
     const [linkedIn, setlinkedIn] = useState("")
+    const [fileInputState, setFileInputState] = useState('')
+
+
+    const onFileChange = event => {
+        // Update the state 
+        setFileInputState(event.target.files[0])
+        console.log(event.target.files[0])
+    };
+
+
+
     const initialUserState = {
         "_id": "",
         "nom": "",
@@ -46,6 +57,36 @@ function Chatbot() {
     }
 
 
+    const onSub = (e) => {
+        e.preventDefault()
+        
+        // Create an object of formData
+        const formData = new FormData();
+        // Update the formData object
+        formData.append(
+          "myFile",
+          fileInputState
+        );
+
+        axios.post(`http://localhost:5000/users/resumeUpload`, formData)
+            .then((response) => {
+                console.log("responseResume : ", response)
+            }).catch((error) => {
+                console.log("errorResume  : ", error.response.data.error)
+            });
+
+            
+
+    }
+
+
+
+
+
+
+
+
+
     const onLinkedInDone = () => {
         $('#linkInSpinner').removeClass('hide');
         axios.post(`http://localhost:5000/users/linkedIn`, { link: linkedIn })
@@ -59,7 +100,7 @@ function Chatbot() {
                     prenom: array[1],
                     profession: response.data.userProfile.title,
                     pays: response.data.userProfile.location.country,
-                    image : response.data.userProfile.photo
+                    image: response.data.userProfile.photo
                 })
                 $('#linkInSpinner').addClass('hide');
                 $('.chat-mail-linkedIn').addClass('hide');
@@ -73,9 +114,9 @@ function Chatbot() {
     }
 
 
-    const onAddUser =  (user) => {
+    const onAddUser = (user) => {
         console.log(user)
-         axios.post(`http://localhost:5000/users/`, user)
+        axios.post(`http://localhost:5000/users/`, user)
             .then((response) => {
                 console.log(response.data)
                 setConnectedUser(response.data)
@@ -89,9 +130,9 @@ function Chatbot() {
         <div>
 
             {/* Chat bot UI start */}
-            
-           
-               
+
+
+
             <div className="chat-screen">
                 <div className="chat-header">
                     <div className="chat-header-title d-flex justify-content-start">
@@ -265,20 +306,31 @@ function Chatbot() {
                             <h4>Please import me your resume : </h4>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col-md-12 mb-5">
-                            <div className="form-group">
-                                <input type="file" className="form-control-file" name="upload" accept="application/pdf" />
+                    <form
+                        onSubmit={(e) => onSub(e)}
+                        enctype="multipart/form-data"
+                        method="POST" >
+                        <div className="row">
+                            <div className="col-md-12 mb-5">
+                                <div className="form-group">
+                                    <input type="file"
+                                        className="form-control-file"
+                                        name="myFile"
+                                        accept="application/pdf"
+                                        
+                                        onChange={onFileChange}
+                                    />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-12 mb-5">
-                            <div className="form-group">
-                                <button id="SaveResume" className="btn btn-primary btn-rounded btn-block my-2">Done</button>
+                        <div className="row">
+                            <div className="col-md-12 mb-5">
+                                <div className="form-group">
+                                    <button id="SaveResume" className="btn btn-primary btn-rounded btn-block my-2" type="submit" >Done</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
 
@@ -295,15 +347,15 @@ function Chatbot() {
 
 
                 <div className="content-conversation hide">
-                <Conversation connectedUser={connectedUser}/>
-               </div>
+                    <Conversation connectedUser={connectedUser} />
+                </div>
 
-               </div>
-
-
+            </div>
 
 
-            
+
+
+
 
 
 
@@ -371,8 +423,8 @@ $(document).ready(function () {
 
 
     $('#SaveResume').click(function () {
-        $('.chat-mail-resume').addClass('hide');
-        $('.content-conversation').removeClass('hide');
+        /*  $('.chat-mail-resume').addClass('hide');
+          $('.content-conversation').removeClass('hide');*/
     });
 
 
@@ -394,7 +446,7 @@ $(document).ready(function () {
 
 
 
-    
+
 
 
 });
