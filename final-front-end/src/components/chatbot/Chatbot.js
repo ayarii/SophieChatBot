@@ -93,13 +93,17 @@ function Chatbot() {
           $('#resumeSpinner').addClass('hide');
             // adding user's info in setConnectedUser
             const fullName = response.data.name
+            const interests = response.data.interests
+            const interestsArray = interests.split("\n");
+            console.log("interestsArray : ", interestsArray)
             const array = fullName.split(" ")
             setConnectedUser({
                 ...connectedUser,
                 nom: array[0],
                 prenom: array[1],
                 profession: response.data.education ? response.data.education.substr(0, 50) : "not_able_to_scrape" ,
-                email : response.data.email ? response.data.email.substr(0, 50) :"not_able_to_scrape" 
+                email : response.data.email ? response.data.email.substr(0, 50) :"not_able_to_scrape",
+                interests :  interestsArray
             })
 
           $('.chat-mail-resume').addClass('hide');
