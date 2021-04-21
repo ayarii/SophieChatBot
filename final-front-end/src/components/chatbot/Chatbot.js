@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import $ from 'jquery';
 import axios from 'axios'
 import Conversation from './Conversation';
+import { useSelector, useDispatch } from 'react-redux'
+import { connectUser } from '../redux/user/userActions';
+
 function Chatbot() {
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
@@ -10,7 +13,7 @@ function Chatbot() {
     const [linkedIn, setlinkedIn] = useState("")
     const [fileInputState, setFileInputState] = useState('')
     const [previewSource, setPreviewSource] = useState('')
-
+    const dispatch = useDispatch()
 
     const onFileChange = event => {
         // Update the state 
@@ -49,6 +52,7 @@ function Chatbot() {
                 setConnectedUser(response.data.user)
                 console.log(response.data.user)
                 $('.chat-mail').addClass('hide');
+                dispatch(connectUser(response.data.user))
                 $('.content-conversation').removeClass('hide');
             }).catch((error) => {
                 console.log("errorLogin  : ", error.response.data.error)
@@ -133,6 +137,7 @@ function Chatbot() {
                     pays: response.data.userProfile.location.country,
                     image: response.data.userProfile.photo
                 })
+
                 $('#linkInSpinner').addClass('hide');
                 $('.chat-mail-linkedIn').addClass('hide');
                 $('.chat-mail-folowed-linkedIn').removeClass('hide');
@@ -151,6 +156,7 @@ function Chatbot() {
             .then((response) => {
                 console.log(response.data)
                 setConnectedUser(response.data)
+                dispatch(connectUser(response.data))
                 $('.chat-mail-folowed-linkedIn').addClass('hide');
                 $('.content-conversation').removeClass('hide');
             })
@@ -174,6 +180,7 @@ function Chatbot() {
                 .then((response) => {
                     console.log("response.data : ", response.data)
                     setConnectedUser(response.data)
+                    dispatch(connectUser(response.data))
                     $('.chat-mail-folowed-resume').addClass('hide');
                     $('.content-conversation').removeClass('hide');
                 })

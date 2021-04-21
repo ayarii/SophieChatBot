@@ -89,9 +89,13 @@ import {Link} from 'react-router-dom';
 function Recommendations() {
 
   const userData = useSelector((state) => state.recom)
+  const userConnectedData = useSelector((state) => state.connectedUser)
+
   const dispatch = useDispatch()
   useEffect(() => {
       dispatch(fetchRecoms())
+      console.log("userConnectedData : ", userConnectedData)
+
   }, [])
 
   const news_container = (

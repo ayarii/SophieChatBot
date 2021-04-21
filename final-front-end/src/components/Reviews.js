@@ -8,9 +8,11 @@ import { Link } from 'react-router-dom';
 function Reviews() {
 
   const userData = useSelector((state) => state.review)
+  const userConnectedData = useSelector((state) => state.connectedUser)
   const dispatch = useDispatch()
   useEffect(() => {
       dispatch(fetchReviews())
+      console.log(userConnectedData)
   }, [])
 
   const [review, setReview] = useState({userId: "606f7bc0997e2d34ccedadca"})

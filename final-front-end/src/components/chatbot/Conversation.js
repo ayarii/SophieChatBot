@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import $ from 'jquery';
 function Conversation({ connectedUser }) {
     const timeElapsed = Date.now()
@@ -8,6 +8,8 @@ function Conversation({ connectedUser }) {
     const onSend = () => {
         var str = $("#myInput").val();
         console.log("msg from click : ", str)
+
+
         $('#conversation').append('<div class="chat-bubble me">' + str + '</div>');
         $("#myInput").val("")
         setTimeout(updateScroll, 1000);
@@ -24,12 +26,15 @@ function Conversation({ connectedUser }) {
         element.scrollTop = element.scrollHeight;
     }
 
-    useEffect(() => {
 
+
+
+    useEffect(() => {
         $('#myInput').keyup(function (e) {
             if (e.keyCode === 13) {
                 var str = $("#myInput").val();
                 console.log("msg from keyboard : ", str)
+  
                 $('#conversation').append('<div class="chat-bubble me">' + str + '</div>');
                 /*
                   <div className=" d-flex flex-row justify-content-end">
