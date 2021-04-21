@@ -18,10 +18,16 @@ var tasksRouter = require("./routes/tasks");
 var contactUs = require("./routes/contectus");
 var recommendationsRouter = require("./routes/recommendations");
 var dialogflow = require('./routes/dialogflow')
-
 const bodyParser = require("body-parser");
-
 var app = express();
+
+
+const dirPath = path.join(__dirname,'/utils/SophieChatbot-GoogleAccountCrediendials.json')
+console.log(dirPath)
+process.env.GOOGLE_APPLICATION_CREDENTIALS = dirPath;
+
+
+
 
 // to avoid CORS error
 app.use((req, res, next) => {

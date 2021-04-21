@@ -1,54 +1,75 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import $ from 'jquery'
+import axios from 'axios'
+import { connect } from 'react-redux'
 
 import { SendMessage } from '../redux/chatbot/chatbotActions'
+import { addDialogue } from '../redux/conversationHistory/conversationHistoryActions'
 
-function Conversation({ connectedUser }) {
+function Conversation(props) {
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
-
+     const conversationHistoryState = useSelector(state => state.conversationHistory)
+     const dispatch = useDispatch()
+    //const myRef = React.createRef();
     // const [sophieResponse, setSophieResponse] = useState("")
 
-    const dialogflowAgentAnswers = useSelector(state => state.dialogflowAgentAnswers)
-    const dispatch = useDispatch()
+    //const dialogflowAgentAnswers = useSelector(state => state.dialogflowAgentAnswers)
+    //const dispatch = useDispatch()
 
-    const textQuery = async (text) => {
+    // const textQuery = async (text) => {
 
-        const textQueryMessage = {
-            text : text
-        }
+    //     const textQueryMessage = {
+    //         text: text
+    //     }
 
-        dispatch(SendMessage(textQueryMessage))
-        
-            // await axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryResponse)
-            // .then( res => {
-            //     setSophieResponse(res.data)
+    //     //dispatch(SendMessage(textQueryMessage))
 
-            // })
-            // .catch((error)=> {
-            //     console.log("The error while sending the message is :" + error)
-            //     setSophieResponse("Error while sending the message ! please try again.")
-            // })
+    //     await axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
+    //         .then(res => {
+    //             setSophieResponse(res.data)
 
-    }
+    //         })
+    //         .catch((error) => {
+    //             console.log("The error while sending the message is :" + error)
+    //             setSophieResponse("Error while sending the message ! please try again.")
+    //         })
+
+    // }
 
     const onSend = () => {
         var str = $("#myInput").val();
         console.log("msg from click : ", str)
-        textQuery(str)
-        console.log(dialogflowAgentAnswers.agentMessage)
-
-
         $('#conversation').append('<div class="chat-bubble me">' + str + '</div>');
         $("#myInput").val("")
         setTimeout(updateScroll, 1000);
+        const textQueryMessage = {
+            text: str
+        }
+        axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
+            .then(res => {
+                //setSophieResponse(res.data)
+                console.log(res.data)
+                $('#conversation').append('<div class="chat-bubble you">' + res.data + '</div>');
+                dispatch(addDialogue(textQueryMessage.text, res.data))
+                //props.addDialogue(textQueryMessage.text, res.data)
+                //console.log(props.conversationHistory)
+            })
+            .catch((error) => {
+                console.log("The error while sending the message is :" + error)
+                //setSophieResponse("Error while sending the message ! please try again.")
+            })
 
-        $('.loadingAnswer').clone().addClass('nouv').appendTo('#conversation')
+
+
+
+
+
+        //$('.loadingAnswer').clone().addClass('nouv').appendTo('#conversation')
         // $('.loadingAnswer').clone().wrap('<div id="nouvLoad"></div>').appendTo('#conversation')
+        //setTimeout(function () { $('.loadingAnswer').fadeOut() }, 4000);
 
-        setTimeout(function () { $('.loadingAnswer').fadeOut() }, 4000);
-        setTimeout(function () { $('#conversation').append('<div class="chat-bubble you">'+ dialogflowAgentAnswers.agentMessage +'</div>'); }, 4500);
     }
 
     function updateScroll() {
@@ -59,7 +80,20 @@ function Conversation({ connectedUser }) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     useEffect(() => {
+
+
         $('#myInput').keyup(function (e) {
             if (e.keyCode === 13) {
                 var str = $("#myInput").val();
@@ -74,11 +108,40 @@ function Conversation({ connectedUser }) {
                 */
                 $("#myInput").val("")
                 setTimeout(updateScroll, 1000);
-                $('.loadingAnswer').clone().addClass('nouv').appendTo('#conversation')
+
+
+                const textQueryMessage = {
+                    text: str
+                }
+                axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
+                    .then(res => {
+                        //setSophieResponse(res.data)
+                        console.log(res.data)
+                        $('#conversation').append('<div class="chat-bubble you">' + res.data + '</div>');
+                        dispatch(addDialogue(textQueryMessage.text, res.data))
+                        //props.addDialogue(textQueryMessage.text, res.data)
+                        //console.log(props.conversationHistory)
+                    })
+                    .catch((error) => {
+                        console.log("The error while sending the message is :" + error)
+                        //setSophieResponse("Error while sending the message ! please try again.")
+                    })
+
+
+
+
+
+
+
+
+
+
+
+               // $('.loadingAnswer').clone().addClass('nouv').appendTo('#conversation')
                 // $('.loadingAnswer').clone().wrap('<div id="nouvLoad"></div>').appendTo('#conversation')
 
-                setTimeout(function () { $('.loadingAnswer').fadeOut() }, 3000);
-                setTimeout(function () { $('#conversation').append('<div class="chat-bubble you">this is my answer</div>'); }, 3500);
+                // setTimeout(function () { $('.loadingAnswer').fadeOut() }, 3000);
+                //setTimeout(function () { $('#conversation').append('<div class="chat-bubble you">this is my answer</div>'); }, 3500);
                 /*
                         <div className=" d-flex flex-row">
                         <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
@@ -100,12 +163,12 @@ function Conversation({ connectedUser }) {
                 <div className=" d-flex flex-row">
                     <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
                     <div className="chat-start">{today.toDateString()}</div>
-                    <img src={connectedUser.image} height="50" width="50" style={{ 'border-radius': '50%' }} />
+                    <img src={props.connectedUser.image} height="50" width="50" style={{ 'border-radius': '50%' }} />
                 </div>
-                <div className="chat-bubble you">Welcome {connectedUser.userName !== "" && connectedUser.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
+                <div className="chat-bubble you">Welcome {props.connectedUser.userName !== "" && props.connectedUser.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
                     online and ready to help.</div>
 
-                <div className="loadingAnswer">
+                {/* <div className="loadingAnswer">
                     <div className="chat-bubble you">
 
                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{ margin: 'auto', display: 'block', shapeRendering: 'auto', width: 43, height: 20 }} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -122,7 +185,9 @@ function Conversation({ connectedUser }) {
                             </circle>
                         </svg>
                     </div>
-                </div>
+                </div> 
+                */}
+
                 {/* <div className=" d-flex flex-row">
                     <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
                     <div className="chat-bubble you">Testing chatBot2</div>
@@ -158,10 +223,19 @@ function Conversation({ connectedUser }) {
 
 }
 
+/*
+const mapStateToProps = state => {
+    return {
+        conversationHistory: state.conversationHistory
+    }
+}
 
-
-
-
+const mapDispatchToProps = dispatch => {
+    return {
+        addDialogue: (userMessage, botMessage) => dispatch(addDialogue(userMessage, botMessage))
+    }
+}
+*/
 
 
 
@@ -171,5 +245,5 @@ $(document).ready(function () {
 
 });
 */
-
 export default Conversation
+

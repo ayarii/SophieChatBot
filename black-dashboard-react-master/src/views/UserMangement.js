@@ -71,7 +71,6 @@ function UserManagement() {
 
 
 
-
     /* useEffect(() => {
          fetchUsers()
      }, [])*/
