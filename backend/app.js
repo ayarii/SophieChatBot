@@ -17,6 +17,8 @@ var userSubject = require("./routes/userSubject");
 var tasksRouter = require("./routes/tasks");
 var contactUs = require("./routes/contectus");
 var recommendationsRouter = require("./routes/recommendations");
+var dialogflow = require('./routes/dialogflow')
+
 const bodyParser = require("body-parser");
 
 var app = express();
@@ -64,6 +66,8 @@ app.use("/usersSubject", userSubject);
 app.use("/tasks", tasksRouter);
 app.use("/contactus", contactUs);
 app.use("/recommendations", recommendationsRouter);
+app.use("/api/dialogflow", dialogflow);
+
 
 
 
