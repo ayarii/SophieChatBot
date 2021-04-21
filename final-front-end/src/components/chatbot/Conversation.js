@@ -4,7 +4,6 @@ import $ from 'jquery'
 import axios from 'axios'
 import { connect } from 'react-redux'
 
-import { SendMessage } from '../redux/chatbot/chatbotActions'
 import { addDialogue } from '../redux/conversationHistory/conversationHistoryActions'
 
 function Conversation(props) {

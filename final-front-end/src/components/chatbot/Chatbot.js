@@ -129,13 +129,20 @@ function Chatbot() {
                 console.log("responseLinkedIn : ", response)
                 const fullName = response.data.userProfile.fullName
                 const array = fullName.split(" ")
+                const skills = response.data.skills
+                var interests = []
+                skills.forEach(skill =>{
+                    interests.push(skill.skillName)
+                });
+                console.log("interests : ", interests)
                 setConnectedUser({
                     ...connectedUser,
                     nom: array[0],
                     prenom: array[1],
                     profession: response.data.userProfile.title,
                     pays: response.data.userProfile.location.country,
-                    image: response.data.userProfile.photo
+                    image: response.data.userProfile.photo,
+                    interests : interests
                 })
 
                 $('#linkInSpinner').addClass('hide');

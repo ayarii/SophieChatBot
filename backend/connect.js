@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const config = require("./database/mongodb.json");
 
 class Connexion {
   constructor() {
@@ -9,7 +8,7 @@ class Connexion {
         useUnifiedTopology: true,
       })
       .then((res) => {
-        console.log("Connected to DB" + config.mongo.uri);
+        console.log("Connected to DB" + process.env.MONGODB_URL);
       })
       .catch((err) => {
         console.log(err);
