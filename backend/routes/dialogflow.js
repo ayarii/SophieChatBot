@@ -15,15 +15,10 @@ const languageCode = config.dialogFlowSessionLanguageCode
 const sessionClient = new dialogflow.SessionsClient();
 const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
-router.post("/textQuery", async (req,res) => {
 
- 
-/**
- * Send a query to the dialogflow agent, and return the query result.
- * @param {string} projectId The project to be used
- */
-   
   // The text query request.
+router.post("/textQuery", async (req,res) => {
+   
   const request = {
     session: sessionPath,
     queryInput: {
@@ -45,6 +40,35 @@ router.post("/textQuery", async (req,res) => {
 
   res.send(result.fulfillmentMessages[0].text.text[0])
   
+})
+
+
+
+// The event query request.
+
+router.post("/eventQuery", async (req,res) => {
+
+const request = {
+  session: sessionPath,
+  queryInput: {
+    event: {
+      // The query to send to the dialogflow agent
+      name: req.body.event,
+      // The language used by the client (en-US)
+      languageCode: languageCode,
+    },
+  },
+};
+
+// Send request and log result
+const responses = await sessionClient.detectIntent(request);
+console.log('Detected intent');
+const result = responses[0].queryResult;
+console.log(`  Query: ${result.queryText}`);
+console.log(`  Response: ${result.fulfillmentText}`);
+
+res.send(result.fulfillmentMessages[0].text.text[0])
+
 })
 
 module.exports = router;

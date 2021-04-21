@@ -1,13 +1,43 @@
-import React, { useEffect } from 'react'
-import $ from 'jquery';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import $ from 'jquery'
+
+import { SendMessage } from '../redux/chatbot/chatbotActions'
+
 function Conversation({ connectedUser }) {
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
 
+    // const [sophieResponse, setSophieResponse] = useState("")
+
+    const dialogflowAgentAnswers = useSelector(state => state.dialogflowAgentAnswers)
+    const dispatch = useDispatch()
+
+    const textQuery = async (text) => {
+
+        const textQueryMessage = {
+            text : text
+        }
+
+        dispatch(SendMessage(textQueryMessage))
+        
+            // await axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryResponse)
+            // .then( res => {
+            //     setSophieResponse(res.data)
+
+            // })
+            // .catch((error)=> {
+            //     console.log("The error while sending the message is :" + error)
+            //     setSophieResponse("Error while sending the message ! please try again.")
+            // })
+
+    }
 
     const onSend = () => {
         var str = $("#myInput").val();
         console.log("msg from click : ", str)
+        textQuery(str)
+        console.log(dialogflowAgentAnswers.agentMessage)
 
 
         $('#conversation').append('<div class="chat-bubble me">' + str + '</div>');
@@ -17,8 +47,8 @@ function Conversation({ connectedUser }) {
         $('.loadingAnswer').clone().addClass('nouv').appendTo('#conversation')
         // $('.loadingAnswer').clone().wrap('<div id="nouvLoad"></div>').appendTo('#conversation')
 
-        setTimeout(function () { $('.loadingAnswer').fadeOut() }, 3000);
-        setTimeout(function () { $('#conversation').append('<div class="chat-bubble you">this is my answer</div>'); }, 3500);
+        setTimeout(function () { $('.loadingAnswer').fadeOut() }, 4000);
+        setTimeout(function () { $('#conversation').append('<div class="chat-bubble you">'+ dialogflowAgentAnswers.agentMessage +'</div>'); }, 4500);
     }
 
     function updateScroll() {
@@ -34,7 +64,7 @@ function Conversation({ connectedUser }) {
             if (e.keyCode === 13) {
                 var str = $("#myInput").val();
                 console.log("msg from keyboard : ", str)
-  
+
                 $('#conversation').append('<div class="chat-bubble me">' + str + '</div>');
                 /*
                   <div className=" d-flex flex-row justify-content-end">
@@ -51,7 +81,7 @@ function Conversation({ connectedUser }) {
                 setTimeout(function () { $('#conversation').append('<div class="chat-bubble you">this is my answer</div>'); }, 3500);
                 /*
                         <div className=" d-flex flex-row">
-                        <img src={require('./img/chatBotLogo.png')} height="50" width="50" />   
+                        <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
                         <div className="chat-bubble you">Testing chatBot2</div>
                         </div>
     */
@@ -93,14 +123,14 @@ function Conversation({ connectedUser }) {
                         </svg>
                     </div>
                 </div>
-                <div className=" d-flex flex-row">
-                    {/* <img src={require('./img/chatBotLogo.png')} height="50" width="50" /> */}
+                {/* <div className=" d-flex flex-row">
+                    <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
                     <div className="chat-bubble you">Testing chatBot2</div>
                 </div>
                 <div className=" d-flex flex-row justify-content-end">
                     <div className="chat-bubble me">Test user chat</div>
-                    {/* <img src={connectedUser.image} height="50" width="50" style={{ 'border-radius': '50%' }} /> */}
-                </div>
+                    <img src={connectedUser.image} height="50" width="50" style={{ 'border-radius': '50%' }} />
+                </div> */}
             </div>
             <div className="chat-input">
                 <input type="text" placeholder="Type a message..." id="myInput" />
