@@ -1,18 +1,18 @@
 const mongoose = require('mongoose')
 
 const userShema = mongoose.Schema({
-    nom:{type: String, required:true},
-    prenom:{type: String, required:true},
-    email:{type: String, required:true},
-    numtel:{type: Number, required:true},
-    pays:{type: String, required:true},
-    profession:{type: String, required:true},
-    userName:{type: String, required:true},
-    password:{type: String, required:true},
-    image:{type: String, required:true},
+    nom:{type: String},
+    prenom:{type: String},
+    email:{type: String},
+    numtel:{type: Number},
+    pays:{type: String},
+    profession:{type: String},
+    userName:{type: String},
+    password:{type: String},
+    image:{type: String},
     interests : [{
         type : String
     }]
 })
-//id – nom – prenom – email – numtel – pays – profession
+//id – nom – prenom – email – numtel – pays – profession - interests
 module.exports = mongoose.model('User', userShema)

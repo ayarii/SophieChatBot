@@ -11,64 +11,43 @@ function Conversation(props) {
     const today = new Date(timeElapsed)
      const conversationHistoryState = useSelector(state => state.conversationHistory)
      const dispatch = useDispatch()
-    //const myRef = React.createRef();
-    // const [sophieResponse, setSophieResponse] = useState("")
+     const connectedUserRedux = useSelector(state => state.connectedUser.user)
 
-    //const dialogflowAgentAnswers = useSelector(state => state.dialogflowAgentAnswers)
-    //const dispatch = useDispatch()
+const hundleMessage = ()=>{
+    var str = $("#myInput").val();
+    console.log("msg from click : ", str)
+    $('#conversation').append('<div class="chat-bubble me">' + str + '</div>');
+    $("#myInput").val("")
+    setTimeout(updateScroll, 1000);
+    const textQueryMessage = {
+        text: str
+    }
+    axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
+        .then(res => {
+            //setSophieResponse(res.data)
+            console.log(res.data)
+            $('#conversation').append('<div class="chat-bubble you">' + res.data + '</div>');
+            dispatch(addDialogue(textQueryMessage.text, res.data))
+            //props.addDialogue(textQueryMessage.text, res.data)
+            //console.log(props.conversationHistory)
+        })
+        .catch((error) => {
+            console.log("The error while sending the message is :" + error)
+            //setSophieResponse("Error while sending the message ! please try again.")
+        })
 
-    // const textQuery = async (text) => {
+}
 
-    //     const textQueryMessage = {
-    //         text: text
-    //     }
 
-    //     //dispatch(SendMessage(textQueryMessage))
 
-    //     await axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
-    //         .then(res => {
-    //             setSophieResponse(res.data)
 
-    //         })
-    //         .catch((error) => {
-    //             console.log("The error while sending the message is :" + error)
-    //             setSophieResponse("Error while sending the message ! please try again.")
-    //         })
 
-    // }
+
+
+
 
     const onSend = () => {
-        var str = $("#myInput").val();
-        console.log("msg from click : ", str)
-        $('#conversation').append('<div class="chat-bubble me">' + str + '</div>');
-        $("#myInput").val("")
-        setTimeout(updateScroll, 1000);
-        const textQueryMessage = {
-            text: str
-        }
-        axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
-            .then(res => {
-                //setSophieResponse(res.data)
-                console.log(res.data)
-                $('#conversation').append('<div class="chat-bubble you">' + res.data + '</div>');
-                dispatch(addDialogue(textQueryMessage.text, res.data))
-                //props.addDialogue(textQueryMessage.text, res.data)
-                //console.log(props.conversationHistory)
-            })
-            .catch((error) => {
-                console.log("The error while sending the message is :" + error)
-                //setSophieResponse("Error while sending the message ! please try again.")
-            })
-
-
-
-
-
-
-        //$('.loadingAnswer').clone().addClass('nouv').appendTo('#conversation')
-        // $('.loadingAnswer').clone().wrap('<div id="nouvLoad"></div>').appendTo('#conversation')
-        //setTimeout(function () { $('.loadingAnswer').fadeOut() }, 4000);
-
+        hundleMessage()
     }
 
     function updateScroll() {
@@ -82,72 +61,13 @@ function Conversation(props) {
 
 
 
-
-
-
-
-
-
-
-
     useEffect(() => {
-
+        
 
         $('#myInput').keyup(function (e) {
             if (e.keyCode === 13) {
-                var str = $("#myInput").val();
-                console.log("msg from keyboard : ", str)
 
-                $('#conversation').append('<div class="chat-bubble me">' + str + '</div>');
-                /*
-                  <div className=" d-flex flex-row justify-content-end">
-                        <div className="chat-bubble me">Test response</div>
-                        <img src={connectedUser.image} height="50" width="50"  />
-                        </div>
-                */
-                $("#myInput").val("")
-                setTimeout(updateScroll, 1000);
-
-
-                const textQueryMessage = {
-                    text: str
-                }
-                axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
-                    .then(res => {
-                        //setSophieResponse(res.data)
-                        console.log(res.data)
-                        $('#conversation').append('<div class="chat-bubble you">' + res.data + '</div>');
-                        dispatch(addDialogue(textQueryMessage.text, res.data))
-                        //props.addDialogue(textQueryMessage.text, res.data)
-                        //console.log(props.conversationHistory)
-                    })
-                    .catch((error) => {
-                        console.log("The error while sending the message is :" + error)
-                        //setSophieResponse("Error while sending the message ! please try again.")
-                    })
-
-
-
-
-
-
-
-
-
-
-
-               // $('.loadingAnswer').clone().addClass('nouv').appendTo('#conversation')
-                // $('.loadingAnswer').clone().wrap('<div id="nouvLoad"></div>').appendTo('#conversation')
-
-                // setTimeout(function () { $('.loadingAnswer').fadeOut() }, 3000);
-                //setTimeout(function () { $('#conversation').append('<div class="chat-bubble you">this is my answer</div>'); }, 3500);
-                /*
-                        <div className=" d-flex flex-row">
-                        <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
-                        <div className="chat-bubble you">Testing chatBot2</div>
-                        </div>
-    */
-
+                hundleMessage()
             }
         });
     }, [])
@@ -162,39 +82,11 @@ function Conversation(props) {
                 <div className=" d-flex flex-row">
                     <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
                     <div className="chat-start">{today.toDateString()}</div>
-                    <img src={props.connectedUser.image} height="50" width="50" style={{ 'border-radius': '50%' }} />
+                  { connectedUserRedux &&(  <img src={connectedUserRedux.image} height="50" width="50" style={{ 'border-radius': '50%' }} /> )}
                 </div>
-                <div className="chat-bubble you">Welcome {props.connectedUser.userName !== "" && props.connectedUser.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
-                    online and ready to help.</div>
+                { connectedUserRedux &&(   <div className="chat-bubble you">Welcome {connectedUserRedux.userName !== "" && connectedUserRedux.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
+                    online and ready to help.</div> )}
 
-                {/* <div className="loadingAnswer">
-                    <div className="chat-bubble you">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" style={{ margin: 'auto', display: 'block', shapeRendering: 'auto', width: 43, height: 20 }} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
-                            <circle cx={0} cy="44.1678" r={15} fill="#ffffff">
-                                <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.6s" />
-                            </circle>
-                            <circle cx={45} cy="43.0965" r={15} fill="#ffffff">
-                                <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.39999999999999997s">
-                                </animate>
-                            </circle>
-                            <circle cx={90} cy="52.0442" r={15} fill="#ffffff">
-                                <animate attributeName="cy" calcMode="spline" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" repeatCount="indefinite" values="57.5;42.5;57.5;57.5" keyTimes="0;0.3;0.6;1" dur="1s" begin="-0.19999999999999998s">
-                                </animate>
-                            </circle>
-                        </svg>
-                    </div>
-                </div> 
-                */}
-
-                {/* <div className=" d-flex flex-row">
-                    <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
-                    <div className="chat-bubble you">Testing chatBot2</div>
-                </div>
-                <div className=" d-flex flex-row justify-content-end">
-                    <div className="chat-bubble me">Test user chat</div>
-                    <img src={connectedUser.image} height="50" width="50" style={{ 'border-radius': '50%' }} />
-                </div> */}
             </div>
             <div className="chat-input">
                 <input type="text" placeholder="Type a message..." id="myInput" />

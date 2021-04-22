@@ -28,11 +28,12 @@ exports.createUser = async(req, res) => {
     var imageUrl = "http://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png"//a logo default
     try {
         const fileStr = req.body.image
-        const uploadedResponse = await cloudinary.uploader.upload(fileStr,{
+         await cloudinary.uploader.upload(fileStr,{
             upload_preset : 'sophie'
+        }).then((res)=>{
+            console.log("resCloudinary : ", res)
+            imageUrl = res.url
         })
-        console.log(uploadedResponse)
-        imageUrl = uploadedResponse.url
     } catch (error) {
         console.log(error)
     }

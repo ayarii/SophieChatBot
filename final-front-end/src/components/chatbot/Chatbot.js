@@ -4,6 +4,7 @@ import axios from 'axios'
 import Conversation from './Conversation';
 import { useSelector, useDispatch } from 'react-redux'
 import { connectUser } from '../redux/user/userActions';
+import ConversationRegistration from './ConversationRegistration';
 
 function Chatbot() {
     const timeElapsed = Date.now()
@@ -521,6 +522,10 @@ function Chatbot() {
                     <Conversation connectedUser={connectedUser} />
                 </div>
 
+                <div className="content-conversationRegistration hide">
+                    <ConversationRegistration/>
+                </div>
+
             </div>
 
 
@@ -593,10 +598,10 @@ $(document).ready(function () {
     });
 
 
-    $('#SaveResume').click(function () {
-        /*  $('.chat-mail-resume').addClass('hide');
-          $('.content-conversation').removeClass('hide');*/
-    });
+    // $('#SaveResume').click(function () {
+    //     /*  $('.chat-mail-resume').addClass('hide');
+    //       $('.content-conversation').removeClass('hide');*/
+    // });
 
 
     $('#Resume').click(function () {
@@ -609,7 +614,7 @@ $(document).ready(function () {
 
     $('#Chat').click(function () {
         $('.chat-mail-registration').addClass('hide');
-        $('.content-conversation').removeClass('hide');
+        $('.content-conversationRegistration').removeClass('hide');
     });
 
 
