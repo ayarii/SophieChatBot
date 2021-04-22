@@ -8,34 +8,37 @@ import { addDialogue } from '../redux/conversationHistory/conversationHistoryAct
 function Conversation(props) {
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
-     const conversationHistoryState = useSelector(state => state.conversationHistory)
-     const dispatch = useDispatch()
-     const connectedUserRedux = useSelector(state => state.connectedUser.user)
+    const conversationHistoryState = useSelector(state => state.conversationHistory)
+    const dispatch = useDispatch()
+    const connectedUserRedux = useSelector(state => state.connectedUser.user)
 
-const hundleMessage = ()=>{
-    var str = $("#myInput").val();
-    console.log("msg from click : ", str)
-    $('#conversation').append('<div class="chat-bubble me">' + str + '</div>');
-    $("#myInput").val("")
-    setTimeout(updateScroll, 1000);
-    const textQueryMessage = {
-        text: str
+    const hundleMessage = () => {
+        var str = $("#myInput").val();
+        console.log("msg from click : ", str)
+        $('#conversation').append('<div class="d-flex flex-row-reverse"><div class="chat-bubble me">' + str + '</div></div>');
+        $('.userImage:last').clone().insertBefore(".me:last")
+        $("#myInput").val("")
+        setTimeout(updateScroll, 1000);
+        const textQueryMessage = {
+            text: str
+        }
+        axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
+            .then(res => {
+                //setSophieResponse(res.data)
+                console.log(res.data)
+                $('#conversation').append('<div class="d-flex flex-row"><img class="botImage" src="https://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png" height="30" width="30"/><div class="chat-bubble you">' + res.data + '</div></div>');
+                console.log("$('.botImage:last').clone() : ", $('.botImage:last').clone())
+                //$('.botImage:last').clone().insertAfter(".you:last")
+                dispatch(addDialogue(textQueryMessage.text, res.data))
+                //props.addDialogue(textQueryMessage.text, res.data)
+                //console.log(props.conversationHistory)
+            })
+            .catch((error) => {
+                console.log("The error while sending the message is :" + error)
+                //setSophieResponse("Error while sending the message ! please try again.")
+            })
+
     }
-    axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
-        .then(res => {
-            //setSophieResponse(res.data)
-            console.log(res.data)
-            $('#conversation').append('<div class="chat-bubble you">' + res.data + '</div>');
-            dispatch(addDialogue(textQueryMessage.text, res.data))
-            //props.addDialogue(textQueryMessage.text, res.data)
-            //console.log(props.conversationHistory)
-        })
-        .catch((error) => {
-            console.log("The error while sending the message is :" + error)
-            //setSophieResponse("Error while sending the message ! please try again.")
-        })
-
-}
 
 
 
@@ -61,7 +64,11 @@ const hundleMessage = ()=>{
 
 
     useEffect(() => {
-        
+        if (props.setCallables) {
+            $('.chat-bubble').remove()
+            $('.userImage').remove()
+            $('.botImage').remove()
+        }
 
         $('#myInput').keyup(function (e) {
             if (e.keyCode === 13) {
@@ -69,7 +76,7 @@ const hundleMessage = ()=>{
                 hundleMessage()
             }
         });
-    }, [])
+    }, [props.setCallables])
 
     return (
         <>
@@ -79,13 +86,15 @@ const hundleMessage = ()=>{
 
             <div className="chat-body" id="conversation">
                 <div className=" d-flex flex-row">
-                    <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
+                    <img src={require('./img/chatBotLogo.png')} height="30" width="30" />
                     <div className="chat-start">{today.toDateString()}</div>
-                  { connectedUserRedux &&(  <img src={connectedUserRedux.image} height="50" width="50" style={{ 'border-radius': '50%' }} /> )}
+                    {connectedUserRedux && (<img className="userImage" src={connectedUserRedux.image} height="30" width="30" style={{ 'border-radius': '50%' }} />)}
                 </div>
-                { connectedUserRedux &&(   <div className="chat-bubble you">Welcome {connectedUserRedux.userName !== "" && connectedUserRedux.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
-                    online and ready to help.</div> )}
-
+                <div className=" d-flex flex-row">
+                    <img className="botImage"  src={require('./img/chatBotLogo.png')} height="30" width="30" />
+                    {connectedUserRedux && (<div className="chat-bubble you">Welcome {connectedUserRedux.userName !== "" && connectedUserRedux.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
+                    online and ready to help.</div>)}
+                </div>
             </div>
             <div className="chat-input">
                 <input type="text" placeholder="Type a message..." id="myInput" />
