@@ -7,7 +7,7 @@ import { addDialogue } from '../redux/conversationHistory/conversationHistoryAct
 import { connectUser } from '../redux/user/userActions'
 import Conversation from './Conversation'
 
-function ConversationRegistration() {
+function ConversationRegistration(props) {
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
     const conversationHistoryState = useSelector(state => state.conversationHistory)
@@ -132,7 +132,6 @@ function ConversationRegistration() {
                     ...connectedUser,
                     image: previewSource
                 })
-                console.log("image : ", previewSource)
                 $('#conversationRegistration').append('<div class="chat-bubble you reg">and finally , please tell me what are your interests(seperated with\'#\')</div>');
                 break;
             case "and finally , please tell me what are your interests(seperated with'#')":
@@ -147,18 +146,18 @@ function ConversationRegistration() {
                 break;
             default:
                 {
-                AddUser(connectedUser).then(()=>{
+                AddUser(connectedUser)
                     console.log("connectedUser after add: ", connectedUser)
                     $('.content-conversation').removeClass('hide');
                     $('.holeConversationRegistration').addClass('hide');
-                })
-            }
+                
+                }
         }
     }
 
 
     const AddUser = async (user) => {
-        console.log(user)
+
         axios.post(`http://localhost:5000/users/`, user)
             .then((response) => {
                 console.log(response.data)
@@ -181,11 +180,23 @@ function ConversationRegistration() {
         element.scrollTop = element.scrollHeight;
     }
 
+    function usePrevious(value) {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = value;
+        });
+        return ref.current;
+    }
+    const prevValue = usePrevious(props.setCallables);
+
+
     useEffect(() => {
+  
         $('#myInputRegistration').keyup(function (e) {
             if (e.keyCode === 13) {
                 handleMessage()
             }})
+        
     }, [])
 
     return (
@@ -193,15 +204,16 @@ function ConversationRegistration() {
             <div className="holeConversationRegistration">
                 <div className="chat-body" id="conversationRegistration">
                     <div className=" d-flex flex-row">
-                        <img src={require('./img/chatBotLogo.png')} height="50" width="50" />
+                        <img src={require('./img/chatBotLogo.png')} height="30" width="30" />
                         <div className="chat-start">{today.toDateString()}</div>
-                        <img src={require('./img/newUser.png')} height="50" width="50" style={{ 'border-radius': '50%' }} />
+                        <img src={require('./img/newUser.png')} height="30" width="30" style={{ 'border-radius': '50%' }} />
                     </div>
-                    <div className="chat-bubble you">Welcome NEW User to our site, I am
+                    <div className="chat-bubbleR you reg">Welcome NEW User to our site, I am
                     online and ready to know you and help you on your registration .</div>
 
-                    <div className="chat-bubble you reg">so, what's your name ?(seperated with ' ')</div>
-
+                    <div className="chat-bubbleR you reg">so, what's your name ?(seperated with ' ')</div>
+                
+                 
                 </div>
 
 

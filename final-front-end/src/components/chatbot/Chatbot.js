@@ -551,7 +551,7 @@ function Chatbot() {
                 </div>
 
                 <div className="content-conversationRegistration hide">
-                    <ConversationRegistration />
+                    <ConversationRegistration setCallables={childCallables}/>
                 </div>
 
             </div>

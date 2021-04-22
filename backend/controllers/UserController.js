@@ -31,7 +31,6 @@ exports.createUser = async(req, res) => {
          await cloudinary.uploader.upload(fileStr,{
             upload_preset : 'sophie'
         }).then((res)=>{
-            console.log("resCloudinary : ", res)
             imageUrl = res.url
         })
     } catch (error) {
@@ -42,13 +41,11 @@ exports.createUser = async(req, res) => {
     bcrypt.hash(req.body.password, 10)                     //10 tours de l'algorithme de hashage
         .then(hash => {
             const UserObject = JSON.parse(JSON.stringify(req.body))
-            console.log("UserObject : ", UserObject)
             const user = new User({
                 ...UserObject,
                 image: imageUrl,
                 password: hash
             })
-            console.log("user : ", user)
             user.save()
                 .then(() => res.status(201).json(user))
                 .catch(err => res.status(400).json({ error: err }))
@@ -89,7 +86,6 @@ exports.updateUser =async (req, res, next) => {
         const uploadedResponse = await cloudinary.uploader.upload(fileStr,{
             upload_preset : 'sophie'
         })
-        console.log(uploadedResponse)
         imageUrl = uploadedResponse.url
     } catch (error) {
         console.log(error)
