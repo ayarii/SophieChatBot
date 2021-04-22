@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import $ from 'jquery'
 import axios from 'axios'
@@ -24,10 +24,8 @@ function Conversation(props) {
         }
         axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
             .then(res => {
-                //setSophieResponse(res.data)
                 console.log(res.data)
                 $('#conversation').append('<div class="d-flex flex-row"><img class="botImage" src="https://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png" height="30" width="30"/><div class="chat-bubble you">' + res.data + '</div></div>');
-                console.log("$('.botImage:last').clone() : ", $('.botImage:last').clone())
                 //$('.botImage:last').clone().insertAfter(".you:last")
                 dispatch(addDialogue(textQueryMessage.text, res.data))
                 //props.addDialogue(textQueryMessage.text, res.data)
@@ -35,7 +33,6 @@ function Conversation(props) {
             })
             .catch((error) => {
                 console.log("The error while sending the message is :" + error)
-                //setSophieResponse("Error while sending the message ! please try again.")
             })
 
     }
@@ -60,22 +57,32 @@ function Conversation(props) {
 
 
 
+    function usePrevious(value) {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = value;
+        });
+        return ref.current;
+    }
 
-
+    const prevValue = usePrevious(props.setCallables);
 
     useEffect(() => {
-       
+        if (props.setCallables !== prevValue) {
             $('.chat-bubble').remove()
             $('.userImage').remove()
             $('.botImage').remove()
-        
+            console.log("setClalable different !")
+        } else {
 
-        $('#myInput').keyup(function (e) {
-            if (e.keyCode === 13) {
+            $('#myInput').keyup(function (e) {
+                if (e.keyCode === 13) {
 
-                hundleMessage()
-            }
-        });
+                    hundleMessage()
+                }
+            });
+            
+        }
     }, [props.setCallables])
 
     return (
@@ -91,7 +98,7 @@ function Conversation(props) {
                     {connectedUserRedux && (<img className="userImage" src={connectedUserRedux.image} height="30" width="30" style={{ 'border-radius': '50%' }} />)}
                 </div>
                 <div className=" d-flex flex-row">
-                    <img className="botImage"  src={require('./img/chatBotLogo.png')} height="30" width="30" />
+                    <img className="botImage" src={require('./img/chatBotLogo.png')} height="30" width="30" />
                     {connectedUserRedux && (<div className="chat-bubble you">Welcome {connectedUserRedux.userName !== "" && connectedUserRedux.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
                     online and ready to help.</div>)}
                 </div>
@@ -121,7 +128,13 @@ function Conversation(props) {
 
 
 }
+$(document).ready(function () {
 
+
+
+
+
+})
 
 export default Conversation
 
