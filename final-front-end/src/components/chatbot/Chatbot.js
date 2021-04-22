@@ -207,7 +207,7 @@ function Chatbot() {
 
 
     const onLogout = () => {
-        setChildCallables(true)
+        setChildCallables(!childCallables)
         setPassword("")
         setUserName("")
         $('.chat-mail').removeClass('hide');

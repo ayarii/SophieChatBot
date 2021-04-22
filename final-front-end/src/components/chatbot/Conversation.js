@@ -64,11 +64,11 @@ function Conversation(props) {
 
 
     useEffect(() => {
-        if (props.setCallables) {
+       
             $('.chat-bubble').remove()
             $('.userImage').remove()
             $('.botImage').remove()
-        }
+        
 
         $('#myInput').keyup(function (e) {
             if (e.keyCode === 13) {
