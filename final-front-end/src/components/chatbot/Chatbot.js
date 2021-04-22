@@ -3,7 +3,7 @@ import $ from 'jquery';
 import axios from 'axios'
 import Conversation from './Conversation';
 import { useSelector, useDispatch } from 'react-redux'
-import { connectUser } from '../redux/user/userActions';
+import { connectUser, disconnectUser } from '../redux/user/userActions';
 import ConversationRegistration from './ConversationRegistration';
 
 function Chatbot() {
@@ -202,6 +202,21 @@ function Chatbot() {
        
     }
 
+
+    const onLogout = ()=>{
+        setPassword("")
+        setUserName("")
+        $('.chat-mail').removeClass('hide');
+        $('.chat-mail-registration').addClass('hide');
+        $('.chat-mail-linkedIn').addClass('hide');
+        $('.chat-mail-folowed-linkedIn').addClass('hide');
+        $('.chat-mail-folowed-resume').addClass('hide');
+        $('.chat-mail-resume').addClass('hide');
+        $('.content-conversation').addClass('hide');
+        $('.content-conversationRegistration').addClass('hide');
+        dispatch(disconnectUser())
+    }
+
     return (
         <div>
 
@@ -211,9 +226,17 @@ function Chatbot() {
 
             <div className="chat-screen">
                 <div className="chat-header">
-                    <div className="chat-header-title d-flex justify-content-start">
+                    <div className="chat-header-title d-flex flex-row">
+                        <div className="d-flex justify-content-start mr-5">
                         <img src={require('./img/chatBotIcon.png')} height="30" width="30" /><h4 className="ml-3"> Sophie </h4>
+                        </div>
+
+                    <div className="justify-content-end ml-5">
+                       <a style={{cursor:"pointer"}} onClick={()=>onLogout()}> <img src={require('./img/logout.png')} height="30" width="30" /> </a>
                     </div>
+
+                    </div>
+
                 </div>
                 <div className="chat-mail">
                     <div className="row">

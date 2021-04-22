@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import $ from 'jquery'
 import axios from 'axios'
-import { connect } from 'react-redux'
 
 import { addDialogue } from '../redux/conversationHistory/conversationHistoryActions'
 
@@ -114,27 +113,6 @@ const hundleMessage = ()=>{
 
 }
 
-/*
-const mapStateToProps = state => {
-    return {
-        conversationHistory: state.conversationHistory
-    }
-}
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addDialogue: (userMessage, botMessage) => dispatch(addDialogue(userMessage, botMessage))
-    }
-}
-*/
-
-
-
-/*
-
-$(document).ready(function () {
-
-});
-*/
 export default Conversation
 

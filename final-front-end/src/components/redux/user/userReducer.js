@@ -1,4 +1,4 @@
-import { CONNECT_USER } from "./userType"
+import { CONNECT_USER, DISCONNECT_USER } from "./userType"
 
 
 
@@ -14,6 +14,11 @@ const reducer = (state = initialState, action) => {
                 connected: true,
                 user: action.payload
             }
+            case DISCONNECT_USER:
+                return {
+                    connected: false,
+                    user: null
+                }
         default: return state
     }
 }
