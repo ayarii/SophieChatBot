@@ -23,8 +23,9 @@ var app = express();
 
 
 const dirPath = path.join(__dirname,'/utils/SophieChatbot-GoogleAccountCrediendials.json')
-console.log(dirPath)
+//console.log(dirPath)
 process.env.GOOGLE_APPLICATION_CREDENTIALS = dirPath;
+console.log("process.env.GOOGLE_APPLICATION_CREDENTIALS : ", process.env.GOOGLE_APPLICATION_CREDENTIALS)
 
 
 

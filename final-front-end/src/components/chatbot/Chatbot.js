@@ -5,6 +5,7 @@ import Conversation from './Conversation';
 import { useSelector, useDispatch } from 'react-redux'
 import { connectUser, disconnectUser } from '../redux/user/userActions';
 import ConversationRegistration from './ConversationRegistration';
+import { finishDialogue } from '../redux/conversationHistory/conversationHistoryActions';
 
 function Chatbot() {
     const timeElapsed = Date.now()
@@ -38,12 +39,13 @@ function Chatbot() {
         "nom": "",
         "prenom": "",
         "email": "",
-        "numtel": 0,
+        "numtel": "",
         "pays": "",
         "profession": "",
         "userName": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "age":""
     }
     const [connectedUser, setConnectedUser] = useState(initialUserState)
     const onLogin = () => {
@@ -131,6 +133,7 @@ function Chatbot() {
 
 
     const onLinkedInDone = () => {
+        setConnectedUser(initialUserState)
         $('#linkInSpinner').removeClass('hide');
         axios.post(`http://localhost:5000/users/linkedIn`, { link: linkedIn })
             .then((response) => {
@@ -208,6 +211,8 @@ function Chatbot() {
 
     const onLogout = () => {
         setChildCallables(!childCallables)
+        setConnectedUser(initialUserState)
+        dispatch(finishDialogue())
         setPassword("")
         setUserName("")
         $('.chat-mail').removeClass('hide');
@@ -223,6 +228,7 @@ function Chatbot() {
     }
 
     return (
+        
         <div>
 
             {/* Chat bot UI start */}
@@ -381,6 +387,19 @@ function Chatbot() {
 
                         <div className="col-md-12">
                             <div className="form-group">
+                                <input type="number" className="form-control"
+                                    placeholder="Age"
+                                    value={connectedUser.age}
+                                    onChange={e => {
+                                        const newUserObj = { ...connectedUser, age: e.target.value }
+                                        setConnectedUser(newUserObj);
+                                    }
+                                    } />
+                            </div>
+                        </div>
+
+                        <div className="col-md-12">
+                            <div className="form-group">
                                 <input type="email" className="form-control"
                                     placeholder="Email"
                                     value={connectedUser.email}
@@ -445,6 +464,18 @@ function Chatbot() {
                                         value={connectedUser.numtel}
                                         onChange={e => {
                                             const newUserObj = { ...connectedUser, numtel: e.target.value }
+                                            setConnectedUser(newUserObj);
+                                        }
+                                        } />
+                                </div>
+                            </div>
+                            <div className="col-md-12">
+                                <div className="form-group">
+                                    <input type="number" className="form-control"
+                                        placeholder="Age"
+                                        value={connectedUser.age}
+                                        onChange={e => {
+                                            const newUserObj = { ...connectedUser, age: e.target.value }
                                             setConnectedUser(newUserObj);
                                         }
                                         } />

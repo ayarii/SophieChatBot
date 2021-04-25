@@ -188,13 +188,11 @@ exports.AddUserthroughResume =async (req, res, next) => {
         bcrypt.hash(req.body.password, 10)                     
         .then(hash => {
         const UserObject = JSON.parse(JSON.stringify(req.body))
-        console.log("UserObject : ", UserObject)
         const user = new User({
             ...UserObject,
             image: imageUrl,
             password:hash
         })
-        console.log("user : ", user)
     
         user.save()
             .then(() => res.status(201).json(user))

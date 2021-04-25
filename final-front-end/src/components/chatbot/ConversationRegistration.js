@@ -73,16 +73,24 @@ function ConversationRegistration(props) {
                     nom: arr[0],
                     prenom: arr[1]
                 })
-                $('#conversationRegistration').append('<div class="chat-bubble you reg">can you give me your email please ?</div>');
+                $('#conversationRegistration').append('<div class="chat-bubble you reg">How old are you ?</div>');
                 break;
-            case "can you give me your email please ?":
-                console.log('email handler');
+            case "How old are you ?":
+                console.log('old handler');
                 setConnectedUser({
                     ...connectedUser,
-                    email: str
+                    age: str
                 })
-                $('#conversationRegistration').append('<div class="chat-bubble you reg">what\'s you phone number ?</div>');
+                $('#conversationRegistration').append('<div class="chat-bubble you reg">can you give me your email please ?</div>');
                 break;
+                case "can you give me your email please ?":
+                    console.log('mail handler');
+                    setConnectedUser({
+                        ...connectedUser,
+                        email: str
+                    })
+                    $('#conversationRegistration').append('<div class="chat-bubble you reg">what\'s you phone number ?</div>');
+                    break;
             case "what's you phone number ?":
                 console.log('phone handler');
                 setConnectedUser({
@@ -189,13 +197,20 @@ function ConversationRegistration(props) {
     }
     const prevValue = usePrevious(props.setCallables);
 
+    const handleKeyDown = (e)=>{
+        if (e.key === 'Enter') {
+            handleMessage()
+          }
+    }
+
+
 
     useEffect(() => {
   
-        $('#myInputRegistration').keyup(function (e) {
+       /* $('#myInputRegistration').keyup(function (e) {
             if (e.keyCode === 13) {
                 handleMessage()
-            }})
+            }})*/
         
     }, [])
 
@@ -219,7 +234,10 @@ function ConversationRegistration(props) {
 
 
                 <div className="chat-input">
-                    <input type="text" placeholder="Type a message..." id="myInputRegistration" />
+                    <input type="text"
+                     placeholder="Type a message..." 
+                     id="myInputRegistration" 
+                     onKeyDown={(e)=>handleKeyDown(e)}/>
                     <div className="input-action-icon">
                         <input
                             type="file"

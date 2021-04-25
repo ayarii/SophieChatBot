@@ -1,4 +1,4 @@
-import { ADD_DIALOGUE } from "./conversationHistoryTypes"
+import { ADD_DIALOGUE, FINISH_CONVERSATION } from "./conversationHistoryTypes"
 
 
 
@@ -16,6 +16,7 @@ const conversationHistoryReducer = (state = initialSate, action)=>{
             botMessages : [...(state.botMessages),action.payloadBot],
             understands : [...(state.understands),action.payloadBot==="Sorry, I didn't get that. Can you rephrase?" ? false : true]
         }
+        case FINISH_CONVERSATION : return initialSate
         default : return state
     }
 }

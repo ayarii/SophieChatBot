@@ -65,6 +65,13 @@ function Conversation(props) {
         return ref.current;
     }
 
+
+    const handleKeyDown = (e)=>{
+        if (e.key === 'Enter') {
+            hundleMessage()
+          }
+    }
+
     const prevValue = usePrevious(props.setCallables);
 
     useEffect(() => {
@@ -73,16 +80,8 @@ function Conversation(props) {
             $('.userImage').remove()
             $('.botImage').remove()
             console.log("setClalable different !")
-        } else {
-
-            $('#myInput').keyup(function (e) {
-                if (e.keyCode === 13) {
-
-                    hundleMessage()
-                }
-            });
-            
-        }
+        } 
+        
     }, [props.setCallables])
 
     return (
@@ -95,16 +94,20 @@ function Conversation(props) {
                 <div className=" d-flex flex-row">
                     <img src={require('./img/chatBotLogo.png')} height="30" width="30" />
                     <div className="chat-start">{today.toDateString()}</div>
-                    {connectedUserRedux && (<img className="userImage" src={connectedUserRedux.image} height="30" width="30" style={{ 'border-radius': '50%' }} />)}
+                    {connectedUserRedux._id!=="" && (<img className="userImage" src={connectedUserRedux.image} height="30" width="30" style={{ 'border-radius': '50%' }} />)}
                 </div>
                 <div className=" d-flex flex-row">
                     <img className="botImage" src={require('./img/chatBotLogo.png')} height="30" width="30" />
-                    {connectedUserRedux && (<div className="chat-bubble you">Welcome {connectedUserRedux.userName !== "" && connectedUserRedux.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
+                    {connectedUserRedux._id!=="" && (<div className="chat-bubble you">Welcome {connectedUserRedux.userName !== "" && connectedUserRedux.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
                     online and ready to help.</div>)}
                 </div>
+                    {connectedUserRedux.role==="admin" && (<div className="chat-bubble you">By the way, you can manage your users and check some statistics ☝️</div>)}
             </div>
             <div className="chat-input">
-                <input type="text" placeholder="Type a message..." id="myInput" />
+                <input type="text"
+                 placeholder="Type a message..." 
+                 id="myInput"
+                 onKeyDown={(e)=>handleKeyDown(e)} />
                 <div className="input-action-icon">
                     <a><svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="feather feather-paperclip">
                         <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48">

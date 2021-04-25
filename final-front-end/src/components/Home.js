@@ -52,7 +52,6 @@ class Home extends  Component{
 //  <!-- /services --> */}
 
 
-<Chatbot/>
 
 
     <section class="services py-5" id="services">

@@ -1,10 +1,21 @@
 import { CONNECT_USER, DISCONNECT_USER } from "./userType"
 
-
+const initialUserState = {
+    "_id": "",
+    "nom": "",
+    "prenom": "",
+    "email": "",
+    "numtel": 0,
+    "pays": "",
+    "profession": "",
+    "userName": "",
+    "password": "",
+    "image": ""
+}
 
 const initialState = {
     connected: false,
-    user: null,
+    user: initialUserState,
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,7 +28,7 @@ const reducer = (state = initialState, action) => {
             case DISCONNECT_USER:
                 return {
                     connected: false,
-                    user: null
+                    user: initialUserState
                 }
         default: return state
     }

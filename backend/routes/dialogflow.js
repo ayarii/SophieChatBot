@@ -33,12 +33,13 @@ router.post("/textQuery", async (req,res) => {
  
   // Send request and log result
   const responses = await sessionClient.detectIntent(request);
-  console.log('Detected intent');
+  console.log("responses : ", responses)
+  console.log('Detected intent :');
   const result = responses[0].queryResult;
   console.log(`  Query: ${result.queryText}`);
   console.log(`  Response: ${result.fulfillmentText}`);
 
-  res.send(result.fulfillmentMessages[0].text.text[0])
+  res.send(result.fulfillmentText)
   
 })
 
