@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { connectUser, disconnectUser } from '../redux/user/userActions';
 import ConversationRegistration from './ConversationRegistration';
 import { finishDialogue } from '../redux/conversationHistory/conversationHistoryActions';
+import { CountryDropdown } from 'react-country-region-selector';
 
 function Chatbot() {
     const timeElapsed = Date.now()
@@ -250,7 +251,7 @@ function Chatbot() {
                     </div>
 
                 </div>
-                
+
                 <div className="chat-mail chat-body my-1">
                     <div className="row">
                         <div className="col-md-12 text-center mb-2">
@@ -400,35 +401,35 @@ function Chatbot() {
                             </div>
                         </div>
                         <div className="d-flex flex-row">
-                                <div className="form-group ml-5 p-2 ">
-                                    <input type="radio"
-                                        id="male"
-                                        name="sexe"
-                                        value={connectedUser.sexe}
-                                        onChange={e => {
-                                            const newUserObj = { ...connectedUser, sexe: "male" }
-                                            setConnectedUser(newUserObj);
-                                        }
-                                        }
-                                         />
-                                    <label for="male">male</label>
-                                </div>
-
-                                <div className="form-group p-2">
-                                    <input type="radio"
-                                        id="female"
-                                        name="sexe"
-                                        value={connectedUser.sexe}
-                                        onChange={e => {
-                                            const newUserObj = { ...connectedUser, sexe: "female" }
-                                            setConnectedUser(newUserObj);
-                                        }
-                                        }
-                                    />
-                                    <label for="female">female</label>
-                                </div>
-
+                            <div className="form-group ml-5 p-2 ">
+                                <input type="radio"
+                                    id="male"
+                                    name="sexe"
+                                    value={connectedUser.sexe}
+                                    onChange={e => {
+                                        const newUserObj = { ...connectedUser, sexe: "male" }
+                                        setConnectedUser(newUserObj);
+                                    }
+                                    }
+                                />
+                                <label for="male">male</label>
                             </div>
+
+                            <div className="form-group p-2">
+                                <input type="radio"
+                                    id="female"
+                                    name="sexe"
+                                    value={connectedUser.sexe}
+                                    onChange={e => {
+                                        const newUserObj = { ...connectedUser, sexe: "female" }
+                                        setConnectedUser(newUserObj);
+                                    }
+                                    }
+                                />
+                                <label for="female">female</label>
+                            </div>
+
+                        </div>
 
                         <div className="col-md-12">
                             <div className="form-group">
@@ -525,7 +526,7 @@ function Chatbot() {
                                             setConnectedUser(newUserObj);
                                         }
                                         }
-                                         />
+                                    />
                                     <label for="male">male</label>
                                 </div>
 
@@ -546,7 +547,7 @@ function Chatbot() {
                             </div>
 
 
-                            <div className="col-md-12">
+                            {/* <div className="col-md-12">
                                 <div className="form-group">
                                     <input type="text" className="form-control" placeholder="Country"
                                         value={connectedUser.pays}
@@ -556,11 +557,26 @@ function Chatbot() {
                                         }
                                         } />
 
-                                    <div id="alertUserNameExist" className="alert alert-danger hide" role="alert">
-                                        UserName exist !
+
                                 </div>
-                                </div>
+                            </div> */}
+
+                            <div className="col-md-12">
+                                <CountryDropdown
+                                    value={connectedUser.pays}
+                                    onChange={(val) =>{ 
+                                        const newUserObj = { ...connectedUser, pays: val }
+                                            setConnectedUser(newUserObj);
+                                        }}/>
+                               
                             </div>
+
+
+
+
+
+
+
 
                             <div className="col-md-12 mb-5">
                                 <div className="form-group">

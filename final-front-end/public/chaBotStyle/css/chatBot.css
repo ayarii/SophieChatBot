@@ -77,8 +77,8 @@
 .chat-screen .chat-body {
     padding: 25px;
     display: inline-block;
-    min-height: 430px;
-    max-height: 430px;
+    min-height: 450px;
+    max-height: 450px;
     background: #fbfbfb;
     max-height: 150px;
     overflow-y: scroll;

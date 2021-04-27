@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import $ from 'jquery'
 import axios from 'axios'
-
-import { addDialogue } from '../redux/conversationHistory/conversationHistoryActions'
+import { CountryDropdown } from 'react-country-region-selector';
 import { connectUser } from '../redux/user/userActions'
 import Conversation from './Conversation'
 
@@ -25,11 +24,12 @@ function ConversationRegistration(props) {
         "image": "",
         "interests": [],
         "age": "",
-        "sexe":""
+        "sexe": ""
     }
     const [connectedUser, setConnectedUser] = useState(initialUserState)
     const [fileInputState, setFileInputState] = useState('')
     const [previewSource, setPreviewSource] = useState('')
+    const [country, setCountry] = useState('')
 
 
     const onFileChange = event => {
@@ -85,7 +85,7 @@ function ConversationRegistration(props) {
                 })
                 $('#conversationRegistration').append('<div class="chat-bubble you reg">are you a male or a female ?</div>');
                 break;
-                case "are you a male or a female ?":
+            case "are you a male or a female ?":
                 console.log('sexe handler');
                 setConnectedUser({
                     ...connectedUser,
@@ -93,14 +93,14 @@ function ConversationRegistration(props) {
                 })
                 $('#conversationRegistration').append('<div class="chat-bubble you reg">can you give me your email please ?</div>');
                 break;
-                case "can you give me your email please ?":
-                    console.log('mail handler');
-                    setConnectedUser({
-                        ...connectedUser,
-                        email: str
-                    })
-                    $('#conversationRegistration').append('<div class="chat-bubble you reg">what\'s you phone number ?</div>');
-                    break;
+            case "can you give me your email please ?":
+                console.log('mail handler');
+                setConnectedUser({
+                    ...connectedUser,
+                    email: str
+                })
+                $('#conversationRegistration').append('<div class="chat-bubble you reg">what\'s you phone number ?</div>');
+                break;
             case "what's you phone number ?":
                 console.log('phone handler');
                 setConnectedUser({
@@ -108,13 +108,15 @@ function ConversationRegistration(props) {
                     numtel: str
                 })
                 $('#conversationRegistration').append('<div class="chat-bubble you reg">where are you from ?</div>');
+                $('#selectCountry').removeClass('hide')
                 break;
             case "where are you from ?":
-                console.log('country handler');
+                console.log('country handler : ', country);
                 setConnectedUser({
                     ...connectedUser,
-                    pays: str
+                    pays: country
                 })
+                $('#selectCountry').addClass('hide')
                 $('#conversationRegistration').append('<div class="chat-bubble you reg">beautiful country ! what do you do in your life ?</div>');
                 break;
             case "beautiful country ! what do you do in your life ?":
@@ -164,11 +166,11 @@ function ConversationRegistration(props) {
                 break;
             default:
                 {
-                AddUser(connectedUser)
+                    AddUser(connectedUser)
                     console.log("connectedUser after add: ", connectedUser)
                     $('.content-conversation').removeClass('hide');
                     $('.holeConversationRegistration').addClass('hide');
-                
+
                 }
         }
     }
@@ -207,21 +209,21 @@ function ConversationRegistration(props) {
     }
     const prevValue = usePrevious(props.setCallables);
 
-    const handleKeyDown = (e)=>{
+    const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             handleMessage()
-          }
+        }
     }
 
 
 
     useEffect(() => {
-  
-       /* $('#myInputRegistration').keyup(function (e) {
-            if (e.keyCode === 13) {
-                handleMessage()
-            }})*/
-        
+
+        /* $('#myInputRegistration').keyup(function (e) {
+             if (e.keyCode === 13) {
+                 handleMessage()
+             }})*/
+
     }, [])
 
     return (
@@ -237,17 +239,24 @@ function ConversationRegistration(props) {
                     online and ready to know you and help you on your registration .</div>
 
                     <div className="chat-bubbleR you reg">so, what's your name ?(seperated with ' ')</div>
-                
-                 
+
+
                 </div>
 
 
 
                 <div className="chat-input">
+                    <CountryDropdown className="hide" id="selectCountry"
+                        value={connectedUser.pays}
+                        onChange={(val) => {
+                            setCountry(val)
+                            $("#myInputRegistration").val(val)
+                        }} />
+
                     <input type="text"
-                     placeholder="Type a message..." 
-                     id="myInputRegistration" 
-                     onKeyDown={(e)=>handleKeyDown(e)}/>
+                        placeholder="Type a message..."
+                        id="myInputRegistration"
+                        onKeyDown={(e) => handleKeyDown(e)} />
                     <div className="input-action-icon">
                         <input
                             type="file"
