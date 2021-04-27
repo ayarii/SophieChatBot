@@ -250,7 +250,8 @@ function Chatbot() {
                     </div>
 
                 </div>
-                <div className="chat-mail">
+                
+                <div className="chat-mail chat-body my-1">
                     <div className="row">
                         <div className="col-md-12 text-center mb-2">
                             <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
@@ -286,15 +287,15 @@ function Chatbot() {
                     </div>
                 </div>
 
-                <div className="chat-mail-registration hide my-5" >
+                <div className="chat-mail-registration hide my-1 chat-body" >
                     <div className="row">
-                        <div className="col-md-12 text-center my-4">
+                        <div className="col-md-12 text-center">
                             <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
                             <h4>Create an account with : </h4>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-12 mb-5">
+                        <div className="col-md-12 my-2">
                             <button id="LinkedIn" className="btn btn-primary btn-rounded btn-block my-2">LinkedIn</button>
                             <button id="Resume" className="btn btn-warning btn-rounded btn-block my-2">Resume</button>
                             <button id="Chat" className="btn btn-secondary btn-rounded btn-block my-2">Chat</button>
@@ -302,9 +303,9 @@ function Chatbot() {
                     </div>
                 </div>
 
-                <div className="chat-mail-linkedIn hide my-5">
+                <div className="chat-mail-linkedIn hide my-1 chat-body">
                     <div className="row">
-                        <div className="col-md-12 text-center my-4 " >
+                        <div className="col-md-12 text-center my-1 " >
                             <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
                             <h4>Please give me your linkedIn : </h4>
                         </div>
@@ -323,7 +324,7 @@ function Chatbot() {
                     </div>
 
                     <div className="d-flex justify-content-center ">
-                        <div id="linkInSpinner" className="spinner-border text-warning my-2 hide" role="status">
+                        <div id="linkInSpinner" className="spinner-border text-warning my-1 hide" role="status">
                             <span className="sr-only">Loading...</span>
                             <span><img src={require('./img/chatBotIcon.png')} height="30" width="30" /></span>
                         </div>
@@ -331,13 +332,13 @@ function Chatbot() {
                     <div className="row">
                         <div className="col-md-12 my-2">
                             <div className="form-group">
-                                <button id="SaveLinkedIn" className="btn btn-primary btn-rounded btn-block my-2" onClick={() => onLinkedInDone()}>Done</button>
+                                <button id="SaveLinkedIn" className="btn btn-primary btn-rounded btn-block my-1" onClick={() => onLinkedInDone()}>Done</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="chat-mail-folowed-linkedIn hide chat-mail">
+                <div className="chat-mail-folowed-linkedIn hide chat-mail chat-body my-1">
                     <div className="row">
                         <div className="col-md-12 text-center mb-2">
                             <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
@@ -451,7 +452,7 @@ function Chatbot() {
 
 
 
-                <div className="chat-mail-folowed-resume hide chat-mail">
+                <div className="chat-mail-folowed-resume hide chat-mail chat-body my-1">
                     <div className="row">
                         <div className="col-md-12 text-center mb-2">
                             <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
@@ -590,12 +591,12 @@ function Chatbot() {
 
 
 
-                <div className="chat-mail-resume hide my-5">
+                <div className="chat-mail-resume hide my-1 chat-body">
                     <div className="row">
-                        <div className="col-md-12 text-center my-4">
+                        <div className="col-md-12 text-center my-1">
                             <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
-                            <h4>Please import me your resume : </h4>
-                            <div id="resumeSpinner" className="spinner-border text-warning my-2 hide" role="status">
+                            <h4>Please import your resume : </h4>
+                            <div id="resumeSpinner" className="spinner-border text-warning my-1 hide" role="status">
                                 <span className="sr-only">Loading...</span>
                                 <span><img src={require('./img/chatBotIcon.png')} height="30" width="30" /></span>
                             </div>
