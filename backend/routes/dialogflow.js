@@ -34,7 +34,7 @@ router.post("/textQuery", async (req,res) => {
     },
   };
   const ch = req.body.text
-  console.log("ch :(", ch)
+  console.log("ch :", ch)
   if(ch.includes("what is") || ch.includes("who is")){
     const searchTxt = ch.substr(ch.indexOf('s')+2, ch.length)
     console.log("searchTxt :", searchTxt)

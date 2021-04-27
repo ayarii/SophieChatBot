@@ -11,7 +11,8 @@ const userShema = mongoose.Schema({
     password:{type: String},
     image:{type: String},
     age:{type:Number},
-    role:{type:String,default: 'user'},
+    role:{type:String, default: 'user'},
+    sexe:{type:String, default: 'male'},
     interests : [{
         type : String
     }]

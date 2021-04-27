@@ -15,7 +15,7 @@ function Chatbot() {
     const [linkedIn, setlinkedIn] = useState("")
     const [fileInputState, setFileInputState] = useState('')
     const [previewSource, setPreviewSource] = useState('')
-    const [childCallables , setChildCallables ] = useState(false)
+    const [childCallables, setChildCallables] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -45,7 +45,8 @@ function Chatbot() {
         "userName": "",
         "password": "",
         "image": "",
-        "age":""
+        "age": "",
+        "sexe": ""
     }
     const [connectedUser, setConnectedUser] = useState(initialUserState)
     const onLogin = () => {
@@ -222,13 +223,13 @@ function Chatbot() {
         $('.chat-mail-folowed-resume').addClass('hide');
         $('.chat-mail-resume').addClass('hide');
         $('.content-conversation').addClass('hide');
-       // $('.chat-bubble').text("")
+        // $('.chat-bubble').text("")
         $('.content-conversationRegistration').addClass('hide');
         dispatch(disconnectUser())
     }
 
     return (
-        
+
         <div>
 
             {/* Chat bot UI start */}
@@ -397,6 +398,36 @@ function Chatbot() {
                                     } />
                             </div>
                         </div>
+                        <div className="d-flex flex-row">
+                                <div className="form-group ml-5 p-2 ">
+                                    <input type="radio"
+                                        id="male"
+                                        name="sexe"
+                                        value={connectedUser.sexe}
+                                        onChange={e => {
+                                            const newUserObj = { ...connectedUser, sexe: "male" }
+                                            setConnectedUser(newUserObj);
+                                        }
+                                        }
+                                         />
+                                    <label for="male">male</label>
+                                </div>
+
+                                <div className="form-group p-2">
+                                    <input type="radio"
+                                        id="female"
+                                        name="sexe"
+                                        value={connectedUser.sexe}
+                                        onChange={e => {
+                                            const newUserObj = { ...connectedUser, sexe: "female" }
+                                            setConnectedUser(newUserObj);
+                                        }
+                                        }
+                                    />
+                                    <label for="female">female</label>
+                                </div>
+
+                            </div>
 
                         <div className="col-md-12">
                             <div className="form-group">
@@ -481,6 +512,39 @@ function Chatbot() {
                                         } />
                                 </div>
                             </div>
+
+                            <div className="d-flex flex-row">
+                                <div className="form-group ml-5 p-2 ">
+                                    <input type="radio"
+                                        id="male"
+                                        name="sexe"
+                                        value={connectedUser.sexe}
+                                        onChange={e => {
+                                            const newUserObj = { ...connectedUser, sexe: "male" }
+                                            setConnectedUser(newUserObj);
+                                        }
+                                        }
+                                         />
+                                    <label for="male">male</label>
+                                </div>
+
+                                <div className="form-group p-2">
+                                    <input type="radio"
+                                        id="female"
+                                        name="sexe"
+                                        value={connectedUser.sexe}
+                                        onChange={e => {
+                                            const newUserObj = { ...connectedUser, sexe: "female" }
+                                            setConnectedUser(newUserObj);
+                                        }
+                                        }
+                                    />
+                                    <label for="female">female</label>
+                                </div>
+
+                            </div>
+
+
                             <div className="col-md-12">
                                 <div className="form-group">
                                     <input type="text" className="form-control" placeholder="Country"
@@ -582,7 +646,7 @@ function Chatbot() {
                 </div>
 
                 <div className="content-conversationRegistration hide">
-                    <ConversationRegistration setCallables={childCallables}/>
+                    <ConversationRegistration setCallables={childCallables} />
                 </div>
 
             </div>
@@ -633,8 +697,8 @@ function Chatbot() {
 }
 /*
 $(document).ready(function () {
-    $(".select2_el").select2({
-    });
+                $(".select2_el").select2({
+                });
 });
 */
 $(document).ready(function () {

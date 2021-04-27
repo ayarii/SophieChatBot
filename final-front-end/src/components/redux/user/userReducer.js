@@ -5,12 +5,14 @@ const initialUserState = {
     "nom": "",
     "prenom": "",
     "email": "",
-    "numtel": 0,
+    "numtel": "",
     "pays": "",
     "profession": "",
     "userName": "",
     "password": "",
-    "image": ""
+    "image": "",
+    "age": "",
+    "sexe":""
 }
 
 const initialState = {

@@ -23,7 +23,9 @@ function ConversationRegistration(props) {
         "userName": "",
         "password": "",
         "image": "",
-        "interests": []
+        "interests": [],
+        "age": "",
+        "sexe":""
     }
     const [connectedUser, setConnectedUser] = useState(initialUserState)
     const [fileInputState, setFileInputState] = useState('')
@@ -80,6 +82,14 @@ function ConversationRegistration(props) {
                 setConnectedUser({
                     ...connectedUser,
                     age: str
+                })
+                $('#conversationRegistration').append('<div class="chat-bubble you reg">are you a male or a female ?</div>');
+                break;
+                case "are you a male or a female ?":
+                console.log('sexe handler');
+                setConnectedUser({
+                    ...connectedUser,
+                    sexe: str
                 })
                 $('#conversationRegistration').append('<div class="chat-bubble you reg">can you give me your email please ?</div>');
                 break;
