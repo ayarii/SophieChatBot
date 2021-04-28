@@ -63,11 +63,14 @@ router.post("/textQuery", async (req,res) => {
   // Send request and log result
   const responses = await sessionClient.detectIntent(request);
   console.log("responses : ", responses)
+  // console.log("fulfillmentMessages: ", responses[0].queryResult.fulfillmentMessages)
+  // console.log("output contexts : ", responses[0].queryResult.outputContexts)
+  // console.log("Intent : ", responses[0].queryResult.intent)
   console.log('Detected intent :');
-  const result = responses[0].queryResult;
-  console.log(`  Query: ${result.queryText}`);
-  console.log(`  Response: ${result.fulfillmentText}`);
-  res.send(result.fulfillmentText)
+  console.log(`  Query: ${responses.queryText}`);
+  console.log(`  Response: ${responses.fulfillmentText}`);
+  res.send(responses)
+  
 }  
 
 
@@ -100,6 +103,7 @@ console.log(`  Query: ${result.queryText}`);
 console.log(`  Response: ${result.fulfillmentText}`);
 
 res.send(result.fulfillmentMessages[0].text.text[0])
+
 
 })
 

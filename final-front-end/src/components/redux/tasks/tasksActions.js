@@ -1,5 +1,7 @@
 import { FETCH_TASKS_REQUEST, FETCH_TASKS_SUCCESS, FETCH_TASKS_FAILURE, ADD_TASK, UPDATE_TASK, DELETE_TASK } from './taskType'
 import axios from 'axios' 
+import React from 'react'
+import { Redirect } from 'react-router'
 
 export const fetchTasksResquest = () => {
     return {
@@ -82,4 +84,8 @@ export const DeleteTask = (id) => {
             dispatch(deleteTask(id))
         ).catch(error => console.log("Error on deleting the task :" +error.response))
     }
+}
+
+export const GoToTasksManagementInterface = () => {
+    return <Redirect to="/tasksManager"/>
 }

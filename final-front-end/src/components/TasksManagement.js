@@ -1,6 +1,6 @@
 import React,  { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Container, Col, Card, Button, Modal } from 'react-bootstrap'
+import { Container, Col, Card, Button, Modal, Image } from 'react-bootstrap'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchTasks } from './redux/tasks/tasksActions'
@@ -15,12 +15,16 @@ const TasksManager = () => {
     // eslint-disable-next-line no-lone-blocks
     const showForm = () => {{!isFormShown? setIsFormShown(true) : setIsFormShown(false)}}
     const taskState = useSelector(state => state.task)
+    const connectedUserState = useSelector(state => state.connectedUser)
+
     const dispatch = useDispatch()
     
 
     useEffect(() => {
-        dispatch(fetchTasks())
-    },[dispatch])
+        if(connectedUserState.connected){
+            dispatch(fetchTasks())
+        }
+    },[dispatch, connectedUserState])
 
     return (
         <div>
@@ -45,35 +49,43 @@ const TasksManager = () => {
                 </Container>
             {/* show form space end*/}
             
-            {/* Form Space start */}
-                    
-                    
-
-            {/* Form space end */}
 
   
 
-            {/* Task cards space */}
-            <Container className="d-flex align-items my-5" >
-               <Col>
-                    <Card.Header><PhaseSubTitle className="fa">ToDo</PhaseSubTitle></Card.Header>
-                    {taskState.tasks.filter((task) => task.status === 'ToDo').map((task) => (
-                        <TaskCard task={task} key={task._id}></TaskCard>
-                    ))}
-               </Col>
-               <Col>
-                    <Card.Header><PhaseSubTitle className="fa">InProgress</PhaseSubTitle></Card.Header>
-                    {taskState.tasks.filter((task) => task.status === 'InProgress').map((task) => (
-                        <TaskCard task={task} key={task._id}></TaskCard>
-                    ))}
-               </Col>
-               <Col>
-                    <Card.Header><PhaseSubTitle className="fa">Done</PhaseSubTitle></Card.Header>
-                    {taskState.tasks.filter((task) => task.status === 'Done').map((task) => (
-                        <TaskCard task={task} key={task._id}></TaskCard>
-                    ))}
-               </Col> 
-            </Container>
+            {/* Task cards space start*/}
+            { connectedUserState.connected? (
+                <Container className="d-flex align-items my-5" >
+                <Col>
+                        <Card.Header><PhaseSubTitle className="fa">ToDo</PhaseSubTitle></Card.Header>
+                        {taskState.tasks.filter((task) => task.status === 'ToDo').map((task) => (
+                            <TaskCard task={task} key={task._id}></TaskCard>
+                        ))}
+                </Col>
+                <Col>
+                        <Card.Header><PhaseSubTitle className="fa">InProgress</PhaseSubTitle></Card.Header>
+                        {taskState.tasks.filter((task) => task.status === 'InProgress').map((task) => (
+                            <TaskCard task={task} key={task._id}></TaskCard>
+                        ))}
+                </Col>
+                <Col>
+                        <Card.Header><PhaseSubTitle className="fa">Done</PhaseSubTitle></Card.Header>
+                        {taskState.tasks.filter((task) => task.status === 'Done').map((task) => (
+                            <TaskCard task={task} key={task._id}></TaskCard>
+                        ))}
+                </Col> 
+                </Container>
+            ) : (
+               <Container>
+                    <PhaseSubTitle className="my-5">
+                        If you want to manipulate tasks you need to Sign-In first !
+                        Or if you don't have an account talk to sophie Chatbot to Sign-Up. 
+                        It has multiple methods for that ! 
+                    </PhaseSubTitle>
+                    <img src="./images/taskCardSpace.png"></img>
+               </Container>
+            )}
+            {/* Task cards space end*/}
+
 
             <Modal
                 show={isFormShown}

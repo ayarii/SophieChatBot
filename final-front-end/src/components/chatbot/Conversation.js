@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import $ from 'jquery'
 import axios from 'axios'
+import { GoToTasksManagementInterface } from '../redux/tasks/tasksActions'
 
 import { addDialogue } from '../redux/conversationHistory/conversationHistoryActions'
+import { Link } from 'react-router-dom'
 
 function Conversation(props) {
     const timeElapsed = Date.now()
@@ -11,6 +13,11 @@ function Conversation(props) {
     const conversationHistoryState = useSelector(state => state.conversationHistory)
     const dispatch = useDispatch()
     const connectedUserRedux = useSelector(state => state.connectedUser.user)
+
+    const [toTasksManagement, setToTasksManagement] = useState(false)
+    // useEffect(() => {
+    //     return <Link to="/tasksManager">Go to </Link>
+    // }, [toTasksManagement])
 
     const hundleMessage = () => {
         var str = $("#myInput").val();
@@ -25,11 +32,19 @@ function Conversation(props) {
         axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
             .then(res => {
                 console.log(res.data)
-                $('#conversation').append('<div class="d-flex flex-row"><img class="botImage" src="https://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png" height="30" width="30"/><div class="chat-bubble you">' + res.data + '</div></div>');
+                let chatbotResponse = res.data[0].queryResult.fulfillmentText
+                $('#conversation').append('<div class="d-flex flex-row"><img class="botImage" src="https://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png" height="30" width="30"/><div class="chat-bubble you">' + chatbotResponse + '</div></div>');
                 //$('.botImage:last').clone().insertAfter(".you:last")
-                dispatch(addDialogue(textQueryMessage.text, res.data))
+                dispatch(addDialogue(textQueryMessage.text, chatbotResponse))
                 //props.addDialogue(textQueryMessage.text, res.data)
                 //console.log(props.conversationHistory)
+
+                //Looking if the Intent is : "CT1 - Confirming Tasks Management Direction (CT2)" 
+                //to direct him to Tasks Management interface
+                if(res.data[0].queryResult.intent.displayName === "CT1 - Confirming Tasks Management Direction (CT2)"){
+                    setToTasksManagement(true)
+                    console.log('going to tasks manager')
+                }
             })
             .catch((error) => {
                 console.log("The error while sending the message is :" + error)

@@ -1,33 +1,39 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container, Form } from 'react-bootstrap'
 import styled from 'styled-components'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { Button } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
+import { Button, Modal } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
 import { AddTask } from '../../redux/tasks/tasksActions'
 import moment from 'moment'
 
 
 const AddTaskForm = (props) => {
 
+    const connectedUserState = useSelector(state => state.connectedUser)
     const dispatch = useDispatch()
-    const [task, setTask] = useState({userId : "606d6fecb60be43a6c2fc601"})
+    const [task, setTask] = useState({userId : connectedUserState.user._id})
+    const [isLoginRequiredShown, setIsLoginRequiredShown] = useState(false)
     const [taskToRender, setTaskToRender] = useState(task)
-    //const [toRenderTask, setToRenderTask] = useState(task)
+
+    useEffect(() => {
+        console.log("connected User",connectedUserState)
+    })
+    
     const addTask = () => { 
-
-    // Treatment to change the date value from react-datepicker to 'dd/mm/yyyy'
-    //but there is a problem that the treatment work for the second click not the first
-    //https://stackoverflow.com/questions/59344089/react-hooks-not-set-state-at-first-time
-        
-
-        dispatch(AddTask(taskToRender))
-        console.log("The added task is : " + taskToRender)
-        props.unShowPopup()
+         if(task.userId===""){
+             setIsLoginRequiredShown(true)
+         }
+         else{
+            dispatch(AddTask(taskToRender))
+            console.log("The added task is : " + taskToRender)
+            props.unShowPopup()
+         }
     }
     
     return (
+        <>
         <Container className="mt-2">  
              <Form>
                 <FormSubTitle>Task title :</FormSubTitle>
@@ -89,6 +95,29 @@ const AddTaskForm = (props) => {
                 </div>
             </Form>
         </Container>
+        <Modal
+                show={isLoginRequiredShown}
+                onHide={() => setIsLoginRequiredShown(false)}
+                dialogClassName="modal-90w"
+                aria-labelledby="example-custom-modal-styling-title"
+
+            >   
+                <Modal.Body>
+                    <p>
+                        If you want to add tasks please Sign-In first. 
+                        Or if you don't have an account talk to sophie Chatbot to Sign-Up. 
+                        It has multiple methods for that !  
+                    </p>
+                    <Container className="d-flex justify-content-center">
+                    <Button  onClick={() => { 
+                        setIsLoginRequiredShown(false)
+                        props.unShowPopup()
+                    }}>Okay</Button>  
+                   </Container>
+                </Modal.Body>
+            </Modal>
+        </>
+
     )
 }
 const FormSubTitle = styled.div`
