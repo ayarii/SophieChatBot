@@ -286,7 +286,7 @@ const uploadImage = async(base64EncodedImage) =>{
                                                 <Row className="justify-content-md-center">
                                                 <Col className="px-md-1" md="12" >
                                                           {previewSource && (
-                                                              <img src = {previewSource} alt="chosen" style={{height:'300px'}} height="50" width="100"/>
+                                                              <img src = {previewSource} alt="chosen" height="50" width="100" style={{ 'border-radius': '50%' }}/>
                                                           )}  
 
                                                 </Col>

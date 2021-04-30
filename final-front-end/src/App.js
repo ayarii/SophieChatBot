@@ -18,6 +18,7 @@ import store from './components/redux/store'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Admin from './dashboard/src/layouts/Admin/Admin';
 import EnterPoint from './dashboard/src/layouts/EnterPoint';
+import Profile from './components/Profile';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route exact path='/'component={Home}/>
               <Route exact path='/TasksManager' component={TasksManagement}/>
               <Route exact path='/Admin' component={EnterPoint}/>
+              <Route exact path='/profile' component={Profile}/>
               <Route path='/contact' component={Contact}/>
               <Route path='/testimonial' component={Testimonial}/>
               <Route exact path='/recommendations' component={Recommendations} />

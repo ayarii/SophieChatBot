@@ -24,6 +24,7 @@ class Navbar extends Component {
 									<li class="mr-lg-3 mr-2 active"><Link to='/'>Home</Link></li>
 									<li class="mr-lg-3 mr-2"><Link to='/TasksManager'>Tasks Management</Link></li>
 									{this.props.connectedUserRedux.user.role === "admin" && (<li class="mr-lg-3 mr-2"><Link to='/Admin'>Dashboard</Link></li>)}
+									{this.props.connectedUserRedux.user._id !== "" && (<li class="mr-lg-3 mr-2"><Link to='/profile'>Profile</Link></li>)}
 									<li class="mr-lg-3 mr-2 p-0">
 										{/* <!-- First Tier Drop Down --> */}
 										<label for="drop-2" class="toggle">Dropdown <span class="fa fa-angle-down" aria-hidden="true"></span> </label>

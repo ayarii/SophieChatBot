@@ -63,7 +63,6 @@ function Chatbot() {
                 //do the same with all the login forms
                 $('.content-conversation').removeClass('hide');
             }).catch((error) => {
-                console.log("errorLogin  : ", error.response.data.error)
                 if (error.response.data.error === "User Not found !") {
                     $('#alertUserNotFound').removeClass('hide')
                 }
@@ -562,7 +561,7 @@ function Chatbot() {
                             </div> */}
 
                             <div className="col-md-12">
-                                <CountryDropdown
+                                <CountryDropdown 
                                     value={connectedUser.pays}
                                     onChange={(val) =>{ 
                                         const newUserObj = { ...connectedUser, pays: val }

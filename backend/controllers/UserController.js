@@ -80,7 +80,11 @@ exports.deleteUser = (req, res, next) => {
 //Update User
 exports.updateUser =async (req, res, next) => {
     // handling the image 
+    if(req.body.image.startsWith("http")){
+        imageUrl = req.body.image
+    }else{
     var imageUrl = "http://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png"//a logo default
+    
     try {
         const fileStr = req.body.image
         const uploadedResponse = await cloudinary.uploader.upload(fileStr,{
@@ -89,6 +93,8 @@ exports.updateUser =async (req, res, next) => {
         imageUrl = uploadedResponse.url
     } catch (error) {
         console.log(error)
+    }
+
     }
     ////////////////
 
