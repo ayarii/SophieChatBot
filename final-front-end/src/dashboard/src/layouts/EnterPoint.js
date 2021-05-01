@@ -8,6 +8,7 @@ import AdminLayout from "./Admin/Admin.js";
 import "core-js/modules/es.promise";
 import "core-js/modules/es.array.iterator";
 import { useSelector } from 'react-redux';
+import UserDetails from '../views/UserMangement.js';
 /*
 import "../assets/scss/black-dashboard-react.scss";
 import "../assets/demo/demo.css";
@@ -39,7 +40,7 @@ function EnterPoint() {
   ReactDOM.render(
             <BrowserRouter>
               <Switch>
-                <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+              <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
                 {/* <Redirect from="/" to="/admin/dashboard" /> */}
               </Switch>
             </BrowserRouter>,

@@ -88,6 +88,7 @@ export const AddUser = (user) =>{
 
 
 export const UpdateUser = (user) =>{
+    console.log(user)
     return function (dispatch){
          axios.put(`http://localhost:5000/users/${user._id}`,user)
          .then(() => {

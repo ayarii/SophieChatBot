@@ -277,6 +277,7 @@ function Profile() {
                                             <label>Country</label>
                                             <CountryDropdown id="selectCountry"
                                                 value={user.pays}
+                                                defaultOptionLabel={user.pays}
                                                 onChange={(val) => {
                                                     const newUserObj = { ...user, pays: val }
                                                     setUser(newUserObj);

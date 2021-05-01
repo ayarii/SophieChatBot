@@ -31,6 +31,7 @@ import logo from "../../assets/img/react-logo.png";
 import { BackgroundColorContext } from "../../contexts/BackgroundColorContext";
 import { Provider } from "react-redux";
 import store from '../../components/redux/store';
+import UserDetails from "../../views/UserMangement.js";
 
 var ps;
 

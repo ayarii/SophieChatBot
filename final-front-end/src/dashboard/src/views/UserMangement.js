@@ -16,9 +16,11 @@
 
 */
 import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
 import { fetchUsers, DeleteUser, AddUser, UpdateUser } from '../components/redux'
 import { useSelector, useDispatch } from 'react-redux'
+import { CountryDropdown } from 'react-country-region-selector';
+import { Modal } from 'react-bootstrap'
+import { FaTimes, FaPlusCircle } from 'react-icons/fa';
 
 // reactstrap components
 import {
@@ -37,8 +39,28 @@ import {
 } from "reactstrap";
 
 
-function UserManagement() {
+function UserDetails(props) {
+
     const [show, setShow] = useState(false)
+    var StronglyTypedArray = function () {
+        this.values = [];
+        this.push = function (value) {
+            this.values.push(value);
+        };
+        this.get = function (index) {
+            return this.values[index]
+        }
+        this.set = function (values) {
+            this.values = values;
+        }
+    }
+
+
+
+
+
+
+
     const initialUserState = {
         "_id": "",
         "nom": "",
@@ -49,12 +71,24 @@ function UserManagement() {
         "profession": "",
         "userName": "",
         "password": "",
-        "image": ""
+        "image": "",
+        "age": "",
+        "sexe": "",
+        "interests": []
     }
     const [user, setUser] = useState(initialUserState)
     const [fileInputState, setFileInputState] = useState('')
     const [selectedFile, setSelectedFile] = useState('')
     const [previewSource, setPreviewSource] = useState('')
+    const [isFormShown, setIsFormShown] = useState(false)
+    const [userDetails, setUserDetails] = useState(initialUserState)
+    const [strings, setStrings] = useState(new StronglyTypedArray())
+    const [newInterest, setNewInterest] = useState('')
+
+    const showForm = () => { { !isFormShown ? setIsFormShown(true) : setIsFormShown(false) } }
+
+
+
     // Show Add User
     const showAdd = () => {
         setShow(!show)
@@ -82,30 +116,36 @@ function UserManagement() {
         console.log(event.target.files[0])
         previewFile(file)
     };
-    const previewFile = (file)=>{
+    const previewFile = (file) => {
         const reader = new FileReader()
         reader.readAsDataURL(file)
-        reader.onload = ()=>{
+        reader.onload = () => {
             setPreviewSource(reader.result)
         }
     }
 
-const uploadImage = async(base64EncodedImage) =>{
-    console.log(base64EncodedImage)
-    user.image = base64EncodedImage
-}
+    const uploadImage = async (base64EncodedImage) => {
+        console.log(base64EncodedImage)
+        user.image = base64EncodedImage
+    }
 
 
     const onAdd = (e) => {
         e.preventDefault()
-        console.log("submitting : ",e)
-        if(!previewSource)return
+        console.log("submitting : ", e)
+        if (!previewSource) return
         uploadImage(previewSource)
         dispatch(AddUser(user))
     }
 
 
-
+    const onUpdate = (e, user) => {
+        e.preventDefault()
+        console.log("user : ", user)
+        console.log("submitting : ", e)
+        if (previewSource) uploadImage(previewSource)
+        dispatch(UpdateUser(user))
+    }
 
 
 
@@ -117,7 +157,7 @@ const uploadImage = async(base64EncodedImage) =>{
         userData.users.map(user =>
 
             <tr key={user._id}>
-                <td><img src={user.image} width="50" height="50"/> </td>
+                <td><img src={user.image} width="50" height="50" /> </td>
                 <td>{user.nom} {user.prenom}</td>
                 <td>{user.userName}</td>
                 <td>{user.email}</td>
@@ -130,7 +170,20 @@ const uploadImage = async(base64EncodedImage) =>{
                         setUser(user)
                     }}>
                         Update
-                        </button></td>
+                        </button>
+
+                    <button className="btn-fill btn btn-dark" onClick={() => {
+                        console.log("details ...")
+                        const arr = new StronglyTypedArray();
+                        arr.set(user.interests);
+                        setStrings(arr)
+                        setUserDetails(user)
+                        showForm()
+                    }}>
+                        Show Details
+                        </button>
+
+                </td>
             </tr>
 
         )
@@ -150,7 +203,7 @@ const uploadImage = async(base64EncodedImage) =>{
                                 <>
                                     <CardBody>
                                         <h3 className="title">{user._id === "" ? "Add User" : "Update User"}</h3>
-                                        <Form onSubmit={(e) => { user._id === "" ? onAdd(e) : dispatch(UpdateUser(user)) }}>
+                                        <Form onSubmit={(e) => { user._id === "" ? onAdd(e) : onUpdate(e, user) }}>
 
                                             <Row>
                                                 {/*Testing User Id if its null or not for the update method*/}
@@ -227,6 +280,63 @@ const uploadImage = async(base64EncodedImage) =>{
                                             <Row>
                                                 <Col className="pr-md-1" md="4">
                                                     <FormGroup>
+                                                        <label>Age</label>
+                                                        <Input
+                                                            className="form-control"
+                                                            type="number"
+                                                            value={user.age} onChange={e => {
+                                                                const newUserObj = { ...user, age: e.target.value }
+                                                                setUser(newUserObj);
+                                                            }
+                                                            }
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+
+                                                <Col className="pr-md-1" md="4">
+
+
+                                                    <FormGroup>
+                                                        <label>Gender</label>
+
+                                                        <div class="form-check">
+                                                            <input className="form-check-input"
+                                                                type="radio"
+                                                                value="male" onChange={e => {
+                                                                    const newUserObj = { ...user, sexe: e.target.value }
+                                                                    setUser(newUserObj);
+                                                                }
+                                                                }
+                                                                checked={user.sexe === "male"} />
+                                                            <label className="form-check-label" for="flexRadioDefault1">
+                                                                Male
+                                                </label>
+                                                        </div>
+
+                                                        <div className="form-check">
+                                                            <input className="form-check-input"
+                                                                type="radio"
+                                                                value="female" onChange={e => {
+                                                                    const newUserObj = { ...user, sexe: e.target.value }
+                                                                    setUser(newUserObj);
+                                                                }
+                                                                }
+                                                                checked={user.sexe === "female"} />
+                                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                                Female
+                                            </label>
+                                                        </div>
+
+
+                                                    </FormGroup>
+                                                </Col>
+
+
+
+                                            </Row>
+                                            <Row>
+                                                <Col className="pr-md-1" md="4">
+                                                    {/* <FormGroup>
                                                         <label>Country</label>
                                                         <Input
                                                             type="text" value={user.pays} onChange={e => {
@@ -235,6 +345,16 @@ const uploadImage = async(base64EncodedImage) =>{
                                                             }
                                                             }
                                                         />
+                                                    </FormGroup> */}
+                                                    <FormGroup>
+                                                        <label>Country</label>
+                                                        <CountryDropdown id="selectCountry"
+                                                            value={user.pays}
+                                                            defaultOptionLabel={user.pays}
+                                                            onChange={(val) => {
+                                                                const newUserObj = { ...user, pays: val }
+                                                                setUser(newUserObj);
+                                                            }} />
                                                     </FormGroup>
                                                 </Col>
                                                 <Col className="px-md-1" md="4">
@@ -270,12 +390,12 @@ const uploadImage = async(base64EncodedImage) =>{
                                                             />
                                                         </FormGroup> */}
                                                         <FormGroup>
-                                                                <label  htmlFor="exampleFormControlFile1">Image</label>
-                                                                <input type="file"
-                                                                    className="form-input"
-                                                                    value={fileInputState}
-                                                                    onChange={onFileChange}
-                                                                />
+                                                            <label htmlFor="exampleFormControlFile1">Image</label>
+                                                            <input type="file"
+                                                                className="form-input"
+                                                                value={fileInputState}
+                                                                onChange={onFileChange}
+                                                            />
 
                                                         </FormGroup>
 
@@ -284,22 +404,113 @@ const uploadImage = async(base64EncodedImage) =>{
                                                     </Col>
                                                 </Row>
                                                 <Row className="justify-content-md-center">
-                                                <Col className="px-md-1" md="12" >
-                                                          {previewSource && (
-                                                              <img src = {previewSource} alt="chosen" height="50" width="100" style={{ 'border-radius': '50%' }}/>
-                                                          )}  
+                                                    <Col className="px-md-1" md="12" >
+                                                        {previewSource && (
+                                                            <img src={previewSource} alt="chosen" height="50" width="100" style={{ 'border-radius': '50%' }} />
+                                                        )}
 
-                                                </Col>
+                                                    </Col>
                                                 </Row>
                                             </Row>
+
+                                            <Row>
+                                                <Col className="pt-md-2" md="4">
+                                                    <FormGroup>
+                                                        <label>interests</label>
+                                                        {user.interests.map((interest, index) => (
+
+                                                            <div className="d-flex flex-row" key={index}>
+                                                                <input
+                                                                    className="form-control my-1"
+                                                                    type="text"
+                                                                    value={interest} onChange={e => {
+                                                                        const interestsArr = user.interests
+                                                                        interestsArr[index] = e.target.value;
+                                                                        const newUserObj = { ...user, interests: interestsArr }
+                                                                        setUser(newUserObj);
+                                                                    }
+                                                                    }
+                                                                />
+                                                                <h5><FaTimes style={{ cursor: 'pointer' }} onClick={() => {
+                                                                    //user.interests.splice(index, 1);
+                                                                    console.log("interest : ", interest)
+                                                                    console.log("index : ", index)
+                                                                    const newArr = user.interests.filter((val) => interest !== val)
+                                                                    const newUserObj = { ...user, interests: newArr }
+                                                                    setUser(newUserObj);
+                                                                }}
+                                                                /></h5>
+                                                            </div>
+
+                                                        ))}
+                                                    </FormGroup>
+
+                                                </Col>
+
+
+
+
+
+
+
+                                                <Col className="mt-md-2" md="4">
+                                                    <FormGroup>
+                                                        <label>New Interest</label>
+                                                        <div className="d-flex flex-row mt-2">
+                                                            <input
+                                                                className="form-control"
+                                                                type="text"
+                                                                value={newInterest} onChange={e => {
+                                                                    setNewInterest(e.target.value);
+                                                                }
+                                                                }
+                                                            />
+
+
+                                                            <h5><FaPlusCircle style={{ cursor: 'pointer' }} onClick={() => {
+
+                                                                const newArr = user.interests;
+                                                                newArr.push(newInterest)
+                                                                const newUserObj = { ...user, interests: newArr }
+                                                                setUser(newUserObj);
+                                                                setNewInterest('')
+                                                            }}
+                                                            /></h5>
+
+                                                        </div>
+                                                        <div class="d-flex justify-content-center">
+
+                                                            <Button className="btn-fill mt-5" color="success" type="submit" >
+                                                                {user._id === "" ? "Add" : "Update"}
+                                                            </Button>
+                                                        </div>
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                             <CardFooter>
-                                        <Button className="btn-fill" color="success" type="submit" >
-                                            {user._id === "" ? "Add" : "Update"}
-                                        </Button>
-                                    </CardFooter>
+
+                                            </CardFooter>
                                         </Form>
                                     </CardBody>
-                                    
+
                                 </>
                             }
                         </Card>
@@ -343,6 +554,65 @@ const uploadImage = async(base64EncodedImage) =>{
                         </Card>
                     </Col>
                 </Row>
+
+                <Modal
+                    show={isFormShown}
+                    onHide={() => setIsFormShown(false)}
+                    dialogClassName="modal-90w"
+                    aria-labelledby="example-custom-modal-styling-title"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title >
+                            <div className="d-flex flex-row">
+                                <img src={userDetails.image} height="70" width="70" style={{ 'border-radius': '50%' }} className="mx-2" />
+                                <h4 style={{ color: "green" }}>{userDetails.userName} Details</h4>
+                            </div>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div class="row">
+                            <div className="col-lg-6">
+                                <p> <b>First name :</b> {userDetails.nom} </p>
+                                <p> <b>Last name : </b>{userDetails.prenom} </p>
+                                <p> <b>Email : </b>{userDetails.email} </p>
+                                <p> <b>Phone number : </b>{userDetails.nom} </p>
+                                <p> <b>Age : </b>{userDetails.age} </p>
+                                <p> <b>Country : </b>{userDetails.pays} </p>
+                                <p> <b>Gender : </b>{userDetails.sexe} </p>
+                            </div>
+
+                            <div className="col-lg-6">
+                                <p> <b>interests :</b> </p>
+                                {strings.values.map((interest, index) => (
+                                    <div key={index}>
+                                        <p> {interest} </p>
+                                    </div>
+
+                                ))}
+                            </div>
+
+
+
+                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </Modal.Body>
+                </Modal>
             </div>
         </>
     );
@@ -370,4 +640,4 @@ const mapDispatchToProps = dispatch => {
 
 
 //export default connect(mapStateToProps, mapDispatchToProps)(UserManagement);
-export default UserManagement
+export default UserDetails

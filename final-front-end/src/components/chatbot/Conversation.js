@@ -32,7 +32,10 @@ function Conversation(props) {
         axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
             .then(res => {
                 console.log(res.data)
-                let chatbotResponse = res.data[0].queryResult.fulfillmentText
+                let chatbotResponse = res.data
+                //console.log("res.data[0].queryResult : ", res.data[0].queryResult)
+                if(res.data[0].queryResult)chatbotResponse = res.data[0].queryResult.fulfillmentText
+            
                 $('#conversation').append('<div class="d-flex flex-row"><img class="botImage" src="https://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png" height="30" width="30"/><div class="chat-bubble you">' + chatbotResponse + '</div></div>');
                 //$('.botImage:last').clone().insertAfter(".you:last")
                 dispatch(addDialogue(textQueryMessage.text, chatbotResponse))

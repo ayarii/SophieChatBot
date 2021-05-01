@@ -16,7 +16,6 @@
 
 */
 import Dashboard from "./views/Dashboard.js";
-import QuitPoint from "./views/QuitPoint.js";
 import UserManagement from "./views/UserMangement";
 
 var routes = [
@@ -29,14 +28,6 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/",
-    name: "Logout",
-    rtlName: "لوحة القيادة",
-    icon: "tim-icons icon-chart-pie-36",
-    component: QuitPoint, // to fix later
-    layout: "/home",
-  },
-  {
     path: "/user-mangement",
     name: "User Management",
     rtlName: "إدارةالمستخدم",
@@ -44,6 +35,7 @@ var routes = [
     component: UserManagement,
     layout: "/admin",
   },
+
   
 ];
 export default routes;
