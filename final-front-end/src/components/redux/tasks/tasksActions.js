@@ -3,7 +3,7 @@ import axios from 'axios'
 import React from 'react'
 import { Redirect } from 'react-router'
 
-export const fetchTasksResquest = () => {
+export const fetchTasksResquest = userId => {
     return {
         type : FETCH_TASKS_REQUEST
     }
@@ -44,12 +44,12 @@ export const deleteTask = id => {
     }
 }
 
-export const  fetchTasks = () => {
+export const  fetchTasks = (userId) => {
     return function(dispatch){
         dispatch(fetchTasksResquest())
         axios.get('http://localhost:5000/tasks')
         .then(res => {
-            const tasks = res.data
+            const tasks = res.data.filter(task => task.userId === userId)
             dispatch(fetchTasksSuccess(tasks))
         })
         .catch(error => {
