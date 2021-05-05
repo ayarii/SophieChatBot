@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaTimes, FaPlusCircle, FaUserEdit } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -85,6 +85,18 @@ function Profile() {
                 console.log({ "error updating ": error });
             });
     }
+
+useEffect(() => {
+    console.log("change redux user")
+    if(connectedUserRedux._id!=="")
+    setUser(initialUserState)
+    
+}, [connectedUserRedux._id])
+
+
+
+
+
 
     return (
         <div>

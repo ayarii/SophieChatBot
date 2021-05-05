@@ -8,9 +8,15 @@ import './Recommendation.css'
 function Events() {
 
     const userData = useSelector((state) => state.recom)
+    const userConnectedData = useSelector((state) => state.connectedUser)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(fetchRecoms())
+        if (userConnectedData.connected){
+            dispatch(fetchRecoms())
+            console.log("userConnectedData : ", userConnectedData)}
+          else {
+            alert("You should connect first.")
+          }
     }, [])
 
     const events_container = (
