@@ -1,46 +1,61 @@
 import React ,{ useState, useEffect }from 'react'
 import { fetchReviews, DeleteReview, AddReview} from './redux/reviews/reviewActions'
+import {fetchUsers} from '../dashboard/src/components/redux/user/userActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { Card} from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+
 function Reviews() {
 
-  const userData = useSelector((state) => state.review)
+  const reviewData = useSelector((state) => state.review)
   const userConnectedData = useSelector((state) => state.connectedUser)
+  const usersData = useSelector((state) => state.user)
+
   const dispatch = useDispatch()
   useEffect(() => {
       dispatch(fetchReviews())
+      dispatch(fetchUsers())
       console.log(userConnectedData)
+      console.log(usersData)
   }, [])
 
-  const [review, setReview] = useState({userId: "606f7bc0997e2d34ccedadca"})
-
-  //const user = () => {
-    //  dispatch(getUser)
-  //}
+/*   const getUser = () => {
+    axios.get('http://localhost:5000/users/607ac861c2efcd3bf4652f70').then(reponse => {
+    console.log(reponse.data)    
+    return reponse.data})
+    } */
+    
+    const [review, setReview] = useState({userId: userConnectedData.user._id})
 
   const onAddReview = () => {
-      console.log(review);
-      dispatch(AddReview(review))
-      alert("We really appreciate you taking the time to share your rating with us. We look forward to seeing you again soon.")
+      if (!userConnectedData.connected){
+          alert("You should connect first")
+      }
+      else{
+        console.log(review);
+        dispatch(AddReview(review))
+        alert("We really appreciate you taking the time to share your rating with us. We look forward to seeing you again soon.")
+      }
   }
 
 
+
   const review_container = (
-    userData.reviews.slice(0, 3).map(review =>
+    reviewData.reviews.slice(0, 3).map(review =>
         <div className="mx-4">
-        <Card style={{ width: '18rem' }}>
-        <div className="image-container">
-        <h3><FaTimes style={{  cursor: 'pointer' }} onClick={() => dispatch(DeleteReview(review._id))} /></h3>          
-        <Card.Img className="card-img-top" variant="top" src="./assets/images/springboot.jpg" />
+        <Card style={{ width: '18rem', border: 'none' }}>
+        <div className="image">
+        {Boolean(userConnectedData.user._id === review.userId) ? <h3 className="close"><FaTimes style={{  cursor: 'pointer' }} onClick={() => dispatch(DeleteReview(review._id))} /></h3> : "" }        
+        <Card.Img className="card-img" src="http://res.cloudinary.com/esprit456/image/upload/v1618659424/e-learning/bcubwjyjzcy8z4konuyv.jpg" width="277px" height="370px" />
         </div>
         <Card.Body className="card-content">
             <Card.Title className="card-title">{review.comment}</Card.Title>
         </Card.Body>
         </Card>
         </div>
+    
     )
 )
 
@@ -50,6 +65,7 @@ function Reviews() {
         <h3 className="yel">Reviews</h3>
         <Link className="ViewR" to="/testimonial">View More</Link>
         </div>
+        <h5 className="rev">Your opinions add value. Thank you !</h5>
         <div className="row">
         {review_container}
         </div>

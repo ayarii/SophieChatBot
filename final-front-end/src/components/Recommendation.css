@@ -60,7 +60,7 @@ textarea{
     width: 900px;
     height: 200px;
     font-size: x-large;
-    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.253);
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.253) !important;
 }
 
 .sub{
@@ -81,7 +81,7 @@ textarea{
 }
 
 .sub:hover{
-    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.253);
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.253) !important;
 }
 
 .form{
@@ -113,7 +113,7 @@ textarea{
 }
 
 .del:hover{
-    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.253);
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.253) !important;
     transform: scale(1.1);
 }
 
@@ -121,4 +121,18 @@ textarea{
     transform: translate(300%,20%) ;
     font-size: x-large;
     color: #ffc905;    
+}
+
+.card-img{
+    box-shadow: 1px 1px 3px 3px rgba(0, 0, 0, 0.253) !important;
+}
+
+.clo{
+    transform: translate(90%,-10%) ; 
+}
+
+.rev{
+    margin-left: 350px;
+    margin-bottom: 10px;
+    color: grey;
 }

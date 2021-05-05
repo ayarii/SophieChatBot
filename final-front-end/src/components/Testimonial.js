@@ -1,5 +1,6 @@
 import React ,{ useEffect }from 'react'
 import { fetchReviews, DeleteReview} from './redux/reviews/reviewActions'
+import {fetchUsers} from '../dashboard/src/components/redux/user/userActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { Card} from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
@@ -7,26 +8,32 @@ import { Link } from 'react-router-dom';
 
 function Testimonial() {
 
-  const userData = useSelector((state) => state.review)
-  const dispatch = useDispatch()
+    const userConnectedData = useSelector((state) => state.connectedUser)
+    const userData = useSelector((state) => state.review)
+    const usersData = useSelector((state) => state.user)
+    const dispatch = useDispatch()
   useEffect(() => {
       dispatch(fetchReviews())
+      dispatch(fetchUsers())
+      console.log(userConnectedData)
+      console.log(usersData.users)
   }, [])
 
 
   const review_container = (
-    userData.reviews.reverse().map(review =>
+    userData.reviews.map(review =>
         <div className="mx-4 mb-3">
-        <Card style={{ width: '18rem' }}>
-        <div className="image-container">
-        <h3><FaTimes style={{  cursor: 'pointer' }} onClick={() => dispatch(DeleteReview(review._id))} /></h3>          
-        <Card.Img className="card-img-top" variant="top" src="./assets/images/springboot.jpg" />
+        <Card style={{ width: '18rem', border: 'none' }}>
+        <div className="image">
+        {Boolean(userConnectedData.user._id === review.userId) ? <h3 className="close"><FaTimes style={{  cursor: 'pointer' }} onClick={() => dispatch(DeleteReview(review._id))} /></h3> : "" }
+        <Card.Img className="card-img" src={usersData.users.filter(user => user._id === review.userId)[0].image} width="277px" height="370px" />
         </div>
         <Card.Body className="card-content">
             <Card.Title className="card-title">{review.comment}</Card.Title>
         </Card.Body>
         </Card>
         </div>
+    
     )
 )
 

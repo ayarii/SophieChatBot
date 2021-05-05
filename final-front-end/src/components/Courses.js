@@ -8,13 +8,19 @@ import Recommendation from "./Recommendation";
 function Courses() {
 
     const userData = useSelector((state) => state.recom)
+    const userConnectedData = useSelector((state) => state.connectedUser)
     const dispatch = useDispatch()
     useEffect(() => {
-        dispatch(fetchRecoms())
+        if (userConnectedData.connected){
+            dispatch(fetchRecoms())
+            console.log("userConnectedData : ", userConnectedData)}
+          else {
+            alert("You should connect first.")
+          }
     }, [])
 
     const courses_container = (
-        userData.recoms.reverse().filter(recom => recom.category == "Courses").map(recommendation =>
+        userData.recoms.reverse().filter(recom => recom.category == "Course").map(recommendation =>
     
           <Recommendation key={recommendation._id} recommendation={recommendation}   />  
         ))
