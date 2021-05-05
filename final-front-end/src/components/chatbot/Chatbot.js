@@ -7,6 +7,8 @@ import { connectUser, disconnectUser } from '../redux/user/userActions';
 import ConversationRegistration from './ConversationRegistration';
 import { finishDialogue } from '../redux/conversationHistory/conversationHistoryActions';
 import { CountryDropdown } from 'react-country-region-selector';
+import moment from 'moment'
+
 
 function Chatbot() {
     const timeElapsed = Date.now()
@@ -17,8 +19,112 @@ function Chatbot() {
     const [fileInputState, setFileInputState] = useState('')
     const [previewSource, setPreviewSource] = useState('')
     const [childCallables, setChildCallables] = useState(false)
+    const [eventToSend, setEventToSent] = useState({ event : "TomorrowTasksReminder"})
+    const [reminderMessageForBeginDates, setreminderMessageForBeginDates] = useState("")
+    const [reminderMessageForEndDates, setreminderMessageForEndDates] = useState("")
 
     const dispatch = useDispatch()
+
+    const isDeadlineComing = (date) =>{
+        let after3Days = new Date(today)
+        after3Days.setDate(after3Days.getDate() + 3)
+        after3Days = moment(after3Days).format("DD/MM/YYYY")
+        return ( after3Days.substr(6,10) === date.substr(6,10) && 
+                 after3Days.substr(3,5) === date.substr(3,5) && 
+                 parseInt(after3Days.substr(0,2)) > parseInt(date.substr(0,2)))
+                
+    }
+
+    const reminderForEndDates = (userId) => {
+        axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
+        .then(response => {
+            if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
+                axios.get('http://localhost:5000/tasks')
+                .then(res => {
+
+                    
+                
+                    const endDateTasksList = res.data.filter(task => 
+                        task.userId === userId && 
+                        task.status === "InProgress" &&
+                        isDeadlineComing(task.beginDate)
+                    )
+
+
+                    // let changedWords = []
+                    // if(tasksList.length===0){
+                    //     changedWords.push(" task")
+                    //     changedWords.push(".")
+                    // }else if(tasksList.length===1){
+                    //     changedWords.push(" task")
+                    //     changedWords.push(" which is :")
+                    // }else if(tasksList.length>1){
+                    //     changedWords.push(" tasks")
+                    //     changedWords.push(" which are :")
+                    // }
+
+                    console.log(" Coming DDL Tasks :", endDateTasksList)
+                    let toRemindTaskNames = " "
+                    endDateTasksList.forEach(task => toRemindTaskNames += task.title + " / ")
+                    setreminderMessageForEndDates(
+                        "Also keep in mind that you have " +
+                        endDateTasksList.length + 
+                        " tasks that will end up in the next few days : " +
+                        toRemindTaskNames )
+
+
+                })
+            }
+        })
+    }
+
+    // Making the Reminder text for user tasks
+    const reminderForBeginDates = (userId) => {
+        axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
+        .then(response => {
+            if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
+                axios.get('http://localhost:5000/tasks')
+                .then(res => {
+
+                    let tomorrow = new Date(today)
+                    tomorrow.setDate(tomorrow.getDate() + 1)
+                
+                    const beginDateTasksList = res.data.filter(task => 
+                        task.userId === userId && 
+                        task.status === "ToDo" &&
+                        task.beginDate === moment(tomorrow).format("DD/MM/YYYY")
+                    )
+
+
+                    let changedWords = []
+                    if(beginDateTasksList.length===0){
+                        changedWords.push(" task")
+                        changedWords.push(".")
+                    }else if(beginDateTasksList.length===1){
+                        changedWords.push(" task")
+                        changedWords.push(" which is :")
+                    }else if(beginDateTasksList.length>1){
+                        changedWords.push(" tasks")
+                        changedWords.push(" which are :")
+                    }
+
+                    console.log("Tomorrow tasks :", beginDateTasksList)
+                    let toRemindTaskNames = " "
+                    beginDateTasksList.forEach(task => toRemindTaskNames += task.title + " / ")
+                    setreminderMessageForBeginDates(
+                        "Just to remind you that you have " + 
+                        beginDateTasksList.length + 
+                        changedWords[0] +
+                        " that begin today" +
+                        changedWords[1] +
+                        toRemindTaskNames )
+
+
+                })
+            }
+        })
+    }
+    
 
     const onFileChange = event => {
         // Update the state 
@@ -62,6 +168,9 @@ function Chatbot() {
                 dispatch(connectUser(response.data.user))
                 //do the same with all the login forms
                 $('.content-conversation').removeClass('hide');
+                
+                reminderForBeginDates(response.data.user._id)
+                reminderForEndDates(response.data.user._id)
             }).catch((error) => {
                 if (error.response.data.error === "User Not found !") {
                     $('#alertUserNotFound').removeClass('hide')
@@ -71,6 +180,8 @@ function Chatbot() {
                     $('#alertPasswordIncorrect').removeClass('hide')
                 }
             });
+
+            
 
     }
 
@@ -226,6 +337,9 @@ function Chatbot() {
         // $('.chat-bubble').text("")
         $('.content-conversationRegistration').addClass('hide');
         dispatch(disconnectUser())
+
+        setreminderMessageForBeginDates("")
+        setreminderMessageForEndDates("")
     }
 
     return (
@@ -658,7 +772,7 @@ function Chatbot() {
 
 
                 <div className="content-conversation hide">
-                    <Conversation connectedUser={connectedUser} setCallables={childCallables} />
+                    <Conversation reminderMessageForEndDates={reminderMessageForEndDates} reminderMessageForBeginDates={reminderMessageForBeginDates} connectedUser={connectedUser} setCallables={childCallables} />
                 </div>
 
                 <div className="content-conversationRegistration hide">

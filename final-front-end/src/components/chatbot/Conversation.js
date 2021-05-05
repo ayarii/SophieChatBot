@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import $ from 'jquery'
 import axios from 'axios'
+import moment from 'moment'
 import { GoToTasksManagementInterface } from '../redux/tasks/tasksActions'
 
 import { addDialogue } from '../redux/conversationHistory/conversationHistoryActions'
@@ -10,14 +11,40 @@ import { Link } from 'react-router-dom'
 function Conversation(props) {
     const timeElapsed = Date.now()
     const today = new Date(timeElapsed)
-    const conversationHistoryState = useSelector(state => state.conversationHistory)
     const dispatch = useDispatch()
     const connectedUserRedux = useSelector(state => state.connectedUser.user)
 
+    // const [eventToSend, setEventToSent] = useState({ event : "TomorrowTasksReminder"})
+
+    
     const [toTasksManagement, setToTasksManagement] = useState(false)
+
+
+//   // to compare the difference between begin date of the task and today.
+//       const isItTomorrow = (date, diff) => {
+//         let todayDate = moment(new Date())
+//         let taskBeginDate = moment(date, "DD/MM/YYYY")
+//         console.log(todayDate.format("M") === taskBeginDate.format("M"))
+//         return todayDate.format("M") === taskBeginDate.format("M") 
+//     }
+
+    
     // useEffect(() => {
     //     return <Link to="/tasksManager">Go to </Link>
     // }, [toTasksManagement])
+
+    // useEffect(() => {
+    //     axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
+    //     .then(response => {
+    //         if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
+    //             axios.get('http://localhost:5000/tasks')
+    //             .then(res => {
+    //                 const toRemindTasksList = res.data.filter(task => isItTomorrow(task.removeBeginDate, 1))
+    //                 console.log(toRemindTasksList)
+    //             })
+    //         }
+    //     })
+    // },[eventToSend])
 
     const hundleMessage = () => {
         var str = $("#myInput").val();
@@ -34,7 +61,7 @@ function Conversation(props) {
                 console.log(res.data)
                 let chatbotResponse = res.data
                 //console.log("res.data[0].queryResult : ", res.data[0].queryResult)
-                if(res.data[0].queryResult)chatbotResponse = res.data[0].queryResult.fulfillmentText
+                if(res.data[0].queryResult) chatbotResponse = res.data[0].queryResult.fulfillmentText
             
                 $('#conversation').append('<div class="d-flex flex-row"><img class="botImage" src="https://res.cloudinary.com/esprit456/image/upload/v1617904764/e-learning/id9xkfigxaozuwuimiox.png" height="30" width="30"/><div class="chat-bubble you">' + chatbotResponse + '</div></div>');
                 //$('.botImage:last').clone().insertAfter(".you:last")
@@ -117,9 +144,18 @@ function Conversation(props) {
                 <div className=" d-flex flex-row">
                     <img className="botImage" src={require('./img/chatBotLogo.png')} height="30" width="30" />
                     {connectedUserRedux._id!=="" && (<div className="chat-bubble you">Welcome {connectedUserRedux.userName !== "" && connectedUserRedux.userName.toUpperCase()} to our site, if you need help simply reply to this message, I am
-                    online and ready to help.</div>)}
+                    online and ready to help. </div>)}
+                </div>
+                <div className=" d-flex flex-row">
+                    <img className="botImage" src={require('./img/chatBotLogo.png')} height="30" width="30" />
+                    {connectedUserRedux._id!=="" && (<div className="chat-bubble you">{props.reminderMessageForBeginDates}</div>)}
+                </div>
+                <div className=" d-flex flex-row">
+                    <img className="botImage" src={require('./img/chatBotLogo.png')} height="30" width="30" />
+                    {connectedUserRedux._id!=="" && (<div className="chat-bubble you">{props.reminderMessageForEndDates}</div>)}
                 </div>
                     {connectedUserRedux.role==="admin" && (<div className="chat-bubble you">By the way, you can manage your users and check some statistics ☝️</div>)}
+                    
             </div>
             <div className="chat-input">
                 <input type="text"

@@ -79,7 +79,7 @@ router.post("/textQuery", async (req,res) => {
 
 
 
-// The event query request.
+// The event query  request.
 
 router.post("/eventQuery", async (req,res) => {
 
@@ -101,8 +101,7 @@ console.log('Detected intent');
 const result = responses[0].queryResult;
 console.log(`  Query: ${result.queryText}`);
 console.log(`  Response: ${result.fulfillmentText}`);
-
-res.send(result.fulfillmentMessages[0].text.text[0])
+res.send(responses)
 
 
 })
