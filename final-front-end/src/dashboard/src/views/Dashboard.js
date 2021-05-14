@@ -23,19 +23,10 @@ import { Line, Bar } from "react-chartjs-2";
 import { pluck } from "underscore";
 
 // reactstrap components
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
-  Col,
-} from "reactstrap";
+import { Card, CardHeader, CardBody, Row, Col } from "reactstrap";
 
 // core components
-import {
-  chartExample2,
-  chartExample3,
-} from "../variables/charts.js";
+import { chartExample2, chartExample3 } from "../variables/charts.js";
 
 class Dashboard extends Component {
   constructor(props) {
@@ -45,22 +36,26 @@ class Dashboard extends Component {
       data1: [],
       lable2: [],
       data2: [],
+      lable3: [],
+      data3: [],
+      lable4: [],
+      data4: [],
     };
   }
 
   componentDidMount() {
-    fetch("http://localhost:5000/usersClass")
+    fetch("http://localhost:5000/usersClass/get-user-classification")
       .then((res) => {
         res
           .json()
           .then((result) => {
-            console.log(result);
-            let lableData = pluck(result, "name");
-            let data1 = pluck(result, "value");
-            console.log("lableData", lableData);
-            console.log("data1", data1);
-            this.setState({ data1: data1 });
-            this.setState({ lable1: lableData });
+            // console.log(result);
+            // let lableData = pluck(result, "name");
+            // let data1 = pluck(result, "value");
+            // console.log("lableData", lableData);
+            // console.log("data1", data1);
+            this.setState({ data1: result.data });
+            this.setState({ lable1: result.lable });
           })
           .catch((err) => {
             alert("Error while fetch data");
@@ -70,18 +65,60 @@ class Dashboard extends Component {
         alert("Error while fetch data");
       });
 
-    fetch("http://localhost:5000/usersSubject")
+    fetch("http://localhost:5000/usersClass/get-intrest-classification")
+      .then((res) => {
+        res
+          .json()
+          .then((result) => {
+            // console.log(result);
+            // let lableData = pluck(result, "name");
+            // let data1 = pluck(result, "value");
+            // console.log("lableData", lableData);
+            // console.log("data1", data1);
+            this.setState({ data4: result.data });
+            this.setState({ lable4: result.lable });
+          })
+          .catch((err) => {
+            alert("Error while fetch data");
+          });
+      })
+      .catch((err) => {
+        alert("Error while fetch data");
+      });
+
+    fetch("http://localhost:5000/usersClass/get-age-classification")
+      .then((res) => {
+        res
+          .json()
+          .then((result) => {
+            // console.log(result);
+            // let lableData = pluck(result, "name");
+            // let data1 = pluck(result, "value");
+            // console.log("lableData", lableData);
+            // console.log("data1", data1);
+            this.setState({ data3: result.data });
+            this.setState({ lable3: result.lable });
+          })
+          .catch((err) => {
+            alert("Error while fetch data");
+          });
+      })
+      .catch((err) => {
+        alert("Error while fetch data");
+      });
+
+    fetch("http://localhost:5000/usersClass/get-usersex-classification")
       .then((res) => {
         res
           .json()
           .then((result) => {
             console.log(result);
-            let lableData = pluck(result, "name");
-            let data1 = pluck(result, "value");
-            console.log("lableData", lableData);
-            console.log("data1", data1);
-            this.setState({ data2: data1 });
-            this.setState({ lable2: lableData });
+            // let lableData = pluck(result, "name");
+            // let data1 = pluck(result, "value");
+            // console.log("lableData", lableData);
+            // console.log("data1", data1);
+            this.setState({ data2: result.data });
+            this.setState({ lable2: result.lable });
           })
           .catch((err) => {
             alert("Error while fetch data");
@@ -179,7 +216,7 @@ class Dashboard extends Component {
             <Col lg="4">
               <Card className="card-chart">
                 <CardHeader>
-                  <h5 className="card-category">User classification</h5>
+                  <h5 className="card-category">User Country Classification</h5>
                   {/* <CardTitle tag="h3">
                     <i className="tim-icons icon-bell-55 text-info" /> 763,215
                   </CardTitle> */}
@@ -236,7 +273,7 @@ class Dashboard extends Component {
             <Col lg="4">
               <Card className="card-chart">
                 <CardHeader>
-                  <h5 className="card-category">Courses Completed chart</h5>
+                  <h5 className="card-category">User Sex Classification</h5>
                   {/* <CardTitle tag="h3">
                     <i className="tim-icons icon-delivery-fast text-primary" />{" "}
                     3,500€
@@ -263,7 +300,7 @@ class Dashboard extends Component {
                           labels: this.state.lable2,
                           datasets: [
                             {
-                              label: "Countries",
+                              label: "Sex",
                               fill: true,
                               backgroundColor: gradientStroke,
                               hoverBackgroundColor: gradientStroke,
@@ -272,6 +309,56 @@ class Dashboard extends Component {
                               borderDash: [],
                               borderDashOffset: 0.0,
                               data: this.state.data2,
+                            },
+                          ],
+                        };
+                      }}
+                      options={chartExample3.options}
+                    />
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+
+            <Col lg="4">
+              <Card className="card-chart">
+                <CardHeader>
+                  <h5 className="card-category">User Age Classification</h5>
+                  {/* <CardTitle tag="h3">
+                    <i className="tim-icons icon-delivery-fast text-primary" />{" "}
+                    3,500€
+                  </CardTitle> */}
+                </CardHeader>
+                <CardBody>
+                  <div className="chart-area">
+                    <Bar
+                      data={(canvas) => {
+                        let ctx = canvas.getContext("2d");
+
+                        let gradientStroke = ctx.createLinearGradient(
+                          0,
+                          230,
+                          0,
+                          50
+                        );
+
+                        gradientStroke.addColorStop(1, "rgba(72,72,176,0.1)");
+                        gradientStroke.addColorStop(0.4, "rgba(72,72,176,0.0)");
+                        gradientStroke.addColorStop(0, "rgba(119,5,169,0)"); //purple colors
+
+                        return {
+                          labels: this.state.lable3,
+                          datasets: [
+                            {
+                              label: "Age",
+                              fill: true,
+                              backgroundColor: gradientStroke,
+                              hoverBackgroundColor: gradientStroke,
+                              borderColor: "red",
+                              borderWidth: 2,
+                              borderDash: [],
+                              borderDashOffset: 0.0,
+                              data: this.state.data3,
                             },
                           ],
                         };
@@ -300,6 +387,65 @@ class Dashboard extends Component {
                 </CardBody>
               </Card>
             </Col> */}
+          </Row>
+          <Row>
+            <Col lg="12">
+              <Card className="card-chart">
+                <CardHeader>
+                  <h5 className="card-category">User Intrest Classification</h5>
+                  {/* <CardTitle tag="h3">
+                    <i className="tim-icons icon-bell-55 text-info" /> 763,215
+                  </CardTitle> */}
+                </CardHeader>
+                <CardBody>
+                  <div className="chart-area">
+                    <Line
+                      data={(canvas) => {
+                        let ctx = canvas.getContext("2d");
+
+                        let gradientStroke = ctx.createLinearGradient(
+                          0,
+                          230,
+                          0,
+                          50
+                        );
+
+                        gradientStroke.addColorStop(1, "rgba(29,140,248,0.2)");
+                        gradientStroke.addColorStop(
+                          0.4,
+                          "rgba(29,140,248,0.0)"
+                        );
+                        gradientStroke.addColorStop(0, "rgba(29,140,248,0)"); //blue colors
+
+                        return {
+                          labels: this.state.lable4,
+                          datasets: [
+                            {
+                              label: "Data",
+                              fill: true,
+                              backgroundColor: gradientStroke,
+                              borderColor: "white",
+                              borderWidth: 2,
+                              borderDash: [],
+                              borderDashOffset: 0.0,
+                              pointBackgroundColor: "grey",
+                              pointBorderColor: "rgba(255,255,255,0)",
+                              pointHoverBackgroundColor: "#1f8ef1",
+                              pointBorderWidth: 20,
+                              pointHoverRadius: 4,
+                              pointHoverBorderWidth: 15,
+                              pointRadius: 4,
+                              data: this.state.data4,
+                            },
+                          ],
+                        };
+                      }}
+                      options={chartExample2.options}
+                    />
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
           </Row>
           {/* <Row>
             <Col lg="6" md="12">
