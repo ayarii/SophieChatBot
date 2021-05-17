@@ -178,7 +178,7 @@ function ConversationRegistration(props) {
 
     const AddUser = async (user) => {
 
-        axios.post(`http://185.117.75.79:5000/users/`, user)
+        axios.post(`http://localhost:5000/users/`, user)
             .then((response) => {
                 console.log(response.data)
                 setConnectedUser(response.data)

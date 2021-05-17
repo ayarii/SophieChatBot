@@ -44,7 +44,7 @@ class Dashboard extends Component {
   }
 
   componentDidMount() {
-    fetch("http://185.117.75.79:5000/usersClass/get-user-classification")
+    fetch("http://localhost:5000/usersClass/get-user-classification")
       .then((res) => {
         res
           .json()
@@ -65,7 +65,7 @@ class Dashboard extends Component {
         alert("Error while fetch data");
       });
 
-    fetch("http://185.117.75.79:5000/usersClass/get-intrest-classification")
+    fetch("http://localhost:5000/usersClass/get-intrest-classification")
       .then((res) => {
         res
           .json()
@@ -86,7 +86,7 @@ class Dashboard extends Component {
         alert("Error while fetch data");
       });
 
-    fetch("http://185.117.75.79:5000/usersClass/get-age-classification")
+    fetch("http://localhost:5000/usersClass/get-age-classification")
       .then((res) => {
         res
           .json()
@@ -107,7 +107,7 @@ class Dashboard extends Component {
         alert("Error while fetch data");
       });
 
-    fetch("http://185.117.75.79:5000/usersClass/get-usersex-classification")
+    fetch("http://localhost:5000/usersClass/get-usersex-classification")
       .then((res) => {
         res
           .json()
