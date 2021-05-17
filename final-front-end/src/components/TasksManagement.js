@@ -89,6 +89,7 @@ const TasksManager = () => {
             { connectedUserState.connected? (
                 <DragDropContext onDragEnd={handleOnDragEnd}>
                     <Container className="d-flex align-items my-5" >
+                    <Col xs="6" sm="4">
                         <Droppable droppableId="ToDo">
                             {(provided) => ( 
                                 <div {...provided.droppableProps} ref={provided.innerRef} >
@@ -112,6 +113,8 @@ const TasksManager = () => {
                                 </div>
                             )}
                         </Droppable>
+                    </Col>
+                    <Col xs="6" sm="4">
                         <Droppable droppableId="InProgress">
                             {(provided) => ( 
                                 <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -133,7 +136,10 @@ const TasksManager = () => {
                                     </Col>
                                 </div>
                             )}
-                        </Droppable>
+                        </Droppable> 
+                    </Col>
+
+                    <Col sm="4">
                         <Droppable droppableId="Done">
                             {(provided) => ( 
                                 <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -156,7 +162,8 @@ const TasksManager = () => {
                                 </div>
                             )}
                         </Droppable>
-                    </Container>
+                    </Col>
+                      </Container>
                 </DragDropContext>
             ) : (
                <Container>
