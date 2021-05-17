@@ -19,112 +19,112 @@ function Chatbot() {
     const [fileInputState, setFileInputState] = useState('')
     const [previewSource, setPreviewSource] = useState('')
     const [childCallables, setChildCallables] = useState(false)
-    const [eventToSend, setEventToSent] = useState({ event : "TomorrowTasksReminder"})
+    const [eventToSend, setEventToSent] = useState({ event: "TomorrowTasksReminder" })
     const [reminderMessageForBeginDates, setreminderMessageForBeginDates] = useState("")
     const [reminderMessageForEndDates, setreminderMessageForEndDates] = useState("")
 
     const dispatch = useDispatch()
 
-    const isDeadlineComing = (date) =>{
+    const isDeadlineComing = (date) => {
         let after3Days = new Date(today)
         after3Days.setDate(after3Days.getDate() + 3)
         after3Days = moment(after3Days).format("DD/MM/YYYY")
-        return ( after3Days.substr(6,10) === date.substr(6,10) && 
-                 after3Days.substr(3,5) === date.substr(3,5) && 
-                 parseInt(after3Days.substr(0,2)) > parseInt(date.substr(0,2)))
-                
+        return (after3Days.substr(6, 10) === date.substr(6, 10) &&
+            after3Days.substr(3, 5) === date.substr(3, 5) &&
+            parseInt(after3Days.substr(0, 2)) > parseInt(date.substr(0, 2)))
+
     }
 
     const reminderForEndDates = (userId) => {
         axios.post(`http://185.117.75.79:5000/api/dialogflow/eventQuery`, eventToSend)
-        .then(response => {
-            if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
-                axios.get('http://185.117.75.79:5000/tasks')
-                .then(res => {
-
-                    
-                
-                    const endDateTasksList = res.data.filter(task => 
-                        task.userId === userId && 
-                        task.status === "InProgress" &&
-                        isDeadlineComing(task.beginDate)
-                    )
+            .then(response => {
+                if (response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow") {
+                    axios.get('http://185.117.75.79:5000/tasks')
+                        .then(res => {
 
 
-                    // let changedWords = []
-                    // if(tasksList.length===0){
-                    //     changedWords.push(" task")
-                    //     changedWords.push(".")
-                    // }else if(tasksList.length===1){
-                    //     changedWords.push(" task")
-                    //     changedWords.push(" which is :")
-                    // }else if(tasksList.length>1){
-                    //     changedWords.push(" tasks")
-                    //     changedWords.push(" which are :")
-                    // }
 
-                    console.log(" Coming DDL Tasks :", endDateTasksList)
-                    let toRemindTaskNames = " "
-                    endDateTasksList.forEach(task => toRemindTaskNames += task.title + " / ")
-                    setreminderMessageForEndDates(
-                        "Also keep in mind that you have " +
-                        endDateTasksList.length + 
-                        " tasks that will end up in the next few days : " +
-                        toRemindTaskNames )
+                            const endDateTasksList = res.data.filter(task =>
+                                task.userId === userId &&
+                                task.status === "InProgress" &&
+                                isDeadlineComing(task.beginDate)
+                            )
 
 
-                })
-            }
-        })
+                            // let changedWords = []
+                            // if(tasksList.length===0){
+                            //     changedWords.push(" task")
+                            //     changedWords.push(".")
+                            // }else if(tasksList.length===1){
+                            //     changedWords.push(" task")
+                            //     changedWords.push(" which is :")
+                            // }else if(tasksList.length>1){
+                            //     changedWords.push(" tasks")
+                            //     changedWords.push(" which are :")
+                            // }
+
+                            console.log(" Coming DDL Tasks :", endDateTasksList)
+                            let toRemindTaskNames = " "
+                            endDateTasksList.forEach(task => toRemindTaskNames += task.title + " / ")
+                            setreminderMessageForEndDates(
+                                "Also keep in mind that you have " +
+                                endDateTasksList.length +
+                                " tasks that will end up in the next few days : " +
+                                toRemindTaskNames)
+
+
+                        })
+                }
+            })
     }
 
     // Making the Reminder text for user tasks
     const reminderForBeginDates = (userId) => {
         axios.post(`http://185.117.75.79:5000/api/dialogflow/eventQuery`, eventToSend)
-        .then(response => {
-            if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
-                axios.get('http://185.117.75.79:5000/tasks')
-                .then(res => {
+            .then(response => {
+                if (response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow") {
+                    axios.get('http://185.117.75.79:5000/tasks')
+                        .then(res => {
 
-                    let tomorrow = new Date(today)
-                    tomorrow.setDate(tomorrow.getDate() + 1)
-                
-                    const beginDateTasksList = res.data.filter(task => 
-                        task.userId === userId && 
-                        task.status === "ToDo" &&
-                        task.beginDate === moment(tomorrow).format("DD/MM/YYYY")
-                    )
+                            let tomorrow = new Date(today)
+                            tomorrow.setDate(tomorrow.getDate() + 1)
 
-
-                    let changedWords = []
-                    if(beginDateTasksList.length===0){
-                        changedWords.push(" task")
-                        changedWords.push(".")
-                    }else if(beginDateTasksList.length===1){
-                        changedWords.push(" task")
-                        changedWords.push(" which is :")
-                    }else if(beginDateTasksList.length>1){
-                        changedWords.push(" tasks")
-                        changedWords.push(" which are :")
-                    }
-
-                    console.log("Tomorrow tasks :", beginDateTasksList)
-                    let toRemindTaskNames = " "
-                    beginDateTasksList.forEach(task => toRemindTaskNames += task.title + " / ")
-                    setreminderMessageForBeginDates(
-                        "Just to remind you that you have " + 
-                        beginDateTasksList.length + 
-                        changedWords[0] +
-                        " that begin today" +
-                        changedWords[1] +
-                        toRemindTaskNames )
+                            const beginDateTasksList = res.data.filter(task =>
+                                task.userId === userId &&
+                                task.status === "ToDo" &&
+                                task.beginDate === moment(tomorrow).format("DD/MM/YYYY")
+                            )
 
 
-                })
-            }
-        })
+                            let changedWords = []
+                            if (beginDateTasksList.length === 0) {
+                                changedWords.push(" task")
+                                changedWords.push(".")
+                            } else if (beginDateTasksList.length === 1) {
+                                changedWords.push(" task")
+                                changedWords.push(" which is :")
+                            } else if (beginDateTasksList.length > 1) {
+                                changedWords.push(" tasks")
+                                changedWords.push(" which are :")
+                            }
+
+                            console.log("Tomorrow tasks :", beginDateTasksList)
+                            let toRemindTaskNames = " "
+                            beginDateTasksList.forEach(task => toRemindTaskNames += task.title + " / ")
+                            setreminderMessageForBeginDates(
+                                "Just to remind you that you have " +
+                                beginDateTasksList.length +
+                                changedWords[0] +
+                                " that begin today" +
+                                changedWords[1] +
+                                toRemindTaskNames)
+
+
+                        })
+                }
+            })
     }
-    
+
 
     const onFileChange = event => {
         // Update the state 
@@ -168,7 +168,7 @@ function Chatbot() {
                 dispatch(connectUser(response.data.user))
                 //do the same with all the login forms
                 $('.content-conversation').removeClass('hide');
-                
+
                 reminderForBeginDates(response.data.user._id)
                 reminderForEndDates(response.data.user._id)
             }).catch((error) => {
@@ -181,7 +181,7 @@ function Chatbot() {
                 }
             });
 
-            
+
 
     }
 
@@ -210,11 +210,20 @@ function Chatbot() {
                 console.log(response.data)
                 $('#resumeSpinner').addClass('hide');
                 // adding user's info in setConnectedUser
-                const fullName = response.data.name
-                const interests = response.data.interests
-                const interestsArray = interests.split("\n");
-                console.log("interestsArray : ", interestsArray)
-                const array = fullName.split(" ")
+                let fullName=""
+                let array =["",""]
+                if (response.data.name) {
+                     fullName = response.data.name
+                     array = fullName.split(" ")
+                }
+                let interests = ""
+                let interestsArray = []
+                if (response.data.interests) {
+                     interests = response.data.interests
+                     interestsArray = interests.split("\n");
+                    console.log("interestsArray : ", interestsArray)
+                }
+                
                 setConnectedUser({
                     ...connectedUser,
                     nom: array[0],
@@ -250,21 +259,29 @@ function Chatbot() {
         axios.post(`http://185.117.75.79:5000/users/linkedIn`, { link: linkedIn })
             .then((response) => {
                 console.log("responseLinkedIn : ", response)
-                const fullName = response.data.userProfile.fullName
-                const array = fullName.split(" ")
-                const skills = response.data.skills
-                var interests = []
+                let fullName = ""
+                let array = ["", ""]
+                if(response.data.userProfile.fullName){
+                 fullName = response.data.userProfile.fullName
+                 array = fullName.split(" ")
+               
+            }
+            let skills=[]
+            var interests = []
+            if(response.data.skills){
+             skills = response.data.skills
                 skills.forEach(skill => {
                     interests.push(skill.skillName)
                 });
                 console.log("interests : ", interests)
+            }
                 setConnectedUser({
                     ...connectedUser,
                     nom: array[0],
                     prenom: array[1],
-                    profession: response.data.userProfile.title,
-                    pays: response.data.userProfile.location.country,
-                    image: response.data.userProfile.photo,
+                    profession: response.data.userProfile.title ? response.data.userProfile.title : "not_able_to_scrape",
+                    pays: response.data.userProfile.location ? response.data.userProfile.location.country : "not_able_to_scrape",
+                    image: response.data.userProfile.photo ? response.data.userProfile.photo : "not_able_to_scrape",
                     interests: interests
                 })
 
@@ -272,7 +289,7 @@ function Chatbot() {
                 $('.chat-mail-linkedIn').addClass('hide');
                 $('.chat-mail-folowed-linkedIn').removeClass('hide');
             }).catch((error) => {
-                console.log("errorLinkedIn  : ", error.response.data.error)
+                console.log("errorLinkedIn  : ", error)
                 $('#linkInSpinner').addClass('hide');
 
             });
@@ -675,13 +692,13 @@ function Chatbot() {
                             </div> */}
 
                             <div className="col-md-12">
-                                <CountryDropdown 
+                                <CountryDropdown
                                     value={connectedUser.pays}
-                                    onChange={(val) =>{ 
+                                    onChange={(val) => {
                                         const newUserObj = { ...connectedUser, pays: val }
-                                            setConnectedUser(newUserObj);
-                                        }}/>
-                               
+                                        setConnectedUser(newUserObj);
+                                    }} />
+
                             </div>
 
 
