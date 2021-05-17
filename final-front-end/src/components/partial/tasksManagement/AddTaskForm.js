@@ -17,9 +17,6 @@ const AddTaskForm = (props) => {
     const [isLoginRequiredShown, setIsLoginRequiredShown] = useState(false)
     const [taskToRender, setTaskToRender] = useState(task)
 
-    useEffect(() => {
-        console.log("connected User",connectedUserState)
-    })
     
     const addTask = () => { 
          if(task.userId===""){
@@ -27,7 +24,7 @@ const AddTaskForm = (props) => {
          }
          else{
             dispatch(AddTask(taskToRender))
-            console.log("The added task is : " + taskToRender)
+            console.log("Added Task :" ,taskToRender)
             props.unShowPopup()
          }
     }
@@ -57,7 +54,7 @@ const AddTaskForm = (props) => {
                             setTaskToRender({
                                 ...taskToRender,
                                 beginDate : moment(date).format("DD/MM/yyyy"),
-                                status : `${moment(date).format("DD/MM/yyyy") === moment(new Date()).format("DD/MM/yyyy")? "ToDo" : "InProgress"}`
+                                status : `${moment(date).format("DD/MM/yyyy") === moment(new Date()).format("DD/MM/yyyy")? "InProgress" : "ToDo"}`
                             })
                         }}
                         dateFormat = "dd/MM/yyyy"

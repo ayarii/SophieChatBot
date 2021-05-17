@@ -10,4 +10,13 @@ router.post("/", userClass.createUser);
 // GET ALL Users
 router.get("/", userClass.getAllUser);
 
+// GET ALL Users
+router.get("/get-user-classification", userClass.getAllUserClasstification);
+
+router.get("/get-usersex-classification", userClass.getsexClasstification);
+
+router.get("/get-age-classification", userClass.getageClasstification);
+
+router.get("/get-intrest-classification", userClass.getintrestClasstification);
+
 module.exports = router;
