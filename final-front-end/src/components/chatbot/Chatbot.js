@@ -25,7 +25,6 @@ function Chatbot() {
 
     const dispatch = useDispatch()
 
-<<<<<<< HEAD
     const isDeadlineComing = (date) =>{
         var dateInString = moment(date).format("yyyy-MM-DD")
         var after3Days = new Date(today)
@@ -80,7 +79,7 @@ function Chatbot() {
                 })
             }
         })
-=======
+
     const isDeadlineComing = (date) => {
         let after3Days = new Date(today)
         after3Days.setDate(after3Days.getDate() + 3)
@@ -132,12 +131,12 @@ function Chatbot() {
                         })
                 }
             })
->>>>>>> a9714c5bcbc364baa927010d026e21c55a0aeba0
+
     }
 
     // Making the Reminder text for user tasks
     const reminderForBeginDates = (userId) => {
-<<<<<<< HEAD
+
         axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
         .then(response => {
             if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
@@ -185,7 +184,7 @@ function Chatbot() {
                 })
             }
         })
-=======
+
         axios.post(`http://185.117.75.79:5000/api/dialogflow/eventQuery`, eventToSend)
             .then(response => {
                 if (response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow") {
@@ -229,7 +228,7 @@ function Chatbot() {
                         })
                 }
             })
->>>>>>> a9714c5bcbc364baa927010d026e21c55a0aeba0
+
     }
 
 
