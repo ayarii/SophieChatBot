@@ -3,6 +3,7 @@ import {fetchRecoms} from './redux/recommendations/recomActions'
 import { useSelector, useDispatch } from 'react-redux'
 import Recommendation from './Recommendation'
 import {Link} from 'react-router-dom';
+import { filter } from 'underscore';
 
 function Recommendations() {
 
@@ -22,20 +23,20 @@ function Recommendations() {
 
 
   const news_container = (
-    recomData.recoms.filter(recom => recom.category === "News").slice(0, 3).map(recommendation =>
+    recomData.recoms.filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category === "News").slice(0, 3).map(recommendation =>
 
       <Recommendation key={recommendation._id} recommendation={recommendation}   />  
     )
 )
 
   const courses_container = (
-  recomData.recoms.filter(recom => recom.category === "Course").slice(0, 3).map(recommendation =>
+  recomData.recoms.filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category === "Course").slice(0, 3).map(recommendation =>
 
     <Recommendation key={recommendation._id} recommendation={recommendation}   />  
   ))
   
   const events_container = (
-    recomData.recoms.filter(recom => recom.category === "Events").slice(0, 3).map(recommendation =>
+    recomData.recoms.filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category === "Events").slice(0, 3).map(recommendation =>
 
       <Recommendation key={recommendation._id} recommendation={recommendation}   />  
     ))
@@ -54,7 +55,8 @@ function Recommendations() {
   </div>      
 
       <div>
-        <div className="mt-5">
+{       userConnectedData.connected? 
+(        <div className="mt-5">
         <div className="mb-5">
         <div className="container">
         <div className="rec-container">
@@ -92,7 +94,7 @@ function Recommendations() {
         </div>
         </div>
         </div>
-        </div>
+        </div>) : (<h1 className="yel">You should sign in to consult your recommendations</h1>)}
 
       </div>
       </div>
