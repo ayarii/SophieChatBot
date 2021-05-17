@@ -2,6 +2,8 @@ import React, { useState} from 'react'
 import { Card, Modal, Button, Container } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import moment from 'moment'
+
 import { DeleteTask } from '../../redux/tasks/tasksActions'
 import UpdateTaskForm from './UpdateTaskForm'
 
@@ -70,7 +72,7 @@ const TaskCard = (props) => {
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h6 style={{color : '#8A8A81'}}><span style={{color : '#424447'}}>Its date : </span>From {props.task.beginDate} To {props.task.endDate}</h6>
+                    <h6 style={{color : '#8A8A81'}}><span style={{color : '#424447'}}>Its date : </span>From {moment(props.task.beginDate).format("DD/MM/yyyy")} To {moment(props.task.endDate).format("DD/MM/yyyy")}</h6>
                     <p>{props.task.description}</p>
                 </Modal.Body>
             </Modal>

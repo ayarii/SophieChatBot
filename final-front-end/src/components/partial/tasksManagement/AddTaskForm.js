@@ -15,16 +15,14 @@ const AddTaskForm = (props) => {
     const dispatch = useDispatch()
     const [task, setTask] = useState({userId : connectedUserState.user._id})
     const [isLoginRequiredShown, setIsLoginRequiredShown] = useState(false)
-    const [taskToRender, setTaskToRender] = useState(task)
-
     
     const addTask = () => { 
          if(task.userId===""){
              setIsLoginRequiredShown(true)
          }
          else{
-            dispatch(AddTask(taskToRender))
-            console.log("Added Task :" ,taskToRender)
+            dispatch(AddTask(task))
+            console.log("Added Task :" ,task)
             props.unShowPopup()
          }
     }
@@ -37,24 +35,18 @@ const AddTaskForm = (props) => {
                 <Form.Control size="lg" type="text" onChange={
                     (e) => {
                         setTask({...task, title : e.target.value})
-                        setTaskToRender({...taskToRender, title : e.target.value})
                     }
                 } />
                <div className="d-flex justify-content-between mt-3">
                     <div >
                         <FormSubTitle>Begin date :</FormSubTitle>
                         <DatePicker className="form-control" 
-                        selected = {task.beginDate}
+                        selected = {task.beginDate? new Date(task.beginDate) : task.beginDate}
                         onChange = { date => {
                             setTask({
                                 ...task,
-                                beginDate : date,
-                                status : `${task.beginDate = new Date()? "InProgress" : "ToDo"}`
-                            })
-                            setTaskToRender({
-                                ...taskToRender,
-                                beginDate : moment(date).format("DD/MM/yyyy"),
-                                status : `${moment(date).format("DD/MM/yyyy") === moment(new Date()).format("DD/MM/yyyy")? "InProgress" : "ToDo"}`
+                                beginDate : moment(date).format("yyyy-MM-DD"),
+                                status : `${task.beginDate = new Date()? "ToDo" : "InProgress"}`
                             })
                         }}
                         dateFormat = "dd/MM/yyyy"
@@ -67,13 +59,12 @@ const AddTaskForm = (props) => {
                     <div>
                         <FormSubTitle>End date :</FormSubTitle>
                         <DatePicker className="form-control" 
-                        selected = {task.endDate}
+                        selected = {task.endDate? new Date(task.endDate) : task.endDate}
                         onChange = { date => {
-                            setTask({...task, endDate : date})
-                            setTaskToRender({...taskToRender, endDate : moment(date).format("DD/MM/yyyy")})
+                            setTask({...task, endDate : moment(date).format("yyyy-MM-DD"),})
                         }}
                         dateFormat = "dd/MM/yyyy"
-                        minDate={task.beginDate? task.beginDate : new Date()}
+                        minDate={task.beginDate? new Date(task.beginDate) : new Date()}
                         isClearable
                         showYearDropdown
                         />
@@ -84,7 +75,6 @@ const AddTaskForm = (props) => {
                 <Form.Control size="lg" as="textarea"  rows={3} onChange={
                     (e) => {
                         setTask({...task, description : e.target.value})
-                        setTaskToRender({...taskToRender, description : e.target.value})
                     }
                 } />
                 <div className="d-flex justify-content-center mt-3">
