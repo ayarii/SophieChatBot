@@ -31,7 +31,7 @@ class Contact extends Component {
             </div>
             <div class="contact-w3pvt-form mt-5">
               <form
-                action="http://localhost:5000/contactus"
+                action="http://185.117.75.79:5000/contactus"
                 class="w3layouts-contact-fm"
                 method="post"
               >

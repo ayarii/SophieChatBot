@@ -36,10 +36,10 @@ function Chatbot() {
     }
 
     const reminderForEndDates = (userId) => {
-        axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
+        axios.post(`http://185.117.75.79:5000/api/dialogflow/eventQuery`, eventToSend)
         .then(response => {
             if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
-                axios.get('http://localhost:5000/tasks')
+                axios.get('http://185.117.75.79:5000/tasks')
                 .then(res => {
 
                     
@@ -80,10 +80,10 @@ function Chatbot() {
 
     // Making the Reminder text for user tasks
     const reminderForBeginDates = (userId) => {
-        axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
+        axios.post(`http://185.117.75.79:5000/api/dialogflow/eventQuery`, eventToSend)
         .then(response => {
             if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
-                axios.get('http://localhost:5000/tasks')
+                axios.get('http://185.117.75.79:5000/tasks')
                 .then(res => {
 
                     let tomorrow = new Date(today)
@@ -159,7 +159,7 @@ function Chatbot() {
     const onLogin = () => {
         console.log({ password, userName })
 
-        axios.post(`http://localhost:5000/users/login`, { password, userName })
+        axios.post(`http://185.117.75.79:5000/users/login`, { password, userName })
             .then((response) => {
                 console.log("responseLogin : ", response)
                 setConnectedUser(response.data.user)
@@ -197,7 +197,7 @@ function Chatbot() {
             fileInputState
         );
 
-        axios.post(`http://localhost:5000/users/resumeUpload`, formData)
+        axios.post(`http://185.117.75.79:5000/users/resumeUpload`, formData)
             .then((response) => {
                 console.log("responseResume : ", response)
             }).catch((error) => {
@@ -205,7 +205,7 @@ function Chatbot() {
             });
 
 
-        axios.get(`http://localhost:5000/users/resumeScrapping/${fileInputState.name}`)
+        axios.get(`http://185.117.75.79:5000/users/resumeScrapping/${fileInputState.name}`)
             .then(response => {
                 console.log(response.data)
                 $('#resumeSpinner').addClass('hide');
@@ -247,7 +247,7 @@ function Chatbot() {
     const onLinkedInDone = () => {
         setConnectedUser(initialUserState)
         $('#linkInSpinner').removeClass('hide');
-        axios.post(`http://localhost:5000/users/linkedIn`, { link: linkedIn })
+        axios.post(`http://185.117.75.79:5000/users/linkedIn`, { link: linkedIn })
             .then((response) => {
                 console.log("responseLinkedIn : ", response)
                 const fullName = response.data.userProfile.fullName
@@ -282,7 +282,7 @@ function Chatbot() {
 
     const onAddUser = (user) => {
         console.log(user)
-        axios.post(`http://localhost:5000/users/`, user)
+        axios.post(`http://185.117.75.79:5000/users/`, user)
             .then((response) => {
                 console.log(response.data)
                 setConnectedUser(response.data)
@@ -306,7 +306,7 @@ function Chatbot() {
         uploadImage(previewSource).then((imageEnc) => {
             user.image = imageEnc
             console.log("user : ", user)
-            axios.post(`http://localhost:5000/users/throughResume`, user)
+            axios.post(`http://185.117.75.79:5000/users/throughResume`, user)
                 .then((response) => {
                     console.log("response.data : ", response.data)
                     setConnectedUser(response.data)

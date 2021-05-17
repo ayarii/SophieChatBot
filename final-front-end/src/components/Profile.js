@@ -77,7 +77,7 @@ function Profile() {
     const UpdateUser = (e) => {
         e.preventDefault()
         if (previewSource) uploadImage(previewSource)
-        axios.put(`http://localhost:5000/users/${user._id}`, user)
+        axios.put(`http://185.117.75.79:5000/users/${user._id}`, user)
             .then(() => {
                 dispatch(connectUser(user))
                 showForm()

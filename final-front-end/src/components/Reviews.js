@@ -20,7 +20,7 @@ function Reviews() {
   }, [])
 
 /*   const getUser = () => {
-    axios.get('http://localhost:5000/users/607ac861c2efcd3bf4652f70').then(reponse => {
+    axios.get('http://185.117.75.79:5000/users/607ac861c2efcd3bf4652f70').then(reponse => {
     console.log(reponse.data)    
     return reponse.data})
     } */

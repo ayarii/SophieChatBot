@@ -34,10 +34,10 @@ function Conversation(props) {
     // }, [toTasksManagement])
 
     // useEffect(() => {
-    //     axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
+    //     axios.post(`http://185.117.75.79:5000/api/dialogflow/eventQuery`, eventToSend)
     //     .then(response => {
     //         if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
-    //             axios.get('http://localhost:5000/tasks')
+    //             axios.get('http://185.117.75.79:5000/tasks')
     //             .then(res => {
     //                 const toRemindTasksList = res.data.filter(task => isItTomorrow(task.removeBeginDate, 1))
     //                 console.log(toRemindTasksList)
@@ -56,7 +56,7 @@ function Conversation(props) {
         const textQueryMessage = {
             text: str
         }
-        axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
+        axios.post(`http://185.117.75.79:5000/api/dialogflow/textQuery`, textQueryMessage)
             .then(res => {
                 console.log(res.data)
                 let chatbotResponse = res.data

@@ -47,7 +47,7 @@ export const updateRecom = (recom) =>{
 export const fetchRecoms = () => {
     return (dispatch) => {
         dispatch(fetchRecomsRequest)
-     axios.get('http://localhost:5000/recommendations')
+     axios.get('http://185.117.75.79:5000/recommendations')
      .then(response =>{
          //response.data is the array of recommendations
          const recoms = response.data
@@ -62,7 +62,7 @@ export const fetchRecoms = () => {
 
 export const DeleteRecom = (id) =>{
     return function (dispatch){
-         axios.delete(`http://localhost:5000/recommendations/${id}`)
+         axios.delete(`http://185.117.75.79:5000/recommendations/${id}`)
         .then(
             dispatch(deleteRecom(id))
         )
@@ -76,7 +76,7 @@ export const AddRecom = (recom) =>{
    
     return function (dispatch){
         console.log("Recommendation : ",recom)
-         axios.post(`http://localhost:5000/recommendations/`,recom)
+         axios.post(`http://185.117.75.79:5000/recommendations/`,recom)
          .then((response) => {
             dispatch(addRecom(response.data))
         }).catch((error)=>console.log("errorAddinng  : ", error.response));
@@ -89,7 +89,7 @@ export const AddRecom = (recom) =>{
 
 export const UpdateRecom = (recom) =>{
     return function (dispatch){
-         axios.put(`http://localhost:5000/recommendations/${recom._id}`,recom)
+         axios.put(`http://185.117.75.79:5000/recommendations/${recom._id}`,recom)
          .then(() => {
             dispatch(updateRecom(recom))
         }, (error) => {

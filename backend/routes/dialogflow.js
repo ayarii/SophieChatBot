@@ -53,7 +53,8 @@ router.post("/textQuery", async (req,res) => {
     scrapeProduct(`https://fr.wikipedia.org/wiki/${finalSearchTxt}`).then((result)=>{
       console.log(result)
       res.status(200).send(result.p1 + result.p2);
-    }).catch(()=>{
+    }).catch((error)=>{
+      console.log(error)
       res.status(200).send(`sorry i couldn't recognize who ${finalSearchTxt} is please check the name again !`  );
     })
 
