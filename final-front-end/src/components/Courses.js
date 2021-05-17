@@ -20,7 +20,7 @@ function Courses() {
     }, [])
 
     const courses_container = (
-        userData.recoms.reverse().filter(recom => recom.category == "Course").map(recommendation =>
+        userData.recoms.reverse().filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category == "Course").map(recommendation =>
     
           <Recommendation key={recommendation._id} recommendation={recommendation}   />  
         ))
@@ -37,14 +37,15 @@ function Courses() {
                         <li class="breadcrumb-item active" aria-current="page">Courses</li>
                     </ol>
         </div> 
-        <div className="recom-container">
 
+        {userConnectedData.connected? 
+            (<div className="recom-container">
             <div className="container">
             <div className="row">
                 {courses_container}
             </div>
         </div>
-        </div>
+        </div>) : (<h1 className="yel">You should sign in to consult your recommendations</h1>)}
         </div>
     )
 }

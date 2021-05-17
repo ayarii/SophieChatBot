@@ -2,19 +2,58 @@ const login = require('./login')
 const puppeteer = require('puppeteer')
 const axios = require('axios');
 const { error } = require('actions-on-google/dist/common');
+const { response } = require('express');
 
-const interest = 'nodejs'
-async function scrapeEvents(url){
-  const browser = await puppeteer.launch({
+var users 
+axios.get('http://localhost:5000/users')
+     .then(response =>{
+         //response.data is the array of users
+          users = response.data
+          console.log(users.length)
+          //console.log(users[7].interests.length)
+          for(i=0; i<users.length; i++){
+            x=Math.floor(Math.random()*users[i].interests.length)
+           const interest = users[i].interests[x]
+           console.log(interest) 
+           scrapeEvents(`https://www.facebook.com/events/search/?q=${interest}`,users[i]._id,interest)
+              .then((res) => {
+                console.log('res')
+              })  
+            }
+     })
+     .catch(error=>{
+      console.log(error)
+     }) 
+async function scrapeEvents(url,id,interest){
+   const browser = await puppeteer.launch({
     headless: false,
     args: ['--disable-notifications']
   })
   const page = await browser.newPage()
   await login(page)
-   await new Promise(r => setTimeout(r, 4000));
+   await new Promise(r => setTimeout(r, 10000));
 
   await page.goto(url)
-  await new Promise(r => setTimeout(r, 4000)); 
+  await new Promise(r => setTimeout(r, 4000));
+
+  const links = await page.evaluate(url => {
+    const links = []
+    const scrapedLinks = document.querySelectorAll('a[href^="' + url + '/permalink"]')
+    scrapedLinks.forEach(scrapedLink => {
+      const split = scrapedLink.href.split('/')
+      split.pop()
+      const postLink = split.join('/')
+
+      if (! links.includes(postLink)) {
+          links.push(postLink)
+      }
+  })
+
+      return links
+      
+    }, url)
+    console.log(links)
+    
 
    const [e1] = await page.$x('/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div/a/div[1]/div/div/div/div/div[2]/div[1]/div[1]/div/div/div[2]/span/span/object/a/span')
   const txt1 = await e1.getProperty('textContent')
@@ -70,13 +109,15 @@ async function scrapeEvents(url){
 
   console.log({title1, date1, mode1, imgUrl1, title2, date2, mode2, imgUrl2, title3, date3, mode3, imgUrl3}) 
 
-/*      axios.post('http://localhost:5000/recommendations', {
+       axios.post('http://localhost:5000/recommendations', {
       "title":title1,
       "date":date1,
       "imgUrl":imgUrl1,
       "category":"Events",
       "mode": mode1,
       "interest" : interest,
+      "userId" : id,
+      "link" : url,
     }).then((res) => {
       console.log(res)
     }).catch(error => {
@@ -90,6 +131,8 @@ async function scrapeEvents(url){
       "category":"Events",
       "mode": mode2,
       "interest" : interest,
+      "userId" : id,
+      "link" : url,
     }).then((res) => {
       console.log(res)
     }).catch(error => {
@@ -103,11 +146,13 @@ async function scrapeEvents(url){
       "category":"Events",
       "mode": mode3,
       "interest" : interest,
+      "userId" : id,
+      "link" : url,
     }).then((res) => {
       console.log(res)
     }).catch(error => {
       console.log(error);
-    })*/
+    }) 
 }
 
-module.exports = scrapeEvents(`https://www.facebook.com/events/search/?q=${interest}`) ;
+//module.exports = scrapeEvents(`https://www.facebook.com/events/search/?q=${interest}`) ;

@@ -1,7 +1,7 @@
 const express = require('express')
 const { models } = require('mongoose')
 const Review = require('../models/Review')
-const reviewController = require('../controllers/ReviewController')
+const reviewController = require('../controllers/reviewController')
 const router = express.Router();
 
 

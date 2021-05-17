@@ -17,10 +17,10 @@ function Events() {
           else {
             alert("You should connect first.")
           }
-    }, [])
+    },[dispatch, userConnectedData])
 
     const events_container = (
-        userData.recoms.reverse().filter(recom => recom.category === "Events").map(recommendation =>
+        userData.recoms.reverse().filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category == "Events").map(recommendation =>
     
           <Recommendation key={recommendation._id} recommendation={recommendation}   />  
         ))    
@@ -37,15 +37,16 @@ function Events() {
                             <li class="breadcrumb-item active" aria-current="page">Events</li>
                         </ol>
             </div>  
-        <div className="recom-container">
-
+            
+            {userConnectedData.connected? 
+            (<div className="recom-container">
             <div className="container">
             <div className="row">
                 {events_container}
-        </div>
-        </div>
-        </div>
-        </div>
+            </div>
+            </div>
+            </div>) : (<h1 className="yel">You should sign in to consult your recommendations</h1>)}
+            </div>
     )
 }
 

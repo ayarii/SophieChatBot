@@ -11,14 +11,12 @@ function Reviews() {
 
   const reviewData = useSelector((state) => state.review)
   const userConnectedData = useSelector((state) => state.connectedUser)
-  const usersData = useSelector((state) => state.user)
 
   const dispatch = useDispatch()
   useEffect(() => {
       dispatch(fetchReviews())
       dispatch(fetchUsers())
       console.log(userConnectedData)
-      console.log(usersData)
   }, [])
 
 /*   const getUser = () => {
@@ -27,7 +25,7 @@ function Reviews() {
     return reponse.data})
     } */
     
-    const [review, setReview] = useState({userId: userConnectedData.user._id})
+    const [review, setReview] = useState({userId: userConnectedData.user._id , userImg: userConnectedData.user.image})
 
   const onAddReview = () => {
       if (!userConnectedData.connected){
@@ -48,7 +46,7 @@ function Reviews() {
         <Card style={{ width: '18rem', border: 'none' }}>
         <div className="image">
         {Boolean(userConnectedData.user._id === review.userId) ? <h3 className="close"><FaTimes style={{  cursor: 'pointer' }} onClick={() => dispatch(DeleteReview(review._id))} /></h3> : "" }        
-        <Card.Img className="card-img" src="http://res.cloudinary.com/esprit456/image/upload/v1618659424/e-learning/bcubwjyjzcy8z4konuyv.jpg" width="277px" height="370px" />
+        <Card.Img className="card-img" src={review.userImg} width="277px" height="370px" />
         </div>
         <Card.Body className="card-content">
             <Card.Title className="card-title">{review.comment}</Card.Title>
@@ -69,6 +67,7 @@ function Reviews() {
         <div className="row">
         {review_container}
         </div>
+        {userConnectedData.connected? (
         <div className="form">
             <div className="row">
                 <textarea placeholder="Enter your comment" 
@@ -78,7 +77,9 @@ function Reviews() {
                 />
                 <button onClick={onAddReview} className="sub" >Submit</button>
             </div>
-        </div>
+        </div>            
+        ) : ("")}
+
     </div>  
     )
 }
