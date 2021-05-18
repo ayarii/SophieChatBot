@@ -14,20 +14,24 @@ exports.createUser = (req, res) => {
     .save()
     .then(async () => {
       // res.status(201).json({ msg: "we have recivied your request . our team will contact you soon" })
+	
+
+
+
 
       let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
+        host: "mail.sophiechatbot.com",
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-          user: "rdpfifatest@gmail.com", // generated ethereal user
-          pass: "Omar1235", // generated ethereal password
+          user: "support@sophiechatbot.com", // generated ethereal user
+          pass: "BebeTest1235!", // generated ethereal password
         },
       });
 
       let info = await transporter
         .sendMail({
-          from: `Thanks For Contacting US <rdpfifatest@gmail.com>`,
+          from: `SophieChatbot <support@sophiechatbot.com>`,
           to: contectUSObj.email,
           subject: "Contact Us",
           // text: "Hi hello",
@@ -43,7 +47,7 @@ exports.createUser = (req, res) => {
       let info2 = await transporter
         .sendMail({
           from: `User Issue <${contectUSObj.email}>`,
-          to: "rdpfifatest@gmail.com",
+          to: "support@sophiechatbot.com",
           subject: "Contact Us",
           // text: "Hi hello",
           html: `<h1><strong>User Info</strong></h1><hr></hr> <b>Message:  </b>${contectUSObj.message}<hr></hr><b>firstname:  </b>${contectUSObj.firstname}<hr></hr><b>lastname:  </b>${contectUSObj.lastname}<hr></hr><b>email:  </b>${contectUSObj.email}<hr></hr>`, // html body
