@@ -14,7 +14,7 @@ function Users() {
 
     // Fetch Users
     const fetchUsers = async () => {
-        const res = await fetch('http://185.117.75.79:5000/users')
+        const res = await fetch('http://localhost:5000/users')
         const data = await res.json()
         console.log(data)
         return data
@@ -24,7 +24,7 @@ function Users() {
   //Delete User
 
   const deleteUser = async (id) => {
-    await fetch(`http://185.117.75.79:5000/users/${id}`, { method: 'DELETE' })
+    await fetch(`http://localhost:5000/users/${id}`, { method: 'DELETE' })
     setUsers(users.filter((user) => user.id != id))
     console.log("users : ", users)
   }

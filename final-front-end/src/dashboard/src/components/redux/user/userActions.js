@@ -46,7 +46,7 @@ export const updateUser = (user) =>{
 export const fetchUsers = () => {
     return function(dispatch){
         dispatch(fetchUsersRequest())
-     axios.get('http://185.117.75.79:5000/users')
+     axios.get('http://localhost:5000/users')
      .then(response =>{
          //response.data is the array of users
          const users = response.data
@@ -62,7 +62,7 @@ export const fetchUsers = () => {
 
 export const DeleteUser = (id) =>{
     return function (dispatch){
-         axios.delete(`http://185.117.75.79:5000/users/${id}`)
+         axios.delete(`http://localhost:5000/users/${id}`)
         .then(
             dispatch(deleteUser(id))
         )
@@ -76,7 +76,7 @@ export const AddUser = (user) =>{
    
     return function (dispatch){
         console.log("user : ",user)
-         axios.post(`http://185.117.75.79:5000/users/`,user)
+         axios.post(`http://localhost:5000/users/`,user)
          .then((response) => {
             dispatch(addUser(response.data))
         }).catch((error)=>console.log("errorAddinng  : ", error.response));
@@ -90,7 +90,7 @@ export const AddUser = (user) =>{
 export const UpdateUser = (user) =>{
     console.log(user)
     return function (dispatch){
-         axios.put(`http://185.117.75.79:5000/users/${user._id}`,user)
+         axios.put(`http://localhost:5000/users/${user._id}`,user)
          .then(() => {
             dispatch(updateUser(user))
         }, (error) => {

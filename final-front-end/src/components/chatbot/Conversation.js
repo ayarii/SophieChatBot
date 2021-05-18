@@ -6,7 +6,8 @@ import moment from 'moment'
 import { GoToTasksManagementInterface } from '../redux/tasks/tasksActions'
 
 import { addDialogue } from '../redux/conversationHistory/conversationHistoryActions'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import history from '../../history'
 
 function Conversation(props) {
     const timeElapsed = Date.now()
@@ -18,6 +19,7 @@ function Conversation(props) {
 
     
     const [toTasksManagement, setToTasksManagement] = useState(false)
+    
 
 
 //   // to compare the difference between begin date of the task and today.
@@ -34,10 +36,10 @@ function Conversation(props) {
     // }, [toTasksManagement])
 
     // useEffect(() => {
-    //     axios.post(`http://185.117.75.79:5000/api/dialogflow/eventQuery`, eventToSend)
+    //     axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
     //     .then(response => {
     //         if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
-    //             axios.get('http://185.117.75.79:5000/tasks')
+    //             axios.get('http://localhost:5000/tasks')
     //             .then(res => {
     //                 const toRemindTasksList = res.data.filter(task => isItTomorrow(task.removeBeginDate, 1))
     //                 console.log(toRemindTasksList)
@@ -53,10 +55,14 @@ function Conversation(props) {
         $('.userImage:last').clone().insertBefore(".me:last")
         $("#myInput").val("")
         setTimeout(updateScroll, 1000);
+        if(str=="hizni"){
+            console.log("redirection ..")
+            history.push('/TasksManager');
+        }
         const textQueryMessage = {
             text: str
         }
-        axios.post(`http://185.117.75.79:5000/api/dialogflow/textQuery`, textQueryMessage)
+        axios.post(`http://localhost:5000/api/dialogflow/textQuery`, textQueryMessage)
             .then(res => {
                 console.log(res.data)
                 let chatbotResponse = res.data

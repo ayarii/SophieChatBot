@@ -19,6 +19,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Admin from './dashboard/src/layouts/Admin/Admin';
 import EnterPoint from './dashboard/src/layouts/EnterPoint';
 import Profile from './components/Profile';
+import history from './history';
 
 
 function App() {
@@ -28,7 +29,7 @@ function App() {
     <div>
       
       <Provider store={store}>
-        <Router>
+        <Router history={history}>
           <Navbar />
             <Switch>
               <Route exact path='/'component={Home}/>

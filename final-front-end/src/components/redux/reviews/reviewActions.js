@@ -47,7 +47,7 @@ export const updateReview = (review) =>{
 export const fetchReviews = () => {
     return (dispatch) => {
         dispatch(fetchReviewsRequest)
-     axios.get('http://185.117.75.79:5000/reviews')
+     axios.get('http://localhost:5000/reviews')
      .then(response =>{
          //response.data is the array of reviews
          const reviews = response.data
@@ -62,7 +62,7 @@ export const fetchReviews = () => {
 
 export const DeleteReview = (id) =>{
     return function (dispatch){
-         axios.delete(`http://185.117.75.79:5000/reviews/${id}`)
+         axios.delete(`http://localhost:5000/reviews/${id}`)
         .then(
             dispatch(deleteReview(id))
         )
@@ -76,7 +76,7 @@ export const AddReview= (review) =>{
    
     return function (dispatch){
         console.log("Review : ",review)
-         axios.post(`http://185.117.75.79:5000/reviews/`,review)
+         axios.post(`http://localhost:5000/reviews/`,review)
          .then((response) => {
             dispatch(addReview(response.data))
         }).catch((error)=>console.log("errorAddinng  : ", error.response));
@@ -89,7 +89,7 @@ export const AddReview= (review) =>{
 
 export const UpdateReview = (review) =>{
     return function (dispatch){
-         axios.put(`http://185.117.75.79:5000/reviews/${review._id}`,review)
+         axios.put(`http://localhost:5000/reviews/${review._id}`,review)
          .then(() => {
             dispatch(updateReview(review))
         }, (error) => {
