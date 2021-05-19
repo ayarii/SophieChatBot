@@ -40,55 +40,9 @@ function Chatbot() {
                 parseInt(after3Days.substr(8,10)) > parseInt(dateInString.substr(8,10)))
     }
 
-    const reminderForEndDates = (userId) => {
-        axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
-        .then(response => {
-            if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
-                axios.get('http://localhost:5000/tasks')
-                .then(res => {
-                
-                    const endDateTasksList = res.data.filter(task => 
-                        task.userId === userId && 
-                        task.status === "InProgress" &&
-                        isDeadlineComing(task.beginDate)
-                    )
+    
 
-
-                    // let changedWords = []
-                    // if(tasksList.length===0){
-                    //     changedWords.push(" task")
-                    //     changedWords.push(".")
-                    // }else if(tasksList.length===1){
-                    //     changedWords.push(" task")
-                    //     changedWords.push(" which is :")
-                    // }else if(tasksList.length>1){
-                    //     changedWords.push(" tasks")
-                    //     changedWords.push(" which are :")
-                    // }
-
-                    console.log(" Coming DDL Tasks :", endDateTasksList)
-                    let toRemindTaskNames = " "
-                    endDateTasksList.forEach(task => toRemindTaskNames += task.title + " / ")
-                    setreminderMessageForEndDates(
-                        "Also keep in mind that you have " +
-                        endDateTasksList.length + 
-                        " tasks that will end up in the next few days : " +
-                        toRemindTaskNames )
-
-
-                })
-            }
-        })
-
-    const isDeadlineComing = (date) => {
-        let after3Days = new Date(today)
-        after3Days.setDate(after3Days.getDate() + 3)
-        after3Days = moment(after3Days).format("DD/MM/YYYY")
-        return (after3Days.substr(6, 10) === date.substr(6, 10) &&
-            after3Days.substr(3, 5) === date.substr(3, 5) &&
-            parseInt(after3Days.substr(0, 2)) > parseInt(date.substr(0, 2)))
-
-    }
+    
 
     const reminderForEndDates = (userId) => {
         axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
@@ -136,10 +90,6 @@ function Chatbot() {
 
     // Making the Reminder text for user tasks
     const reminderForBeginDates = (userId) => {
-<<<<<<< HEAD
-        axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
-=======
-
         axios.post(`http://localhost:5000/api/dialogflow/eventQuery`, eventToSend)
         .then(response => {
             if(response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow"){
@@ -189,7 +139,6 @@ function Chatbot() {
         })
 
         axios.post(`http://185.117.75.79:5000/api/dialogflow/eventQuery`, eventToSend)
->>>>>>> 6dbb86b48d93b9c36874a27b20d7995ea0ffc48d
             .then(response => {
                 if (response.data[0].queryResult.fulfillmentText === "REMINDER : You have a task tommorow") {
                     axios.get('http://localhost:5000/tasks')
@@ -1006,4 +955,5 @@ $(document).ready(function () {
 
 
 });
+
 export default Chatbot
