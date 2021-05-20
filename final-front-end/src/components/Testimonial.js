@@ -26,7 +26,7 @@ function Testimonial() {
         <Card style={{ width: '18rem', border: 'none' }}>
         <div className="image">
         {Boolean(userConnectedData.user._id === review.userId) ? <h3 className="close"><FaTimes style={{  cursor: 'pointer' }} onClick={() => dispatch(DeleteReview(review._id))} /></h3> : "" }
-        <Card.Img className="card-img" src={review.userImg} width="277px" height="370px" />
+        <Card.Img className="card-img" src={review.userImg} width="277px" height="370px" name="User-Image" alt="User" />
         </div>
         <Card.Body className="card-content">
             <Card.Title className="card-title">{review.comment}</Card.Title>

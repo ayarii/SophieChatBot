@@ -3,7 +3,9 @@ const axios = require('axios');
 const User = require('../models/User')
 const { error } = require('actions-on-google/dist/common');
 const { chunk } = require('underscore');
+const cron = require('node-cron')
 
+exports.newsScraper = cron.schedule('00 10 * * Monday', () =>{
 var users 
 axios.get('http://localhost:5000/users')
      .then(response =>{
@@ -24,9 +26,10 @@ axios.get('http://localhost:5000/users')
      .catch(error=>{
       console.log(error)
      }) 
+    })
 
 async function scrapeNews(url,id,interest){
-    const browser = await puppeteer.launch({headless: false})
+    const browser = await puppeteer.launch()
     const page = await browser.newPage()
     await page.goto(url)
 

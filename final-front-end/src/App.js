@@ -13,6 +13,7 @@ import Courses from './components/Courses';
 import Events from './components/Events';
 import TasksManagement from './components/TasksManagement';
 import store from './components/redux/store'
+import PageNotFound from './dashboard/src/views/PageNotFound'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -42,6 +43,7 @@ function App() {
               <Route exact path='/recommendations/events' component={Events} />
               <Route exact path='/recommendations/news' component={News} />
               <Route exact path='/recommendations/courses' component={Courses} /> 
+              <Route component={PageNotFound}></Route>
             </Switch>
           <Footer/>
         </Router>

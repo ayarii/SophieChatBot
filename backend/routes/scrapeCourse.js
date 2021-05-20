@@ -1,29 +1,33 @@
 const puppeteer = require('puppeteer')
 const axios = require('axios');
 const { error } = require('actions-on-google/dist/common');
+const cron = require('node-cron')
 
-var users 
-axios.get('http://localhost:5000/users')
-     .then(response =>{
-         //response.data is the array of users
-          users = response.data
-          console.log(users.length)
-          //console.log(users[7].interests.length)
-          for(i=0; i<users.length; i++){
-            x=Math.floor(Math.random()*users[i].interests.length)
-           const interest = users[i].interests[x]
-           console.log(interest) 
-              scrapeCourse(`https://www.udacity.com/courses/all?search=${interest}`,users[i]._id,interest)
-              .then((res) => {
-                console.log('res')
-              })  
-            }
-     })
-     .catch(error=>{
-      console.log(error)
-     }) 
+  exports.courseScraper = cron.schedule('00 10 * * Monday', () =>{
+    var users 
+    axios.get('http://localhost:5000/users')
+         .then(response =>{
+             //response.data is the array of users
+              users = response.data
+              console.log(users.length)
+              //console.log(users[7].interests.length)
+              for(i=0; i<users.length; i++){
+                x=Math.floor(Math.random()*users[i].interests.length)
+               const interest = users[i].interests[x]
+               console.log(interest) 
+                  scrapeCourse(`https://www.udacity.com/courses/all?search=${interest}`,users[i]._id,interest)
+                  .then((res) => {
+                    console.log('res')
+                  })  
+                }
+         })
+         .catch(error=>{
+          console.log(error)
+         })  
+  })
 async function scrapeCourse(url,id,interest){
-    const browser = await puppeteer.launch({headless: false})
+
+    const browser = await puppeteer.launch()
     const page = await browser.newPage()
     await page.goto(url)
 

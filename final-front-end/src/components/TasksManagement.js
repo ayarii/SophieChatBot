@@ -175,6 +175,7 @@ const TasksManager = () => {
                     <div className="justify-content-center">
                         <img 
                             src={require('../assets/images/taskCardSpace.png')} 
+                            name="task-cards-space-exemple"
                             alt="task cards space exemple"
                         />
                     </div>

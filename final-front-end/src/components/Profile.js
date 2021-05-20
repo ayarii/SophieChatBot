@@ -128,8 +128,8 @@ useEffect(() => {
                                     <div className="col-lg-6">
                                         <div className="form-group">
                                             {previewSource ? (
-                                                <img src={previewSource} alt="chosen" height="200" width="200" style={{ 'border-radius': '50%' }} />
-                                            ) : (<img src={connectedUserRedux.image} height="200" width="200" style={{ 'border-radius': '50%' }} />
+                                                <img src={previewSource} name="chosen" alt="chosen" height="200" width="200" style={{ 'border-radius': '50%' }} />
+                                            ) : (<img src={connectedUserRedux.image} name="Connected-User-Image" alt="Connected User" height="200" width="200" style={{ 'border-radius': '50%' }} />
                                             )}
                                         </div>
                                         <input
