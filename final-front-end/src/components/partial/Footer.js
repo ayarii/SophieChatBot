@@ -23,7 +23,7 @@ class Footer extends Component{
                     </div>
                     <div class="col-lg-4 col-md-6 mt-md-0 mt-5">
                         <div class="footer-w3pvt">
-                            <h3 class="mb-3 w3pvt_title">Calling Agent Disponibility</h3>
+                            <h3 class="mb-3 w3pvt_title">Calling Agent Disponibility for sophie chatbot</h3>
                             <hr/>
                             <ul class="list-info-w3pvt last-w3ls-contact mt-lg-4">
                                 <li>

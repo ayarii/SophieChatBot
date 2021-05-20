@@ -445,7 +445,7 @@ function Chatbot() {
                     <div className="row">
                         <div className="col-md-12 text-center mb-2">
                             <img src={require('./img/chatBotLogo.png')} height="100" width="100" />
-                            <p>Hi 👋! Please fill out the form below to authentificate and start chatting with me 💖</p>
+                            <p>Hi 👋! Please fill out the form below to authentificate and start <b>chatting with me </b>💖</p>
                         </div>
                     </div>
                     <div className="row">

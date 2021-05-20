@@ -23,8 +23,8 @@ class Home extends  Component{
 					<div class="bs-slider-overlay">
 						<div class="banner-text">
 							<div class="container">
-								<h2 class="movetxt agile-title text-capitalize">Organize and manage your tasks with Sophie </h2>
-								<p>a helpfull virtual learning assistant</p>
+								<h1 class="movetxt agile-title text-capitalize">Manage your tasks with Sophie chatBot</h1>
+								<h3 style={{color:'white'}}>a helpfull virtual learning assistant</h3>
 								
 								<Link to='/contact' class="btn">Start now</Link>
 							</div>
@@ -63,7 +63,7 @@ class Home extends  Component{
                         <Link to="/single"><img src="assets/images/loula.jpg" alt="news image" class="img-fluid" /></Link>
                         <div class="ab-info-con">
                             <h4> Student Bot Support</h4>
-							<p>School, college or university chatbots can improve the quality of your administration and services.
+							<p>School, college or university <b> chatbots </b>can improve the quality of your administration and services.
 								 They curate answers on demand resolving issues fast and in a way that feels natural.</p>
 							
                             
@@ -75,8 +75,8 @@ class Home extends  Component{
 					<Link to="/single"><img src="assets/images/thenya.png" alt="news image" class="img-fluid" /></Link>
                         <div class="ab-info-con">
                             <h4>Increased Engagement</h4>
-							<p>Online chatting and messaging are part of our daily habits. Allowing students and teachers access services in this manner increases engagement through convenience and familiarity.</p>
-                            <a href="single.html" class="read-more two btn m-0 px-3"><span class="fa fa-arrow-circle-o-right"> </span></a>
+							<p>Online <b>chatting</b> and <b>messaging</b> are part of our daily habits. Allowing students and teachers access services in this manner increases engagement through convenience and familiarity.</p>
+                            {/* <a href="single.html" class="read-more two btn m-0 px-3"><span class="fa fa-arrow-circle-o-right"> </span></a> */}
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ class Home extends  Component{
                         <Link to="/single"><img src="assets/images/theltha.jpg" alt="news image" class="img-fluid" /></Link>
                         <div class="ab-info-con">
                             <h4> Interactive Learning</h4>
-							<p>Digitalization of learning experiences is not a new concept but educational chatbots take it to a whole new level allowing rich interactions and learning in & outside of the classroom, 24/7.</p>
+							<p>Digitalization of <b>learning experiences </b>is not a new concept but <b>educational chatbots </b>take it to a whole new level allowing rich interactions and <b>learning</b> in & outside of the classroom, 24/7.</p>
 							
                             
                         </div>
@@ -115,11 +115,11 @@ class Home extends  Component{
             </div>
         </div>
     </section>
-//     {/* <!--//order-now-->
+     {/* <!--//order-now-->
 
 
 // <!-- subscribe --> */}
-<section class="subscribe" id="subscribe">
+{/* <section class="subscribe" id="subscribe">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-5 d-flex subscribe-left p-lg-5 py-sm-5 py-4">
@@ -139,7 +139,7 @@ class Home extends  Component{
 			</div>
 		</div>
 	</div>
-</section>
+</section> */}
 <Reviews></Reviews>
 <br></br>
  {/* <!-- //subscribe -->

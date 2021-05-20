@@ -169,7 +169,7 @@ const TasksManager = () => {
                <Container>
                     <PhaseSubTitle className="my-5">
                         If you want to manipulate tasks you need to Sign-In first !
-                        Or if you don't have an account talk to sophie Chatbot to Sign-Up. 
+                        Or if you don't have an account talk to <h2>sophie Chatbot</h2> to Sign-Up. 
                         It has multiple methods for that ! 
                     </PhaseSubTitle>
                     <div className="justify-content-center">
