@@ -6,11 +6,13 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { UpdateTask } from '../../redux/tasks/tasksActions'
+import moment from 'moment'
 
 
 
 const UpdateTaskForm = (props) => {
     const [task, setTask] = useState(props.task)
+
 
     const dispatch = useDispatch()
     //const [toRenderTask, setToRenderTask] = useState(task)
@@ -36,9 +38,9 @@ const UpdateTaskForm = (props) => {
                     <div >
                         <FormSubTitle>Begin date :</FormSubTitle>
                         <DatePicker className="form-control" 
-                        value = {task.beginDate}
+                        selected = {new Date(task.beginDate)}
                         onChange = { date => setTask(
-                            {...task, beginDate : date}
+                            {...task, beginDate : moment(date).format("yyyy-MM-DD")}
                         )}
                         dateFormat = "dd/MM/yyyy"
                         minDate={new Date()}
@@ -50,12 +52,12 @@ const UpdateTaskForm = (props) => {
                     <div>
                         <FormSubTitle>End date :</FormSubTitle>
                         <DatePicker className="form-control" 
-                        value = {task.endDate}
+                        selected = {new Date(task.endDate)}
                         onChange = { date => setTask(
-                            {...task, endDate : date}
+                            {...task, endDate : moment(date).format("yyyy-MM-DD")}
                         )}
                         dateFormat = "dd/MM/yyyy"
-                        minDate={task.beginDate? task.beginDate : new Date()}
+                        minDate={task.beginDate? new Date(task.beginDate) : new Date()}
                         isClearable
                         showYearDropdown
                         />

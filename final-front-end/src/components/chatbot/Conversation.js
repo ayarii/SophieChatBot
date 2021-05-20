@@ -6,7 +6,8 @@ import moment from 'moment'
 import { GoToTasksManagementInterface } from '../redux/tasks/tasksActions'
 
 import { addDialogue } from '../redux/conversationHistory/conversationHistoryActions'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import history from '../../history'
 
 function Conversation(props) {
     const timeElapsed = Date.now()
@@ -18,6 +19,7 @@ function Conversation(props) {
 
     
     const [toTasksManagement, setToTasksManagement] = useState(false)
+    
 
 
 //   // to compare the difference between begin date of the task and today.
@@ -53,6 +55,10 @@ function Conversation(props) {
         $('.userImage:last').clone().insertBefore(".me:last")
         $("#myInput").val("")
         setTimeout(updateScroll, 1000);
+        if(str=="hizni"){
+            console.log("redirection ..")
+            history.push('/TasksManager');
+        }
         const textQueryMessage = {
             text: str
         }
