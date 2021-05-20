@@ -8,6 +8,9 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const Connexion = require("./connect");
 const connect = new Connexion();
+const fcourseScrapper = require('./routes/scrapeCourse')
+const feventsScrapper = require('./routes/EventScraping/scrapeEvents')
+const fnewsScrapper = require('./routes/scrapeNews')
 
 var indexRouter = require("./routes/index");
 var reviewsRouter = require("./routes/reviews")
@@ -26,6 +29,10 @@ const dirPath = path.join(__dirname,'/utils/SophieChatbot-GoogleAccountCrediendi
 //console.log(dirPath)
 process.env.GOOGLE_APPLICATION_CREDENTIALS = dirPath;
 console.log("process.env.GOOGLE_APPLICATION_CREDENTIALS : ", process.env.GOOGLE_APPLICATION_CREDENTIALS)
+fcourseScrapper.courseScraper
+feventsScrapper.eventscraper
+fnewsScrapper.newsScraper
+
 
 
 

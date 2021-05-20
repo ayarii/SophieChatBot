@@ -157,7 +157,7 @@ function UserDetails(props) {
         userData.users.map(user =>
 
             <tr key={user._id}>
-                <td><img src={user.image} width="50" height="50" /> </td>
+                <td><img src={user.image} width="50" height="50" name="User-Image" alt="User" /> </td>
                 <td>{user.nom} {user.prenom}</td>
                 <td>{user.userName}</td>
                 <td>{user.email}</td>
@@ -406,7 +406,7 @@ function UserDetails(props) {
                                                 <Row className="justify-content-md-center">
                                                     <Col className="px-md-1" md="12" >
                                                         {previewSource && (
-                                                            <img src={previewSource} alt="chosen" height="50" width="100" style={{ 'border-radius': '50%' }} />
+                                                            <img src={previewSource} name="chosen" alt="chosen" height="50" width="100" style={{ 'border-radius': '50%' }} />
                                                         )}
 
                                                     </Col>
@@ -564,7 +564,7 @@ function UserDetails(props) {
                     <Modal.Header closeButton>
                         <Modal.Title >
                             <div className="d-flex flex-row">
-                                <img src={userDetails.image} height="70" width="70" style={{ 'border-radius': '50%' }} className="mx-2" />
+                                <img src={userDetails.image} name="Update-User-Image" alt="Update User" height="70" width="70" style={{ 'border-radius': '50%' }} className="mx-2" />
                                 <h4 style={{ color: "green" }}>{userDetails.userName} Details</h4>
                             </div>
                         </Modal.Title>
