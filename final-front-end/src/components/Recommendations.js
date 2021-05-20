@@ -23,20 +23,20 @@ function Recommendations() {
 
 
   const news_container = (
-    recomData.recoms.filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category === "News").slice(0, 3).map(recommendation =>
+    recomData.recoms.reverse().filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category === "News").slice(0, 3).map(recommendation =>
 
       <Recommendation key={recommendation._id} recommendation={recommendation}   />  
     )
 )
 
   const courses_container = (
-  recomData.recoms.filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category === "Course").slice(0, 3).map(recommendation =>
+  recomData.recoms.reverse().filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category === "Course").slice(0, 3).map(recommendation =>
 
     <Recommendation key={recommendation._id} recommendation={recommendation}   />  
   ))
   
   const events_container = (
-    recomData.recoms.filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category === "Events").slice(0, 3).map(recommendation =>
+    recomData.recoms.reverse().filter(recom => recom.userId === userConnectedData.user._id).filter(recom => recom.category === "Events").slice(0, 3).map(recommendation =>
 
       <Recommendation key={recommendation._id} recommendation={recommendation}   />  
     ))

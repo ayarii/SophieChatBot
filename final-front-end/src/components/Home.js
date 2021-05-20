@@ -11,7 +11,7 @@ class Home extends  Component{
 // {/* <!-- //header -->
 // <!-- banner --> */}
 <div class="banner_w3lspvt" id="home">
-	<div class="csslider infinity" id="slider1">
+	<div class="csslider infinity" id="slider1" alt="Home Page" name="Home-Page">
 		<input type="radio" name="slides" checked="checked" id="slides_1"/>
 		<input type="radio" name="slides" id="slides_2"/>
 		<input type="radio" name="slides" id="slides_3"/>
@@ -60,7 +60,7 @@ class Home extends  Component{
             <div class="row ab-info">
                 <div class="col-md-6 ab-content ab-content1">
                     <div class="ab-content-inner">
-                        <Link to="/single"><img src="assets/images/loula.jpg" alt="news image" class="img-fluid" /></Link>
+                        <Link to="/single"><img src="assets/images/loula.jpg" name="Student-Bot-Support" alt="Student Bot Support" class="img-fluid" /></Link>
                         <div class="ab-info-con">
                             <h4> Student Bot Support</h4>
 							<p>School, college or university chatbots can improve the quality of your administration and services.
@@ -72,7 +72,7 @@ class Home extends  Component{
                 </div>
                 <div class="col-md-6 ab-content ab-content1">
                     <div class="ab-content-inner">
-					<Link to="/single"><img src="assets/images/thenya.png" alt="news image" class="img-fluid" /></Link>
+					<Link to="/single"><img src="assets/images/thenya.png" name="Increased-Engagement" alt="Increased Engagement" class="img-fluid" /></Link>
                         <div class="ab-info-con">
                             <h4>Increased Engagement</h4>
 							<p>Online chatting and messaging are part of our daily habits. Allowing students and teachers access services in this manner increases engagement through convenience and familiarity.</p>
@@ -83,7 +83,7 @@ class Home extends  Component{
             </div>
             <div  center class="col-md-6 ab-content ab-content1">
                     <div class="ab-content-inner">
-                        <Link to="/single"><img src="assets/images/theltha.jpg" alt="news image" class="img-fluid" /></Link>
+                        <Link to="/single"><img src="assets/images/theltha.jpg" name="Interactive-Learning" alt="Interactive Learning" class="img-fluid" /></Link>
                         <div class="ab-info-con">
                             <h4> Interactive Learning</h4>
 							<p>Digitalization of learning experiences is not a new concept but educational chatbots take it to a whole new level allowing rich interactions and learning in & outside of the classroom, 24/7.</p>

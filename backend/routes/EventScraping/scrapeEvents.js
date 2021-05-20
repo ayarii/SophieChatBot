@@ -3,14 +3,14 @@ const puppeteer = require('puppeteer')
 const axios = require('axios');
 const { error } = require('actions-on-google/dist/common');
 const { response } = require('express');
+const cron = require('node-cron')
 
+exports.eventscraper = cron.schedule('00 10 * * Monday', () =>{
 var users 
 axios.get('http://localhost:5000/users')
      .then(response =>{
-         //response.data is the array of users
           users = response.data
           console.log(users.length)
-          //console.log(users[7].interests.length)
           for(i=0; i<users.length; i++){
             x=Math.floor(Math.random()*users[i].interests.length)
            const interest = users[i].interests[x]
@@ -20,27 +20,27 @@ axios.get('http://localhost:5000/users')
                 console.log('res')
               })  
             }
-     })
-     .catch(error=>{
-      console.log(error)
-     }) 
+            })
+            .catch(error=>{
+              console.log(error)
+            }) 
+    })
 async function scrapeEvents(url,id,interest){
    const browser = await puppeteer.launch({
-    headless: false,
     args: ['--disable-notifications']
   })
   const page = await browser.newPage()
   await login(page)
-   await new Promise(r => setTimeout(r, 10000));
+   await new Promise(r => setTimeout(r, 7000));
 
   await page.goto(url)
   await new Promise(r => setTimeout(r, 4000));
 
-  const links = await page.evaluate(url => {
+/*  const links = await page.evaluate(url => {
     const links = []
     const scrapedLinks = document.querySelectorAll('a[href^="' + url + '/permalink"]')
     scrapedLinks.forEach(scrapedLink => {
-      const split = scrapedLink.href.split('/')
+       const split = scrapedLink.href.split('/')
       split.pop()
       const postLink = split.join('/')
 
@@ -52,7 +52,7 @@ async function scrapeEvents(url,id,interest){
       return links
       
     }, url)
-    console.log(links)
+    console.log(links) */
     
 
    const [e1] = await page.$x('/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[2]/div/div/div/div/div/div/div/div[1]/div/a/div[1]/div/div/div/div/div[2]/div[1]/div[1]/div/div/div[2]/span/span/object/a/span')
@@ -152,7 +152,7 @@ async function scrapeEvents(url,id,interest){
       console.log(res)
     }).catch(error => {
       console.log(error);
-    }) 
+    })  
 }
 
 //module.exports = scrapeEvents(`https://www.facebook.com/events/search/?q=${interest}`) ;

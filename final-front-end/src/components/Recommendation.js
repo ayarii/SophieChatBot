@@ -17,7 +17,7 @@ const Recommendation  = ({ recommendation}) => {
         <div className="image-container">
         <FontAwesomeIcon icon="book" />
         <h3 className="clo"><FaTimes style={{  cursor: 'pointer' }} onClick={() => dispatch(DeleteRecom(recommendation._id))} width="150" height="150"/></h3>
-        <Card.Img className="card-img-top" variant="top" src={recommendation.imgUrl} />
+        <Card.Img className="card-img-top" variant="top" src={recommendation.imgUrl} name="Recommendation-Image" alt="Recommendation" />
         </div>
         <Card.Body className="card-content">
             <Card.Title className="card-title">{recommendation.title}</Card.Title>
