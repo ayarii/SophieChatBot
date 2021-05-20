@@ -63,8 +63,9 @@ class Home extends  Component{
                         <Link to="/single"><img src="assets/images/loula.jpg" alt="news image" class="img-fluid" /></Link>
                         <div class="ab-info-con">
                             <h4> Student Bot Support</h4>
-							<p>School, college or university chatbots can improve the quality of your administration and services.
-								 They curate answers on demand resolving issues fast and in a way that feels natural.</p>
+							<p>School, college or university chatbots can improve your skills depending on your interests.</p>
+							<p>Sophie Chatbot is one of them. It will supervise you by managing your tasks and sending courses, 
+								news and events recommandation every beginnig of a new week.</p>
 							
                             
                         </div>
@@ -75,7 +76,8 @@ class Home extends  Component{
 					<Link to="/single"><img src="assets/images/thenya.png" alt="news image" class="img-fluid" /></Link>
                         <div class="ab-info-con">
                             <h4>Increased Engagement</h4>
-							<p>Online chatting and messaging are part of our daily habits. Allowing students and teachers access services in this manner increases engagement through convenience and familiarity.</p>
+							<p>Online chatting and messaging are part of our daily habits. So we can use them in a better way.</p>
+							<p> Chatting with Sophie Chatbot is a benefit for you. It will helps you to imrove your skills.</p>
                             <a href="single.html" class="read-more two btn m-0 px-3"><span class="fa fa-arrow-circle-o-right"> </span></a>
                         </div>
                     </div>
@@ -86,7 +88,7 @@ class Home extends  Component{
                         <Link to="/single"><img src="assets/images/theltha.jpg" alt="news image" class="img-fluid" /></Link>
                         <div class="ab-info-con">
                             <h4> Interactive Learning</h4>
-							<p>Digitalization of learning experiences is not a new concept but educational chatbots take it to a whole new level allowing rich interactions and learning in & outside of the classroom, 24/7.</p>
+							<p>Digitalization of learning experiences is not a new concept but educational chatbots take it to a whole new level allowing rich interactions and learning.</p>
 							
                             
                         </div>
